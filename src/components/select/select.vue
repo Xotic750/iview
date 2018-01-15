@@ -575,6 +575,7 @@
             },
             handleBlur () {
                 this.inputFocused = false;
+                this.visible = false;
                 setTimeout(() => {
                     if (this.autoComplete) return;
                     const model = this.model;
