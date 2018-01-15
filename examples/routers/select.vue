@@ -2,6 +2,7 @@
     <!--<div>-->
         <!--{{ model10 }} - -->
         <!--{{ model11 }}-->
+        <!--<input>-->
         <!--<Select v-model="model10" style="width:260px">-->
             <!--<Option v-for="(item, index) in cityList" :value="item.value" :key="index">{{ item.label }}</Option>-->
         <!--</Select>-->
@@ -18,7 +19,7 @@
                 <!--model10: '',-->
                 <!--model11: '',-->
                 <!--model12: ''-->
-            <!--}-->
+            <!--};-->
         <!--},-->
         <!--mounted () {-->
             <!--setTimeout(() => {-->
@@ -50,7 +51,7 @@
                 <!--];-->
             <!--}, 1000);-->
         <!--}-->
-    <!--}-->
+    <!--};-->
 <!--</script>-->
 
 <!--<template>-->
@@ -169,11 +170,22 @@
 
 <template>
     <div style="width: 300px">
+        <input>
         <Select
                 v-model="model14"
                 multiple
                 filterable
                 remote
+                :remote-method="remoteMethod2"
+                :loading="loading2">
+            <Option v-for="(option, index) in options2" :value="option.value" :key="index">{{option.label}}</Option>
+        </Select>
+        <Select
+                v-model="model14"
+                multiple
+                filterable
+                remote
+                placeholder="garbage"
                 :remote-method="remoteMethod2"
                 :loading="loading2">
             <Option v-for="(option, index) in options2" :value="option.value" :key="index">{{option.label}}</Option>
@@ -191,7 +203,7 @@
                 loading2: false,
                 options2: [],
                 list: ['a', 'b', 'c']
-            }
+            };
         },
         methods: {
             remoteMethod2 (query) {
@@ -212,5 +224,5 @@
                 }
             }
         }
-    }
+    };
 </script>
