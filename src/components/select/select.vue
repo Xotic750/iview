@@ -1,5 +1,5 @@
 <template>
-    <div :class="classes" v-clickoutside="handleClose">
+    <div :class="classes" v-clickoutside="handleClose" :tabindex="filterable ? -1 : 0">
         <div
             :class="selectionCls"
             ref="reference"
@@ -26,6 +26,7 @@
                     @blur="handleBlur"
                     @keydown="resetInputState"
                     @keydown.delete="handleInputDelete"
+                    @focus="handleFocus"
                     ref="input">
                 <Icon type="ios-close" :class="[prefixCls + '-arrow']" v-show="showCloseIcon" @click.native.stop="clearSingleSelect"></Icon>
                 <Icon type="arrow-down-b" :class="[prefixCls + '-arrow']" v-if="!remote"></Icon>
@@ -159,7 +160,8 @@
                 notFound: false,
                 slotChangeDuration: false,    // if slot change duration and in multiple, set true and after slot change, set false
                 model: this.value,
-                currentLabel: this.label
+                currentLabel: this.label,
+                inputFocused: false,
             };
         },
         computed: {
@@ -172,7 +174,8 @@
                         [`${prefixCls}-multiple`]: this.multiple,
                         [`${prefixCls}-single`]: !this.multiple,
                         [`${prefixCls}-show-clear`]: this.showCloseIcon,
-                        [`${prefixCls}-${this.size}`]: !!this.size
+                        [`${prefixCls}-${this.size}`]: !!this.size,
+                        [`${prefixCls}-focused`]: this.inputFocused,
                     }
                 ];
             },
@@ -260,6 +263,10 @@
             }
         },
         methods: {
+            handleFocus(){
+                if (this.multiple === true) this.toggleMenu();
+                this.inputFocused = true;
+            },
             toggleMenu () {
                 if (this.disabled || this.autoComplete) {
                     return false;
@@ -567,6 +574,7 @@
                 }
             },
             handleBlur () {
+                this.inputFocused = false;
                 setTimeout(() => {
                     if (this.autoComplete) return;
                     const model = this.model;
