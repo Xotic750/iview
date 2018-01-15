@@ -9,8 +9,13 @@
     vertical-align: middle;
     color: @text-color;
     font-size: @font-size-base;
-    //position: relative;
+    position: relative;
     line-height: normal;
+
+    // Protect the outline when having inline blocked elements.
+    &:focus {
+        z-index: 1;
+    }
 
     &-selection {
         display: block;
@@ -30,7 +35,8 @@
             cursor: pointer;
         }
 
-        &:hover {
+        &:hover,
+        .@{select-prefix-cls}-focused {
             .hover();
             .@{select-prefix-cls}-arrow:nth-of-type(1) {
                 display: inline-block;

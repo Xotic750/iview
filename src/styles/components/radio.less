@@ -216,6 +216,11 @@ span.@{radio-prefix-cls} + * {
             color: @primary-color;
         }
 
+        // Protect the outline when having inline blocked elements.
+        &:focus {
+            z-index: 1;
+        }
+
         .@{radio-prefix-cls}-inner,
         input {
             opacity: 0;
@@ -234,7 +239,8 @@ span.@{radio-prefix-cls} + * {
                 box-shadow: none!important;
             }
 
-            &:hover {
+            &:hover,
+            &:focus {
                 border-color: tint(@primary-color, 20%);
                 box-shadow: -1px 0 0 0 tint(@primary-color, 20%);
                 color: tint(@primary-color, 20%);
@@ -252,6 +258,7 @@ span.@{radio-prefix-cls} + * {
             background-color: @background-color-base;
             cursor: @cursor-disabled;
             color: #ccc;
+            outline: none;
 
             &:first-child,
             &:hover {
