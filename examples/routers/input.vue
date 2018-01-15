@@ -6,7 +6,7 @@
         <br>
         <Input v-model="value3" size="small" placeholder="small size"></Input>
         <br>
-        <Input v-model="value1" size="large" placeholder="large size" icon="ios-clock-outline"></Input>
+        <Input v-model="value1" size="large" placeholder="large size" icon="ios-clock-outline" :disabled="true"></Input>
         <br>
         <Input v-model="value2" placeholder="default size" icon="ios-clock-outline"></Input>
         <br>
