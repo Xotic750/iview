@@ -10,7 +10,9 @@
                 :value="label"
                 v-model="model"
                 :name="name"
-                @change="change">
+                @change="change"
+                @blur="handleBlur"
+                @focus="handleFocus">
             <input
                 v-if="!group"
                 type="checkbox"
@@ -18,7 +20,9 @@
                 :disabled="disabled"
                 :checked="currentValue"
                 :name="name"
-                @change="change">
+                @change="change"
+                @blur="handleBlur"
+                @focus="handleFocus">
         </span>
         <slot><span v-if="showSlot">{{ label }}</span></slot>
     </label>
@@ -71,7 +75,8 @@
                 currentValue: this.value,
                 group: false,
                 showSlot: true,
-                parent: findComponentUpward(this, 'CheckboxGroup')
+                parent: findComponentUpward(this, 'CheckboxGroup'),
+                inputFocused: false
             };
         },
         computed: {
@@ -92,7 +97,8 @@
                     {
                         [`${prefixCls}-checked`]: this.currentValue,
                         [`${prefixCls}-disabled`]: this.disabled,
-                        [`${prefixCls}-indeterminate`]: this.indeterminate
+                        [`${prefixCls}-indeterminate`]: this.indeterminate,
+                        [`${prefixCls}-focused`]: this.inputFocused
                     }
                 ];
             },
@@ -131,6 +137,12 @@
                     this.$emit('on-change', value);
                     this.dispatch('FormItem', 'on-form-change', value);
                 }
+            },
+            handleBlur(){
+                this.inputFocused = false;
+            },
+            handleFocus(){
+                this.inputFocused = true;
             },
             updateModel () {
                 this.currentValue = this.value === this.trueValue;
