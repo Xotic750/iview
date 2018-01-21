@@ -39,9 +39,7 @@
         "vue"
     ],
     "rules": {
-        "indent": ["error", 4, {
-            "SwitchCase": 1
-        }],
+        "indent": ["error", 4],
 
         "css-modules/no-undef-class": "warn",
         "css-modules/no-unused-class": "off",
@@ -53,9 +51,7 @@
         "eslint-comments/no-unused-enable": "error",
         "eslint-comments/no-use": "off",
 
-        "import/no-extraneous-dependencies": ["error", {
-            "devDependencies": ["webpack.*.js"]
-        }],
+        "import/no-extraneous-dependencies": ["error"],
 
         "jsdoc/check-param-names": "warn",
         "jsdoc/check-tag-names": "warn",
@@ -85,7 +81,7 @@
             ]
         }],
 
-        "vue/html-indent": ["error", 4, {}],
+        "vue/html-indent": ["error", 4],
         "vue/jsx-uses-vars": "off",
         "vue/order-in-components": "error",
         "vue/v-bind-style": ["error", "shorthand"]
