@@ -5,7 +5,7 @@ const path = require('path');
 const webpack = require('webpack');
 const packageJSON = require('../package.json');
 
-function resolve (dir) {
+function resolve(dir) {
     return path.join(__dirname, '..', dir);
 }
 
@@ -92,7 +92,7 @@ const lessLoader = {
  * @type {!Object}
  * @see {https://github.com/postcss/postcss-loader}
  */
-const postcssLoader ={
+const postcssLoader = {
     loader: 'postcss-loader',
     options: {
         sourceMap: BUILD_SOURCEMAPS,
@@ -204,21 +204,21 @@ module.exports = {
             // https://github.com/webpack-contrib/html-loader
             {
                 test: /\.(html|tpl)$/,
-                loader: 'html-loader'
-            }
-        ]
+                loader: 'html-loader',
+            },
+        ],
     },
     resolve: {
         extensions: ['.js', '.vue'],
         alias: {
-            'vue$': 'vue/dist/vue.esm.js',
-            '@': resolve('src')
-        }
+            vue$: 'vue/dist/vue.esm.js',
+            '@': resolve('src'),
+        },
     },
     plugins: [
         new webpack.optimize.ModuleConcatenationPlugin(),
         new webpack.DefinePlugin({
-            'process.env.VERSION': VERSION
+            'process.env.VERSION': VERSION,
         }),
-    ]
+    ],
 };

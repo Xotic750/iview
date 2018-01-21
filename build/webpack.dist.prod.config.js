@@ -11,7 +11,7 @@ const BUILD_SOURCEMAPS = true;
 module.exports = merge(webpackBaseConfig, {
     devtool: 'nosources-source-map',
     entry: {
-        main: './src/index.js'
+        main: './src/index.js',
     },
     output: {
         path: path.resolve(__dirname, '../dist'),
@@ -19,15 +19,15 @@ module.exports = merge(webpackBaseConfig, {
         filename: 'iview.min.js',
         library: 'iview',
         libraryTarget: 'umd',
-        umdNamedDefine: true
+        umdNamedDefine: true,
     },
     externals: {
         vue: {
             root: 'Vue',
             commonjs: 'vue',
             commonjs2: 'vue',
-            amd: 'vue'
-        }
+            amd: 'vue',
+        },
     },
     plugins: [
         // @todo
@@ -46,7 +46,7 @@ module.exports = merge(webpackBaseConfig, {
             algorithm: 'gzip',
             test: /\.(js|css)$/,
             threshold: 10240,
-            minRatio: 0.8
-        })
-    ]
+            minRatio: 0.8,
+        }),
+    ],
 });

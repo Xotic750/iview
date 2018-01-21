@@ -1,6 +1,7 @@
 const path = require('path');
 const webpack = require('webpack');
 const entry = require('./locale');
+
 process.env.NODE_ENV = 'production';
 
 const BUILD_SOURCEMAPS = true;
@@ -13,9 +14,9 @@ module.exports = {
             {
                 test: /\.js$/,
                 loader: 'babel-loader',
-                exclude: /node_modules/
-            }
-        ]
+                exclude: /node_modules/,
+            },
+        ],
     },
     output: {
         path: path.resolve(__dirname, '../dist/locale'),
@@ -23,15 +24,15 @@ module.exports = {
         filename: '[name].js',
         library: 'iview/locale',
         libraryTarget: 'umd',
-        umdNamedDefine: true
+        umdNamedDefine: true,
     },
     externals: {
         vue: {
             root: 'Vue',
             commonjs: 'vue',
             commonjs2: 'vue',
-            amd: 'vue'
-        }
+            amd: 'vue',
+        },
     },
     plugins: [
         new webpack.DefinePlugin({
@@ -43,6 +44,6 @@ module.exports = {
             uglifyOptions: {
                 ecma: 8,
             },
-        })
-    ]
+        }),
+    ],
 };
