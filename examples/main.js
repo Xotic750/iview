@@ -56,7 +56,7 @@ import AutoComplete from './routers/auto-complete.vue';
 import Scroll from './routers/scroll.vue';
 
 Vue.use(VueRouter);
-Vue.use(iView, {locale});
+Vue.use(iView, { locale });
 
 // 开启debug模式
 Vue.config.debug = true;
@@ -67,189 +67,189 @@ const router = new VueRouter({
     routes: [
         {
             path: '/layout',
-            component: Layout
+            component: Layout,
         },
         {
             path: '/affix',
-            component: Affix
+            component: Affix,
         },
         {
             path: '/grid',
-            component: Grid
+            component: Grid,
         },
         {
             path: '/button',
-            component: Button
+            component: Button,
         },
         {
             path: '/input',
-            component: Input
+            component: Input,
         },
         {
             path: '/radio',
-            component: Radio
+            component: Radio,
         },
         {
             path: '/checkbox',
-            component: Checkbox
+            component: Checkbox,
         },
         {
             path: '/steps',
-            component: Steps
+            component: Steps,
         },
         {
             path: '/timeline',
-            component: Timeline
+            component: Timeline,
         },
         {
             path: '/switch',
-            component: Swicth
+            component: Swicth,
         },
         {
             path: '/alert',
-            component: Alert
+            component: Alert,
         },
         {
             path: '/badge',
-            component: Badge
+            component: Badge,
         },
         {
             path: '/tag',
-            component: Tag
+            component: Tag,
         },
         {
             path: '/input-number',
-            component: InputNumber
+            component: InputNumber,
         },
         {
             path: '/upload',
-            component: Upload
+            component: Upload,
         },
         {
             path: '/progress',
-            component: Progress
+            component: Progress,
         },
         {
             path: '/collapse',
-            component: Collapse
+            component: Collapse,
         },
         {
             path: '/carousel',
-            component: Carousel
+            component: Carousel,
         },
         {
             path: '/card',
-            component: Card
+            component: Card,
         },
         {
             path: '/tree',
-            component: Tree
+            component: Tree,
         },
         {
             path: '/rate',
-            component: Rate
+            component: Rate,
         },
         {
             path: '/circle',
-            component: Circle
+            component: Circle,
         },
         {
             path: '/tabs',
-            component: Tabs
+            component: Tabs,
         },
         {
             path: '/tooltip',
-            component: Tootip
+            component: Tootip,
         },
         {
             path: '/poptip',
-            component: Poptip
+            component: Poptip,
         },
         {
             path: '/slider',
-            component: Slider
+            component: Slider,
         },
         {
             path: '/dropdown',
-            component: Dropdown
+            component: Dropdown,
         },
         {
             path: '/breadcrumb',
-            component: Breadcrumb
+            component: Breadcrumb,
         },
         {
             path: '/menu',
-            component: Menu
+            component: Menu,
         },
         {
             path: '/spin',
-            component: Spin
+            component: Spin,
         },
         {
             path: '/cascader',
-            component: Cascader
+            component: Cascader,
         },
         {
             path: '/select',
-            component: Select
+            component: Select,
         },
         {
             path: '/backtop',
-            component: Backtop
+            component: Backtop,
         },
         {
             path: '/page',
-            component: Page
+            component: Page,
         },
         {
             path: '/transfer',
-            component: Transfer
+            component: Transfer,
         },
         {
             path: '/date',
-            component: DatePicker
+            component: DatePicker,
         },
         {
             path: '/form',
-            component: Form
+            component: Form,
         },
         {
             path: '/table',
-            component: Table
+            component: Table,
         },
         {
             path: '/loading-bar',
-            component: LoadingBar
+            component: LoadingBar,
         },
         {
             path: '/modal',
-            component: Modal
+            component: Modal,
         },
         {
             path: '/message',
-            component: Message
+            component: Message,
         },
         {
             path: '/notice',
-            component: Notice
+            component: Notice,
         },
         {
             path: '/avatar',
-            component: Avatar
+            component: Avatar,
         },
         {
             path: '/color-picker',
-            component: ColorPicker
+            component: ColorPicker,
         },
         {
             path: '/auto-complete',
-            component: AutoComplete
+            component: AutoComplete,
         },
         {
             path: '/scroll',
-            component: Scroll
-        }
-    ]
+            component: Scroll,
+        },
+    ],
 });
 
 const app = new Vue({

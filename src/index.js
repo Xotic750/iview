@@ -48,9 +48,9 @@ import Tooltip from './components/tooltip';
 import Transfer from './components/transfer';
 import Tree from './components/tree';
 import Upload from './components/upload';
-import {Row, Col} from './components/grid';
-import {Select, Option, OptionGroup} from './components/select';
-import locale from './locale/index';
+import { Row, Col } from './components/grid';
+import { Select, Option, OptionGroup } from './components/select';
+import * as locale from './locale/index';
 
 const components = {
     Affix,
@@ -72,22 +72,22 @@ const components = {
     Col,
     Collapse,
     ColorPicker,
-    Content: Content,
+    Content,
     DatePicker,
     Dropdown,
     DropdownItem: Dropdown.Item,
     DropdownMenu: Dropdown.Menu,
-    Footer: Footer,
+    Footer,
     Form,
     FormItem: Form.Item,
-    Header: Header,
+    Header,
     Icon,
     Input,
     InputNumber,
     Scroll,
-    Sider: Sider,
+    Sider,
     Submenu: Menu.Sub,
-    Layout: Layout,
+    Layout,
     LoadingBar,
     Menu,
     MenuGroup: Menu.Group,
@@ -95,7 +95,7 @@ const components = {
     Message,
     Modal,
     Notice,
-    Option: Option,
+    Option,
     OptionGroup,
     Page,
     Panel: Collapse.Panel,
@@ -111,7 +111,7 @@ const components = {
     Step: Steps.Step,
     Steps,
     Table,
-    Tabs: Tabs,
+    Tabs,
     TabPane: Tabs.Pane,
     Tag,
     Timeline,
@@ -120,7 +120,7 @@ const components = {
     Tooltip,
     Transfer,
     Tree,
-    Upload
+    Upload,
 };
 
 const iview = {
@@ -138,23 +138,28 @@ const iview = {
     iProgress: Progress,
     iSelect: Select,
     iSwitch: Switch,
-    iTable: Table
+    iTable: Table,
 };
 
-const install = function(Vue, opts = {}) {
-    if (install.installed) return;
+const install = (Vue, opts = {}) => {
+    if (install.installed) {
+        return;
+    }
+
     locale.use(opts.locale);
     locale.i18n(opts.i18n);
 
-    Object.keys(iview).forEach(key => {
+    Object.keys(iview).forEach((key) => {
         Vue.component(key, iview[key]);
     });
 
-    Vue.prototype.$Loading = LoadingBar;
-    Vue.prototype.$Message = Message;
-    Vue.prototype.$Modal = Modal;
-    Vue.prototype.$Notice = Notice;
-    Vue.prototype.$Spin = Spin;
+    Object.assign(Vue.prototype, {
+        $Loading: LoadingBar,
+        $Message: Message,
+        $Modal: Modal,
+        $Notice: Notice,
+        $Spin: Spin,
+    });
 };
 
 // auto install
@@ -169,13 +174,16 @@ const API = {
     install,
     Circle,
     Switch,
-    ...components
+    ...components,
 };
 
 API.lang = (code) => {
     const langObject = window['iview/locale'].default;
-    if (code === langObject.i.locale) locale.use(langObject);
-    else console.log(`The ${code} language pack is not loaded.`); // eslint-disable-line no-console
+    if (code === langObject.i.locale) {
+        locale.use(langObject);
+    } else {
+        console.log(`The ${code} language pack is not loaded.`); // eslint-disable-line no-console
+    }
 };
 
 export default API;

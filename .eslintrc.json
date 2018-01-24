@@ -17,6 +17,7 @@
     },
     "extends": [
         "eslint:recommended",
+        "airbnb-base",
         "plugin:eslint-comments/recommended",
         "plugin:import/errors",
         "plugin:import/warnings",
@@ -41,14 +42,6 @@
         "indent": ["error", 4, {
             "SwitchCase": 1
         }],
-        "quotes": ["error", "single"],
-        "semi": ["error", "always"],
-        "no-console": ["error"],
-
-        "babel/new-cap": "error",
-        "babel/no-invalid-this": "error",
-        "babel/object-curly-spacing": "error",
-        "babel/semi": "error",
 
         "css-modules/no-undef-class": "warn",
         "css-modules/no-unused-class": "off",
