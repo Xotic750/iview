@@ -257,7 +257,7 @@
             change (event) {
                 let val = event.target.value.trim();
 
-                if (event.type == 'input' && val.match(/^\-?\.?$|\.$/)) return; // prevent fire early if decimal. If no more input the change event will fire later
+                if (event.type == 'input' && val.match(/^-?\.?$|\.$/)) return; // prevent fire early if decimal. If no more input the change event will fire later
 
                 const {min, max} = this;
                 const isEmptyString = val.length === 0;

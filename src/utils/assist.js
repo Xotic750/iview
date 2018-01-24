@@ -57,7 +57,7 @@ export function getScrollBarSize (fresh) {
 // watch DOM change
 export const MutationObserver = isServer ? false : window.MutationObserver || window.WebKitMutationObserver || window.MozMutationObserver || false;
 
-const SPECIAL_CHARS_REGEXP = /([\:\-\_]+(.))/g;
+const SPECIAL_CHARS_REGEXP = /([:\-_]+(.))/g;
 const MOZ_HACK_REGEXP = /^moz([A-Z])/;
 
 function camelCase(name) {

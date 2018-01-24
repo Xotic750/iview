@@ -280,16 +280,15 @@ describe('DatePicker.vue', () => {
 
   it('Should format labels correctly', done => {
     const formater = require('../../../src/components/date-picker/util').formatDateLabels;
-    const expectedResults = require('./assets/locale-expects.js').default;
+    const expectedResults = require('./assets/locale-expects.js');
     const locales = [
       'de-DE', 'en-US', 'es-ES', 'fr-FR', 'id-ID', 'ja-JP', 'ko-KR', 'pt-BR',
       'pt-PT', 'ru-RU', 'sv-SE', 'tr-TR', 'vi-VN', 'zh-CN', 'zh-TW'
     ].reduce((obj, locale) => {
-      obj[locale] = require('../../../src/locale/lang/' + locale).default;
+      obj[locale] = require('../../../src/locale/lang/' + locale);
       return obj;
     }, {});
     const testDate = new Date(2030, 9); // October 2030
-
     Object.keys(locales).forEach(locale => {
       const format = locales[locale].i.datepicker.datePanelLabel;
       const f = formater(locale, format, testDate);
