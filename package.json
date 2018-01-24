@@ -139,17 +139,6 @@
     "sugarss": "^1.0.1",
     "url-loader": "^0.6.2",
     "vue": "^2.5.13",
-<<<<<<< 45f823c0caf93629829fe58959e0da4f5179b8d4
-    "vue-hot-reload-api": "^1.3.3",
-    "vue-html-loader": "^1.2.3",
-    "vue-loader": "^13.7.0",
-    "vue-router": "^2.8.1",
-    "vue-style-loader": "^1.0.0",
-    "vue-template-compiler": "^2.5.13",
-    "webpack": "^3.10.0",
-    "webpack-dev-server": "^2.11.1",
-    "webpack-merge": "^3.0.0"
-=======
     "vue-hot-reload-api": "^2.2.4",
     "vue-html-loader": "^1.2.4",
     "vue-loader": "^13.7.0",
@@ -160,7 +149,6 @@
     "webpack-bundle-analyzer": "^2.9.2",
     "webpack-dev-server": "^2.11.1",
     "webpack-merge": "^4.1.1"
->>>>>>> Initial upgrade and IDE integration - WIP
   },
   "engines": {
     "node": ">= 6.0.0",
