@@ -3,7 +3,10 @@ const webpack = require('webpack');
 const entry = require('./locale');
 process.env.NODE_ENV = 'production';
 
+const BUILD_SOURCEMAPS = true;
+
 module.exports = {
+    devtool: 'nosources-source-map',
     entry,
     module: {
         rules: [
@@ -32,14 +35,14 @@ module.exports = {
     },
     plugins: [
         new webpack.DefinePlugin({
-            'process.env': {
-                NODE_ENV: '"production"'
-            }
+            'process.env.NODE_ENV': JSON.stringify('production'),
         }),
         new webpack.optimize.UglifyJsPlugin({
-            compress: {
-                warnings: false
-            }
+            parallel: true,
+            sourceMap: BUILD_SOURCEMAPS,
+            uglifyOptions: {
+                ecma: 8,
+            },
         })
     ]
 };

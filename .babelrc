@@ -21,6 +21,7 @@
         "stage-3"
     ],
     "plugins": [
+        "add-module-exports",
         "dynamic-import-node",
         "transform-class-properties",
         "transform-es5-property-mutators",

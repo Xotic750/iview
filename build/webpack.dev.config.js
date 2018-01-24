@@ -10,7 +10,6 @@ const merge = require('webpack-merge');
 const webpackBaseConfig = require('./webpack.base.config.js');
 const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin');
 
-
 module.exports = merge(webpackBaseConfig, {
     // 入口
     entry: {
@@ -29,10 +28,14 @@ module.exports = merge(webpackBaseConfig, {
             iview: '../../src/index',
             vue: 'vue/dist/vue.esm.js'
             // vue: 'vue/dist/vue.runtime.js'
-        }
+        },
+        extensions: ['.js', '.vue', '.json'],
     },
     plugins: [
-        new webpack.optimize.CommonsChunkPlugin({ name: 'vendors', filename: 'vendor.bundle.js' }),
+        new webpack.optimize.CommonsChunkPlugin({
+            name: 'vendors',
+            filename: 'vendor.bundle.js'
+        }),
         new HtmlWebpackPlugin({
             inject: true,
             filename: path.join(__dirname, '../examples/dist/index.html'),

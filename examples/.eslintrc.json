@@ -6,7 +6,6 @@
         "import/no-extraneous-dependencies": ["error", {
             "devDependencies": true
         }],
-        "prefer-object-spread/prefer-object-spread": "off",
         "no-console": "off"
     }
 }

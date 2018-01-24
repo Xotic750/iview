@@ -6,7 +6,10 @@ const CompressionPlugin = require('compression-webpack-plugin');
 
 process.env.NODE_ENV = 'production';
 
+const BUILD_SOURCEMAPS = true;
+
 module.exports = merge(webpackBaseConfig, {
+    devtool: 'nosources-source-map',
     entry: {
         main: './src/index.js'
     },
@@ -29,12 +32,14 @@ module.exports = merge(webpackBaseConfig, {
     plugins: [
         // @todo
         new webpack.DefinePlugin({
-            'process.env.NODE_ENV': '"production"'
+            'process.env.NODE_ENV': JSON.stringify('production'),
         }),
         new webpack.optimize.UglifyJsPlugin({
-            compress: {
-                warnings: false
-            }
+            parallel: true,
+            sourceMap: BUILD_SOURCEMAPS,
+            uglifyOptions: {
+                ecma: 8,
+            },
         }),
         new CompressionPlugin({
             asset: '[path].gz[query]',

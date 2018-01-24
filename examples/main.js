@@ -8,8 +8,55 @@ import iView from '../src/index';
 // import locale from '../src/locale/lang/en-US';
 import locale from '../src/locale/lang/zh-CN';
 
+import Layout from './routers/layout.vue';
+import Affix from './routers/affix.vue';
+import Grid from './routers/grid.vue';
+import Button from './routers/button.vue';
+import Input from './routers/input.vue';
+import Radio from './routers/radio.vue';
+import Checkbox from './routers/checkbox.vue';
+import Steps from './routers/steps.vue';
+import Timeline from './routers/timeline.vue';
+import Swicth from './routers/switch.vue';
+import Alert from './routers/alert.vue';
+import Badge from './routers/badge.vue';
+import Tag from './routers/tag.vue';
+import InputNumber from './routers/input-number.vue';
+import Upload from './routers/upload.vue';
+import Progress from './routers/progress.vue';
+import Collapse from './routers/collapse.vue';
+import Carousel from './routers/carousel.vue';
+import Card from './routers/card.vue';
+import Tree from './routers/tree.vue';
+import Rate from './routers/rate.vue';
+import Circle from './routers/circle.vue';
+import Tabs from './routers/tabs.vue';
+import Tootip from './routers/tooltip.vue';
+import Poptip from './routers/poptip.vue';
+import Slider from './routers/slider.vue';
+import Dropdown from './routers/dropdown.vue';
+import Breadcrumb from './routers/breadcrumb.vue';
+import Menu from './routers/menu.vue';
+import Spin from './routers/spin.vue';
+import Cascader from './routers/cascader.vue';
+import Select from './routers/select.vue';
+import Backtop from './routers/back-top.vue';
+import Page from './routers/page.vue';
+import Transfer from './routers/transfer.vue';
+import DatePicker from './routers/date.vue';
+import Form from './routers/form.vue';
+import Table from './routers/table.vue';
+import LoadingBar from './routers/loading-bar.vue';
+import Modal from './routers/modal.vue';
+import Message from './routers/message.vue';
+import Notice from './routers/notice.vue';
+import Avatar from './routers/avatar.vue';
+import ColorPicker from './routers/color-picker.vue';
+import AutoComplete from './routers/auto-complete.vue';
+import Scroll from './routers/scroll.vue';
+
 Vue.use(VueRouter);
-Vue.use(iView, { locale });
+Vue.use(iView, {locale});
 
 // 开启debug模式
 Vue.config.debug = true;
@@ -20,192 +67,194 @@ const router = new VueRouter({
     routes: [
         {
             path: '/layout',
-            component: (resolve) => require(['./routers/layout.vue'], resolve)
+            component: Layout
         },
         {
             path: '/affix',
-            component: (resolve) => require(['./routers/affix.vue'], resolve)
+            component: Affix
         },
         {
             path: '/grid',
-            component: (resolve) => require(['./routers/grid.vue'], resolve)
+            component: Grid
         },
         {
             path: '/button',
-            component: (resolve) => require(['./routers/button.vue'], resolve)
+            component: Button
         },
         {
             path: '/input',
-            component: (resolve) => require(['./routers/input.vue'], resolve)
+            component: Input
         },
         {
             path: '/radio',
-            component: (resolve) => require(['./routers/radio.vue'], resolve)
+            component: Radio
         },
         {
             path: '/checkbox',
-            component: (resolve) => require(['./routers/checkbox.vue'], resolve)
+            component: Checkbox
         },
         {
             path: '/steps',
-            component: (resolve) => require(['./routers/steps.vue'], resolve)
+            component: Steps
         },
         {
             path: '/timeline',
-            component: (resolve) => require(['./routers/timeline.vue'], resolve)
+            component: Timeline
         },
         {
             path: '/switch',
-            component: (resolve) => require(['./routers/switch.vue'], resolve)
+            component: Swicth
         },
         {
             path: '/alert',
-            component: (resolve) => require(['./routers/alert.vue'], resolve)
+            component: Alert
         },
         {
             path: '/badge',
-            component: (resolve) => require(['./routers/badge.vue'], resolve)
+            component: Badge
         },
         {
             path: '/tag',
-            component: (resolve) => require(['./routers/tag.vue'], resolve)
+            component: Tag
         },
         {
             path: '/input-number',
-            component: (resolve) => require(['./routers/input-number.vue'], resolve)
+            component: InputNumber
         },
         {
             path: '/upload',
-            component: (resolve) => require(['./routers/upload.vue'], resolve)
+            component: Upload
         },
         {
             path: '/progress',
-            component: (resolve) => require(['./routers/progress.vue'], resolve)
+            component: Progress
         },
         {
             path: '/collapse',
-            component: (resolve) => require(['./routers/collapse.vue'], resolve)
+            component: Collapse
         },
         {
             path: '/carousel',
-            component: (resolve) => require(['./routers/carousel.vue'], resolve)
+            component: Carousel
         },
         {
             path: '/card',
-            component: (resolve) => require(['./routers/card.vue'], resolve)
+            component: Card
         },
         {
             path: '/tree',
-            component: (resolve) => require(['./routers/tree.vue'], resolve)
+            component: Tree
         },
         {
             path: '/rate',
-            component: (resolve) => require(['./routers/rate.vue'], resolve)
+            component: Rate
         },
         {
             path: '/circle',
-            component: (resolve) => require(['./routers/circle.vue'], resolve)
+            component: Circle
         },
         {
             path: '/tabs',
-            component: (resolve) => require(['./routers/tabs.vue'], resolve)
+            component: Tabs
         },
         {
             path: '/tooltip',
-            component: (resolve) => require(['./routers/tooltip.vue'], resolve)
+            component: Tootip
         },
         {
             path: '/poptip',
-            component: (resolve) => require(['./routers/poptip.vue'], resolve)
+            component: Poptip
         },
         {
             path: '/slider',
-            component: (resolve) => require(['./routers/slider.vue'], resolve)
+            component: Slider
         },
         {
             path: '/dropdown',
-            component: (resolve) => require(['./routers/dropdown.vue'], resolve)
+            component: Dropdown
         },
         {
             path: '/breadcrumb',
-            component: (resolve) => require(['./routers/breadcrumb.vue'], resolve)
+            component: Breadcrumb
         },
         {
             path: '/menu',
-            component: (resolve) => require(['./routers/menu.vue'], resolve)
+            component: Menu
         },
         {
             path: '/spin',
-            component: (resolve) => require(['./routers/spin.vue'], resolve)
+            component: Spin
         },
         {
             path: '/cascader',
-            component: (resolve) => require(['./routers/cascader.vue'], resolve)
+            component: Cascader
         },
         {
             path: '/select',
-            component: (resolve) => require(['./routers/select.vue'], resolve)
+            component: Select
         },
         {
             path: '/backtop',
-            component: (resolve) => require(['./routers/back-top.vue'], resolve)
+            component: Backtop
         },
         {
             path: '/page',
-            component: (resolve) => require(['./routers/page.vue'], resolve)
+            component: Page
         },
         {
             path: '/transfer',
-            component: (resolve) => require(['./routers/transfer.vue'], resolve)
+            component: Transfer
         },
         {
             path: '/date',
-            component: (resolve) => require(['./routers/date.vue'], resolve)
+            component: DatePicker
         },
         {
             path: '/form',
-            component: (resolve) => require(['./routers/form.vue'], resolve)
+            component: Form
         },
         {
             path: '/table',
-            component: (resolve) => require(['./routers/table.vue'], resolve)
+            component: Table
         },
         {
             path: '/loading-bar',
-            component: (resolve) => require(['./routers/loading-bar.vue'], resolve)
+            component: LoadingBar
         },
         {
             path: '/modal',
-            component: (resolve) => require(['./routers/modal.vue'], resolve)
+            component: Modal
         },
         {
             path: '/message',
-            component: (resolve) => require(['./routers/message.vue'], resolve)
+            component: Message
         },
         {
             path: '/notice',
-            component: (resolve) => require(['./routers/notice.vue'], resolve)
+            component: Notice
         },
         {
             path: '/avatar',
-            component: (resolve) => require(['./routers/avatar.vue'], resolve)
+            component: Avatar
         },
         {
             path: '/color-picker',
-            component: (resolve) => require(['./routers/color-picker.vue'], resolve)
+            component: ColorPicker
         },
         {
             path: '/auto-complete',
-            component: (resolve) => require(['./routers/auto-complete.vue'], resolve)
+            component: AutoComplete
         },
         {
             path: '/scroll',
-            component: (resolve) => require(['./routers/scroll.vue'], resolve)
+            component: Scroll
         }
     ]
 });
 
 const app = new Vue({
     router: router,
-    render: h => h(App)
+    render(h) {
+        return h(App);
+    },
 }).$mount('#app');

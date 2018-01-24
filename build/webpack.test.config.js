@@ -8,14 +8,12 @@ const webpackBaseConfig = require('./webpack.base.config.js');
 
 
 const webpackConfig = merge(webpackBaseConfig, {
-  // use inline sourcemap for karma-sourcemap-loader
-    devtool: '#inline-source-map',
+    // use inline sourcemap for karma-sourcemap-loader
+    devtool: 'inline-source-map',
     plugins: [
         new webpack.DefinePlugin({
-            'process.env': {
-                NODE_ENV: '"testing"'
-            }
-        })
+            'process.env.NODE_ENV': JSON.stringify('testing'),
+        }),
     ]
 });
 
