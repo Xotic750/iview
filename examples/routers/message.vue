@@ -26,7 +26,7 @@
                             }
                         }, '这是render出来的');
                     }
-                })
+                });
             },
             success () {
                 this.$Message.success({
@@ -50,5 +50,5 @@
 //                duration: 3
 //            });
         }
-    }
+    };
 </script>

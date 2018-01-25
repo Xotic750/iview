@@ -190,18 +190,18 @@
         data () {
             return {
                 spinShow: true
-            }
+            };
         },
         methods: {
             show () {
                 this.$Spin.show();
                 setTimeout(() => {
                     this.$Spin.hide();
-                }, 3000)
+                }, 3000);
             },
             hide () {
                 this.$Spin.hide();
             }
         }
-    }
+    };
 </script>

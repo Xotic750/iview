@@ -45,7 +45,7 @@
                 modal10: false,
                 modal1: false,
                 scrollable: false
-            }
+            };
         },
         methods: {
             ok () {
@@ -63,5 +63,5 @@
                 });
             }
         }
-    }
+    };
 </script>

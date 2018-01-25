@@ -9,7 +9,7 @@
             return {
                 value: ['beijing', 'gugong'],
                 data: []
-            }
+            };
         },
         mounted () {
             setTimeout(() => {
@@ -60,7 +60,7 @@
                         }
                     ],
                 }];
-            }, 100)
+            }, 100);
         }
-    }
+    };
 </script>

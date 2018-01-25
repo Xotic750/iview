@@ -399,7 +399,7 @@
                         { type: 'string', min: 20, message: '介绍不能少于20字', trigger: 'blur' }
                     ]
                 }
-            }
+            };
         },
         methods: {
             handleSubmit (name) {
@@ -409,7 +409,7 @@
                     } else {
                         this.$Message.error('表单验证失败!');
                     }
-                })
+                });
             },
             handleReset (name) {
                 this.$refs[name].resetFields();
@@ -422,5 +422,5 @@
                 ];
             }
         }
-    }
+    };
 </script>

@@ -121,7 +121,7 @@
                         startTime:'5'
                     }
                 ]
-            }
+            };
         },
         computed: {
 
@@ -141,5 +141,5 @@
         mounted () {
 //            this.change();
         }
-    }
+    };
 </script>

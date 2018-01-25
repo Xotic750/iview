@@ -210,12 +210,12 @@
                 value2: '2018-02-05 10:09:00',
                 value3: '1978',
                 value4: '1978-05'
-            }
+            };
         },
         methods: {
             handleChange (v) {
                 console.log(v);
             }
         }
-    }
+    };
 </script>

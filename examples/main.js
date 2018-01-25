@@ -252,8 +252,8 @@ const router = new VueRouter({
     ],
 });
 
-const app = new Vue({
-    router: router,
+export default new Vue({
+    router,
     render(h) {
         return h(App);
     },

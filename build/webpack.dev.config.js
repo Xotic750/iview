@@ -2,13 +2,15 @@
  * 本地预览
  */
 
-const path = require('path');
 const webpack = require('webpack');
 // const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const merge = require('webpack-merge');
-const webpackBaseConfig = require('./webpack.base.config.js');
 const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin');
+const webpackBaseConfig = require('./webpack.base.config.js');
+const resolve = require('./resolve');
+
+process.env.NODE_ENV = 'development';
 
 module.exports = merge(webpackBaseConfig, {
     // 入口
@@ -18,7 +20,7 @@ module.exports = merge(webpackBaseConfig, {
     },
     // 输出
     output: {
-        path: path.join(__dirname, '../examples/dist'),
+        path: resolve('examples/dist'),
         publicPath: '',
         filename: '[name].js',
         chunkFilename: '[name].chunk.js',
@@ -26,10 +28,7 @@ module.exports = merge(webpackBaseConfig, {
     resolve: {
         alias: {
             iview: '../../src/index',
-            vue: 'vue/dist/vue.esm.js',
-            // vue: 'vue/dist/vue.runtime.js'
         },
-        extensions: ['.js', '.vue', '.json'],
     },
     plugins: [
         new webpack.optimize.CommonsChunkPlugin({
@@ -38,8 +37,8 @@ module.exports = merge(webpackBaseConfig, {
         }),
         new HtmlWebpackPlugin({
             inject: true,
-            filename: path.join(__dirname, '../examples/dist/index.html'),
-            template: path.join(__dirname, '../examples/index.html'),
+            filename: resolve('examples/dist/index.html'),
+            template: resolve('examples/index.html'),
         }),
         new FriendlyErrorsPlugin(),
     ],

@@ -51,7 +51,7 @@
                 imgName: '',
                 visible: false,
                 uploadList: []
-            }
+            };
         },
         computed: {
 //            uploadList () {
@@ -102,10 +102,10 @@
                 return check;
             },
             handleProgress (s) {
-                console.log(s)
+                console.log(s);
             }
         }
-    }
+    };
 </script>
 <style>
     .demo-upload-list{

@@ -23,6 +23,7 @@
     "plugins": [
         "add-module-exports",
         "dynamic-import-node",
+        "lodash",
         "transform-class-properties",
         "transform-es5-property-mutators",
         "transform-object-rest-spread",

@@ -11,7 +11,7 @@
             return {
                 data1: this.getMockData(),
                 targetKeys1: this.getTargetKeys()
-            }
+            };
         },
         methods: {
             getMockData () {
@@ -41,5 +41,5 @@
                 this.targetKeys1 = newTargetKeys;
             }
         }
-    }
+    };
 </script>

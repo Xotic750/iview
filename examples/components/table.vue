@@ -43,7 +43,7 @@
                         key: 'action',
                         fixed: 'right',
                         width: 120,
-                        render: (h, params) => {
+                        render: (h) => {
                             return h('div', [
                                 h('Button', {
                                     props: {
@@ -95,10 +95,10 @@
                         zip: 100000
                     }
                 ]
-            }
+            };
         },
         mounted () {
-            console.log(1)
+            console.log(1);
         }
-    }
+    };
 </script>

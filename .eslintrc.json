@@ -12,80 +12,29 @@
         "sourceType": "module"
     },
     "env": {
-        "browser": true,
-        "es6": true,
-        "node": true
+        "es6": true
     },
     "extends": [
         "eslint:recommended",
-        "airbnb-base",
-        "plugin:eslint-comments/recommended",
         "plugin:import/errors",
         "plugin:import/warnings",
-        "plugin:promise/recommended",
-        "plugin:css-modules/recommended",
-        "plugin:vue/recommended"
+        "plugin:vue/base"
     ],
     "plugins": [
         "babel",
-        "css-modules",
-        "eslint-comments",
         "html",
-        "jsdoc",
         "json",
-        "no-use-extend-native",
-        "prefer-object-spread",
-        "promise",
-        "sort-class-members",
         "vue"
     ],
     "rules": {
-        "indent": ["error", 4],
-
-        "css-modules/no-undef-class": "warn",
-        "css-modules/no-unused-class": "off",
-
-        "eslint-comments/disable-enable-pair": "error",
-        "eslint-comments/no-duplicate-disable": "error",
-        "eslint-comments/no-unlimited-disable": "error",
-        "eslint-comments/no-unused-disable": "error",
-        "eslint-comments/no-unused-enable": "error",
-        "eslint-comments/no-use": "off",
-
-        "import/no-extraneous-dependencies": ["error"],
-
-        "jsdoc/check-param-names": "warn",
-        "jsdoc/check-tag-names": "warn",
-        "jsdoc/check-types": "warn",
-        "jsdoc/newline-after-description": "warn",
-        "jsdoc/require-description-complete-sentence": "warn",
-        "jsdoc/require-example": "off",
-        "jsdoc/require-hyphen-before-param-description": "warn",
-        "jsdoc/require-param": "warn",
-        "jsdoc/require-param-description": "warn",
-        "jsdoc/require-param-type": "warn",
-        "jsdoc/require-returns-description": "warn",
-        "jsdoc/require-returns-type": "warn",
-
-        "prefer-object-spread/prefer-object-spread": "error",
-
-        "sort-class-members/sort-class-members": ["error", {
-            "accessorPairPositioning": "getThenSet",
-            "order": [
-                "[static-properties]",
-                "[static-methods]",
-                "[properties]",
-                "[conventional-private-properties]",
-                "constructor",
-                "[methods]",
-                "[conventional-private-methods]"
-            ]
-        }],
-
-        "vue/html-indent": ["error", 4],
-        "vue/jsx-uses-vars": "off",
-        "vue/order-in-components": "error",
-        "vue/v-bind-style": ["error", "shorthand"]
+        "indent": "off",
+        "indent-legacy": ["error", 4, { "SwitchCase": 1 }],
+        "quotes": ["error", "single"],
+        "semi": ["error", "always"],
+        "vue/jsx-uses-vars": "error",
+        "no-console": ["error"],
+        "linebreak-style": ["error", "unix"],
+        "eol-last": ["error", "always"]
     },
     "settings": {
         "html/html-extensions": [

@@ -82,5 +82,5 @@
                 this.$Notice.destroy();
             }
         }
-    }
+    };
 </script>

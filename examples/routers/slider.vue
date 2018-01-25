@@ -54,7 +54,7 @@
             return {
                 modal1: false,
                 value2: [20, 50],
-            }
+            };
         },
         methods: {
             ok () {
@@ -64,5 +64,5 @@
                 this.$Message.info('Clicked cancel');
             }
         }
-    }
+    };
 </script>

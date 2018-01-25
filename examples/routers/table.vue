@@ -33,7 +33,7 @@
                 data1: [
 
                 ]
-            }
+            };
         },
         methods: {
             handleSelectAll (status) {
@@ -71,5 +71,5 @@
                 this.data1 = [];
             }
         }
-    }
+    };
 </script>

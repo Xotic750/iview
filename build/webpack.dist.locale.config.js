@@ -1,25 +1,23 @@
-const path = require('path');
-const webpack = require('webpack');
 const entry = require('./locale');
+const externals = require('./externals');
+const uglifyPlugin = require('./uglifyPlugin');
+const resolve = require('./resolve');
+const babel = require('./babel');
+const eslint = require('./eslint');
 
 process.env.NODE_ENV = 'production';
 
-const BUILD_SOURCEMAPS = true;
-
 module.exports = {
-    devtool: 'nosources-source-map',
+    devtool: 'source-map',
     entry,
     module: {
         rules: [
-            {
-                test: /\.js$/,
-                loader: 'babel-loader',
-                exclude: /node_modules/,
-            },
+            babel.rule,
+            eslint.rule,
         ],
     },
     output: {
-        path: path.resolve(__dirname, '../dist/locale'),
+        path: resolve('dist/locale'),
         publicPath: '/dist/locale/',
         filename: '[name].js',
         library: 'iview/locale',
@@ -27,23 +25,9 @@ module.exports = {
         umdNamedDefine: true,
     },
     externals: {
-        vue: {
-            root: 'Vue',
-            commonjs: 'vue',
-            commonjs2: 'vue',
-            amd: 'vue',
-        },
+        vue: externals.vue,
     },
     plugins: [
-        new webpack.DefinePlugin({
-            'process.env.NODE_ENV': JSON.stringify('production'),
-        }),
-        new webpack.optimize.UglifyJsPlugin({
-            parallel: true,
-            sourceMap: BUILD_SOURCEMAPS,
-            uglifyOptions: {
-                ecma: 8,
-            },
-        }),
+        uglifyPlugin,
     ],
 };

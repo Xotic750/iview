@@ -18,5 +18,5 @@
                 this.$Message.info('点击了取消');
             }
         }
-    }
+    };
 </script>

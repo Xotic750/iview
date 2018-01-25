@@ -13,10 +13,10 @@
         data(){
             return {
 
-            }
+            };
         },
         mounted(){
             
         }
-    }
+    };
 </script>

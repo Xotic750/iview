@@ -22,12 +22,12 @@
         data(){
             return {
                 arr: []
-            }
+            };
         },
         created(){
             for(let i = 0 ; i < 100 ; i++){
                 this.arr.push(i);
             }
         }
-    }
+    };
 </script>

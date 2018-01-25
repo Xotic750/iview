@@ -264,8 +264,8 @@
                 model11: 'New York',
                 model12: [],
                 model13: 'New York'
-            }
+            };
         }
-    }
+    };
 </script>
 

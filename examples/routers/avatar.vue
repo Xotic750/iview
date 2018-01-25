@@ -70,12 +70,12 @@
             return {
                 name: 'Aresn',
                 theme1: 'dark'
-            }
+            };
         },
         methods: {
             change () {
-                this.name = 'Tomserm'
+                this.name = 'Tomserm';
             }
         }
-    }
+    };
 </script>

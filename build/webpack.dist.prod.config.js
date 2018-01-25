@@ -1,46 +1,23 @@
-const path = require('path');
-const webpack = require('webpack');
 const merge = require('webpack-merge');
-const webpackBaseConfig = require('./webpack.base.config.js');
 const CompressionPlugin = require('compression-webpack-plugin');
+const webpackBaseConfig = require('./webpack.base.config.js');
+const externals = require('./externals');
+const uglifyPlugin = require('./uglifyPlugin');
+const outputDist = require('./outputDist');
 
 process.env.NODE_ENV = 'production';
 
-const BUILD_SOURCEMAPS = true;
-
 module.exports = merge(webpackBaseConfig, {
-    devtool: 'nosources-source-map',
+    devtool: 'source-map',
     entry: {
         main: './src/index.js',
     },
-    output: {
-        path: path.resolve(__dirname, '../dist'),
-        publicPath: '/dist/',
-        filename: 'iview.min.js',
-        library: 'iview',
-        libraryTarget: 'umd',
-        umdNamedDefine: true,
-    },
+    output: outputDist,
     externals: {
-        vue: {
-            root: 'Vue',
-            commonjs: 'vue',
-            commonjs2: 'vue',
-            amd: 'vue',
-        },
+        vue: externals.vue,
     },
     plugins: [
-        // @todo
-        new webpack.DefinePlugin({
-            'process.env.NODE_ENV': JSON.stringify('production'),
-        }),
-        new webpack.optimize.UglifyJsPlugin({
-            parallel: true,
-            sourceMap: BUILD_SOURCEMAPS,
-            uglifyOptions: {
-                ecma: 8,
-            },
-        }),
+        uglifyPlugin,
         new CompressionPlugin({
             asset: '[path].gz[query]',
             algorithm: 'gzip',

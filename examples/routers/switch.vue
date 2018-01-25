@@ -13,12 +13,12 @@
         data () {
             return {
                 m1: 'yes'
-            }
+            };
         },
         methods: {
             change (status) {
-                console.log(status)
+                console.log(status);
             }
         }
-    }
+    };
 </script>

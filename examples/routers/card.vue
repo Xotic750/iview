@@ -77,12 +77,12 @@
                         rate: 9.2
                     }
                 ]
-            }
+            };
         },
         methods: {
             changeLimit () {
                 this.limitFrom = this.limitFrom === 0 ? 5 : 0;
             }
         }
-    }
+    };
 </script>

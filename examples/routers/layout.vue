@@ -1,9 +1,9 @@
 <template>
     <div class="layout-demo-con">
         <Layout :style="{minHeight: '100vh'}">
-            <Sider 
+            <Sider
                 v-model="isCollapsed"
-                collapsed-width="0" 
+                collapsed-width="0"
                 hide-trigger
                 collapsible
                 ref="side"
@@ -55,7 +55,7 @@ export default {
         }
     },
     watch: {
-        isCollapsed (val) {
+        isCollapsed (/* val */) {
             // console.log(val)
         }
     }

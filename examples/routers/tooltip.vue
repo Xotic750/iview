@@ -18,8 +18,8 @@
         },
         methods: {
             handleChange () {
-                this.text = '提示'
+                this.text = '提示';
             }
         }
-    }
+    };
 </script>

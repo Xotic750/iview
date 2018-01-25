@@ -13,7 +13,7 @@
             return {
                 current: 1,
                 total: 21
-            }
+            };
         },
         methods: {
             subject() {
@@ -23,5 +23,5 @@
                 this.current = 1;
             }
         }
-    }
+    };
 </script>

@@ -4,8 +4,9 @@
     ],
     "env": {
         "browser": true,
-        "commonjs": true,
-        "jasmine": true,
-        "node": true
+        "commonjs": true
+    },
+    "globals": {
+        "process": false
     }
 }

@@ -1,46 +1,34 @@
 /**
  * 公共配置
  */
-const path = require('path');
+
 const webpack = require('webpack');
+const LodashModuleReplacementPlugin = require('lodash-webpack-plugin');
+const StyleLintPlugin = require('stylelint-webpack-plugin');
+const {
+    BundleAnalyzerPlugin,
+} = require('webpack-bundle-analyzer');
 const packageJSON = require('../package.json');
+const resolve = require('./resolve');
+const babel = require('./babel');
+const eslint = require('./eslint');
 
-function resolve(dir) {
-    return path.join(__dirname, '..', dir);
-}
+const PERFORM_LINTING = false;
 
-/**
- * The iView version string.
- * @type {string}
- */
-const VERSION = `'${packageJSON.version}'`;
+const RUN_REPORT = false;
 
 /**
- * The default exclude regex.
- * @type {string}
- */
-const DEFAULT_EXCLUDE_RX = /node_modules/;
-
-/**
- * If the file is greater than the limit (in bytes) the file-loader is used by default
- * and all query parameters are passed to it..
- *
- * @type {number}
- * @see {@link https://github.com/webpack-contrib/url-loader#limit}
- */
-const URL_LOADER_BYTES_LIMIT = 8192;
-
-const BUILD_SOURCEMAPS = true;
-
-/**
- * Shared (.js & .vue) babel-loader options.
+ * A webpack plugin to lint your CSS/Sass code using stylelint.
  * @type {!Object}
- * @see {@link https://github.com/babel/babel-loader}
+ * @see {@link https://github.com/JaKXz/stylelint-webpack-plugin}
  */
-const babelLoader = {
-    exclude: DEFAULT_EXCLUDE_RX,
-    loader: 'babel-loader',
-};
+
+const styleLint = new StyleLintPlugin({
+    emitErrors: true,
+    failOnError: false, // https://github.com/JaKXz/stylelint-webpack-plugin/issues/103
+    files: ['**/*.+(css|sass|scss|less|vue)'],
+    quiet: true, // https://github.com/JaKXz/stylelint-webpack-plugin/issues/61
+});
 
 /**
  * Adds CSS to the DOM by injecting a <style> tag.
@@ -51,7 +39,7 @@ const styleLoader = {
     loader: 'style-loader',
     options: {
         singleton: true,
-        sourceMap: BUILD_SOURCEMAPS,
+        sourceMap: true,
     },
 };
 
@@ -64,7 +52,7 @@ const cssLoader = {
     loader: 'css-loader',
     options: {
         camelCase: true,
-        sourceMap: BUILD_SOURCEMAPS,
+        sourceMap: true,
     },
 };
 
@@ -83,7 +71,7 @@ const cssLoader = {
 const lessLoader = {
     loader: 'less-loader',
     options: {
-        sourceMap: BUILD_SOURCEMAPS,
+        sourceMap: true,
     },
 };
 
@@ -95,7 +83,7 @@ const lessLoader = {
 const postcssLoader = {
     loader: 'postcss-loader',
     options: {
-        sourceMap: BUILD_SOURCEMAPS,
+        sourceMap: true,
     },
 };
 
@@ -107,7 +95,7 @@ const postcssLoader = {
 const sassLoader = {
     loader: 'sass-loader',
     options: {
-        sourceMap: BUILD_SOURCEMAPS,
+        sourceMap: true,
     },
 };
 
@@ -146,11 +134,11 @@ module.exports = {
                 loader: 'vue-loader',
                 options: {
                     // https://github.com/vuejs/vue-loader/blob/master/docs/en/options.md#csssourcemap
-                    cssSourceMap: BUILD_SOURCEMAPS,
+                    cssSourceMap: true,
                     // https://github.com/vuejs/vue-loader/blob/master/docs/en/options.md#loaders
                     loaders: {
                         css: generateLoaders(postcssLoader),
-                        js: [babelLoader],
+                        js: [babel.loader, eslint.loader],
                         less: generateLoaders(lessLoader),
                         sass: generateLoaders(sassLoader),
                     },
@@ -166,9 +154,7 @@ module.exports = {
                     },
                 },
             },
-            Object.assign({}, babelLoader, {
-                test: /\.js$/,
-            }),
+            babel.rule,
             {
                 test: /\.css$/,
                 loaders: [
@@ -197,7 +183,7 @@ module.exports = {
                 test: /\.(gif|jpg|png|woff|svg|eot|ttf)\??.*$/,
                 loader: 'url-loader',
                 options: {
-                    limit: URL_LOADER_BYTES_LIMIT,
+                    limit: 8192,
                 },
             },
             // Exports HTML as string. HTML is minimized when the compiler demands.
@@ -206,6 +192,7 @@ module.exports = {
                 test: /\.(html|tpl)$/,
                 loader: 'html-loader',
             },
+            eslint.rule,
         ],
     },
     resolve: {
@@ -218,7 +205,16 @@ module.exports = {
     plugins: [
         new webpack.optimize.ModuleConcatenationPlugin(),
         new webpack.DefinePlugin({
-            'process.env.VERSION': VERSION,
+            'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
+            'process.env.VERSION': JSON.stringify(`'${packageJSON.version}'`),
         }),
+        /**
+         * Smaller lodash builds. We are not opting in to any features.
+         * @type {!Object}
+         * @see {@link https://github.com/lodash/lodash-webpack-plugin}
+         */
+        new LodashModuleReplacementPlugin({}),
+        ...(RUN_REPORT ? [new BundleAnalyzerPlugin()] : []),
+        ...(PERFORM_LINTING ? [styleLint] : []),
     ],
 };

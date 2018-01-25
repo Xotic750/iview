@@ -57,5 +57,5 @@
 <script>
     export default {
 
-    }
+    };
 </script>

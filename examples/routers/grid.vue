@@ -28,12 +28,12 @@
         data () {
             return {
                 n: 2
-            }
+            };
         },
         methods: {
             add () {
                 this.n++;
             }
         }
-    }
+    };
 </script>

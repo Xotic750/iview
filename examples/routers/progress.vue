@@ -22,7 +22,7 @@
         data () {
             return {
                 percent: 0
-            }
+            };
         },
         methods: {
             add () {
@@ -38,5 +38,5 @@
                 this.percent -= 10;
             }
         }
-    }
+    };
 </script>

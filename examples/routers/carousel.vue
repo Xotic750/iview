@@ -33,7 +33,7 @@
                 this.log.push(`From ${from} To ${to}`);
             }
         }
-    }
+    };
 </script>
 <style>
     .demo-carousel{

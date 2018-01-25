@@ -168,14 +168,14 @@
         data () {
             return {
                 tabs: 2
-            }
+            };
         },
         methods: {
             handleTabsAdd () {
                 this.tabs ++;
             }
         }
-    }
+    };
 </script>
 
 
