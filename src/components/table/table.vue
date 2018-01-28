@@ -88,6 +88,8 @@
     </div>
 </template>
 <script>
+    import stubArray from 'lodash/stubArray';
+    import stubString from 'lodash/stubString';
     import tableHead from './table-head.vue';
     import tableBody from './table-body.vue';
     import Spin from '../spin/spin.vue';
@@ -110,15 +112,11 @@
         props: {
             data: {
                 type: Array,
-                default () {
-                    return [];
-                }
+                default: stubArray
             },
             columns: {
                 type: Array,
-                default () {
-                    return [];
-                }
+                default: stubArray
             },
             size: {
                 validator (value) {
@@ -149,9 +147,7 @@
             },
             rowClassName: {
                 type: Function,
-                default () {
-                    return '';
-                }
+                default: stubString
             },
             context: {
                 type: Object
@@ -255,7 +251,7 @@
                             width = this.tableWidth - this.scrollBarWidth;
                         }
                     }
-//                    const width = this.bodyHeight === 0 ? this.tableWidth : this.tableWidth - this.scrollBarWidth;
+                    // const width = this.bodyHeight === 0 ? this.tableWidth : this.tableWidth - this.scrollBarWidth;
                     style.width = `${width}px`;
                 }
                 return style;
@@ -298,7 +294,7 @@
                     if ((this.width && this.width < this.tableWidth) || tableWidth < this.tableWidth){
                         height = this.bodyHeight;
                     }
-//                    style.height = this.scrollBarWidth > 0 ? `${this.bodyHeight}px` : `${this.bodyHeight - 1}px`;
+                    // style.height = this.scrollBarWidth > 0 ? `${this.bodyHeight}px` : `${this.bodyHeight - 1}px`;
                     style.height = this.scrollBarWidth > 0 ? `${height}px` : `${height - 1}px`;
                 }
                 return style;
@@ -461,7 +457,6 @@
                 //     }else{
                 //         this.objData[data._index]._isChecked = status;
                 //     }
-
                 // });
                 for(const data of this.rebuildData){
                     if(this.objData[data._index]._isDisabled){
@@ -583,13 +578,13 @@
                 this.cloneColumns[index]._filterVisible = false;
                 this.$emit('on-filter-change', column);
             },
-            /**
+            /*
              * #2832
              * 应该区分当前表头的 column 是左固定还是右固定
              * 否则执行到 $parent 时，方法的 index 与 cloneColumns 的 index 是不对应的
              * 左固定和右固定，要区分对待
-             * 所以，此方法用来获取正确的 index
-             * */
+             * 所以，此方法用来获取正确的 index.
+             */
             GetOriginalIndex (_index) {
                 return this.cloneColumns.findIndex(item => item._index === _index);
             },

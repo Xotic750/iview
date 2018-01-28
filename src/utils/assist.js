@@ -1,4 +1,6 @@
 import Vue from 'vue';
+import noop from 'lodash/noop';
+
 const isServer = Vue.prototype.$isServer;
 // 判断参数是否是其中之一
 export function oneOf (value, validList) {
@@ -90,7 +92,8 @@ export {firstUpperCase};
 export function warnProp(component, prop, correctType, wrongType) {
     correctType = firstUpperCase(correctType);
     wrongType = firstUpperCase(wrongType);
-    console.error(`[iView warn]: Invalid prop: type check failed for prop ${prop}. Expected ${correctType}, got ${wrongType}. (found in component: ${component})`);    // eslint-disable-line
+    // eslint-disable-next-line no-console
+    console.error(`[iView warn]: Invalid prop: type check failed for prop ${prop}. Expected ${correctType}, got ${wrongType}. (found in component: ${component})`);
 }
 
 function typeOf(obj) {
@@ -314,8 +317,8 @@ export function setMatchMedia () {
             return {
                 media: mediaQuery,
                 matches: false,
-                on() {},
-                off() {},
+                on: noop,
+                off: noop,
             };
         };
         window.matchMedia = window.matchMedia || matchMediaPolyfill;

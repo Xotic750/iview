@@ -43,6 +43,8 @@
     </div>
 </template>
 <script>
+import noop from 'lodash/noop';
+
 export default {
     data () {
         return {
@@ -55,9 +57,12 @@ export default {
         }
     },
     watch: {
-        isCollapsed (/* val */) {
-            // console.log(val)
+        isCollapsed: noop,
+        /*
+        isCollapsed (val) {
+            console.log(val)
         }
+        */
     }
 };
 </script>

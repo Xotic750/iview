@@ -54,6 +54,7 @@
     </div>
 </template>
 <script>
+    import isNil from 'lodash/isNil';
     import tinycolor from 'tinycolor2';
 
     import clickoutside from '../../directives/clickoutside';
@@ -86,7 +87,7 @@
             color = tinycolor(data);
         }
 
-        if (color && (color._a === undefined || color._a === null)) {
+        if (color && isNil(color._a)) {
             color.setAlpha(alpha || 1);
         }
 

@@ -2,8 +2,9 @@
 // Thanks to: https://github.com/calebroseland/vue-dom-portal
 
 /**
- * Get target DOM Node
- * @param {(Node|string|Boolean)} [node=document.body] DOM Node, CSS selector, or Boolean
+ * Get target DOM Node.
+ * 
+ * @param {(Node|string|Boolean)} [node=document.body] - DOM Node, CSS selector, or Boolean.
  * @return {Node} The target that the el will be appended to
  */
 function getTarget (node) {

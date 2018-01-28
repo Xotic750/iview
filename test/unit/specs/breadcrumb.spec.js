@@ -7,12 +7,12 @@ describe('Breadcrumb.vue', () => {
     });
     it('create', done => {
         vm = createVue(`
-      <Breadcrumb separator="<b class='demo-breadcrumb-separator'>=></b>">
-        <Breadcrumb-item href="/">Home4</Breadcrumb-item>
-        <Breadcrumb-item href="/components/breadcrumb">Components</Breadcrumb-item>
-        <Breadcrumb-item>Breadcrumb</Breadcrumb-item>
-      </Breadcrumb>
-    `);
+            <Breadcrumb separator="<b class='demo-breadcrumb-separator'>=></b>">
+            <Breadcrumb-item href="/">Home4</Breadcrumb-item>
+            <Breadcrumb-item href="/components/breadcrumb">Components</Breadcrumb-item>
+            <Breadcrumb-item>Breadcrumb</Breadcrumb-item>
+            </Breadcrumb>
+        `);
         expect(vm.$el.querySelectorAll('.ivu-breadcrumb-item-link').length).to.equal(3);
 
         vm.$nextTick(() => {

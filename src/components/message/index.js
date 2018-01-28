@@ -1,3 +1,4 @@
+import noop from 'lodash/noop';
 import Notification from '../base/notification';
 
 const prefixCls = 'ivu-message';
@@ -31,7 +32,7 @@ function getMessageInstance () {
     return messageInstance;
 }
 
-function notice (content = '', duration = defaults.duration, type, onClose = function () {}, closable = false, render = function () {}) {
+function notice (content = '', duration = defaults.duration, type, onClose = noop, closable = false, render = noop) {
     const iconType = iconTypes[type];
 
     // if loading

@@ -24,6 +24,9 @@
     </div>
 </template>
 <script>
+    import noop from 'lodash/noop';
+    import stubArray from 'lodash/stubArray';
+    import stubObject from 'lodash/stubObject';
     import UploadList from './upload-list.vue';
     import ajax from './ajax';
     import { oneOf } from '../../utils/assist';
@@ -42,9 +45,7 @@
             },
             headers: {
                 type: Object,
-                default () {
-                    return {};
-                }
+                default: stubObject
             },
             multiple: {
                 type: Boolean,
@@ -74,9 +75,7 @@
             },
             format: {
                 type: Array,
-                default () {
-                    return [];
-                }
+                default: stubArray
             },
             accept: {
                 type: String
@@ -87,51 +86,35 @@
             beforeUpload: Function,
             onProgress: {
                 type: Function,
-                default () {
-                    return {};
-                }
+                default: stubObject
             },
             onSuccess: {
                 type: Function,
-                default () {
-                    return {};
-                }
+                default: stubObject
             },
             onError: {
                 type: Function,
-                default () {
-                    return {};
-                }
+                default: stubObject
             },
             onRemove: {
                 type: Function,
-                default () {
-                    return {};
-                }
+                default: stubObject
             },
             onPreview: {
                 type: Function,
-                default () {
-                    return {};
-                }
+                default: stubObject
             },
             onExceededSize: {
                 type: Function,
-                default () {
-                    return {};
-                }
+                default: stubObject
             },
             onFormatError: {
                 type: Function,
-                default () {
-                    return {};
-                }
+                default: stubObject
             },
             defaultFileList: {
                 type: Array,
-                default() {
-                    return [];
-                }
+                default: stubArray
             }
         },
         data () {
@@ -195,9 +178,12 @@
                         } else {
                             this.post(file);
                         }
+                    }, noop);
+                    /*
                     }, () => {
-                        // this.$emit('cancel', file);
+                        this.$emit('cancel', file);
                     });
+                    */
                 } else if (before !== false) {
                     this.post(file);
                 } else {

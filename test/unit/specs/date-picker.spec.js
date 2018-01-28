@@ -1,5 +1,13 @@
 import { createVue, destroyVM, stringToDate, dateToString, promissedTick } from '../util';
 
+// phantomjs 2.1.1 does not support Date#toLocaleDateString so skip labels test.
+const longLocaleString = new Date(2030, 9).toLocaleDateString('zh-CN', {
+    month: 'long'
+});
+
+const hasWokingToLocaleDateString = longLocaleString === '十月';
+const itToLocaleDateString  = hasWokingToLocaleDateString ? it : it.skip;
+
 describe('DatePicker.vue', () => {
     let vm;
     afterEach(() => {
@@ -8,8 +16,8 @@ describe('DatePicker.vue', () => {
 
     it('should create a DatePicker component and open the calendar with the current month', done => {
         vm = createVue(`
-      <Date-Picker></Date-Picker>
-    `);
+            <Date-Picker></Date-Picker>
+        `);
         const picker = vm.$children[0];
         picker.showPicker();
         vm.$nextTick(() => {
@@ -28,8 +36,8 @@ describe('DatePicker.vue', () => {
 
     it('should create a DatePicker component of type="datetimerange"', done => {
         vm = createVue(`
-      <Date-Picker type="datetimerange"></Date-Picker>
-    `);
+            <Date-Picker type="datetimerange"></Date-Picker>
+        `);
         const picker = vm.$children[0];
         expect(picker.$children.length).to.equal(2);
         expect(Array.isArray(picker.currentValue)).to.equal(true);
@@ -38,8 +46,8 @@ describe('DatePicker.vue', () => {
 
     it('should create a datetimerange component and pick 2 dates in the current month', done => {
         vm = createVue(`
-      <Date-picker type="datetimerange"></Date-picker>
-    `);
+            <Date-picker type="datetimerange"></Date-picker>
+        `);
 
         const picker = vm.$children[0];
         picker.handleIconClick();
@@ -103,19 +111,19 @@ describe('DatePicker.vue', () => {
 
             vm.dateType = 'year';
             promissedTick(picker)
-        .then(() => {
-            expect(picker.type).to.equal('year');
-            expect(picker.selectionMode).to.equal('year');
+                .then(() => {
+                    expect(picker.type).to.equal('year');
+                    expect(picker.selectionMode).to.equal('year');
 
-            vm.dateType = 'date';
-            return promissedTick(picker);
-        })
-        .then(() => {
-            expect(picker.type).to.equal('date');
-            expect(picker.selectionMode).to.equal('day');
+                    vm.dateType = 'date';
+                    return promissedTick(picker);
+                })
+                .then(() => {
+                    expect(picker.type).to.equal('date');
+                    expect(picker.selectionMode).to.equal('day');
 
-            done();
-        });
+                    done();
+                });
         });
     });
 
@@ -152,8 +160,8 @@ describe('DatePicker.vue', () => {
 
     it('should have same behavior after a reset as before the reset', done => {
         vm = createVue(`
-      <Date-picker type="datetimerange"></Date-picker>
-    `);
+            <Date-picker type="datetimerange"></Date-picker>
+        `);
 
         const picker = vm.$children[0];
         picker.handleIconClick();
@@ -225,13 +233,13 @@ describe('DatePicker.vue', () => {
     it('should convert strings to Date objects', done => {
         vm = createVue({
             template: `
-        <div>
-          <date-picker v-model="value1" type="daterange" style="width: 200px"></date-picker>
-          <date-picker v-model="value2" type="daterange" placement="bottom-end" style="width: 200px"></date-picker>
-          <date-picker v-model="value3" type="datetime" placement="bottom-end" style="width: 200px"></date-picker>
-          <date-picker v-model="value4" type="datetimerange" placement="bottom-end" style="width: 200px"></date-picker>
-        </div>
-      `,
+                <div>
+                    <date-picker v-model="value1" type="daterange" style="width: 200px"></date-picker>
+                    <date-picker v-model="value2" type="daterange" placement="bottom-end" style="width: 200px"></date-picker>
+                    <date-picker v-model="value3" type="datetime" placement="bottom-end" style="width: 200px"></date-picker>
+                    <date-picker v-model="value4" type="datetimerange" placement="bottom-end" style="width: 200px"></date-picker>
+                </div>
+            `,
             data() {
                 return {
                     value1: ['2017-10-10', '2017-10-20'],
@@ -269,8 +277,8 @@ describe('DatePicker.vue', () => {
 
     it('should render date-picker label correctly in zh-CN', done => {
         vm = createVue(`
-      <Date-picker type="date"></Date-picker>
-    `);
+            <Date-picker type="date"></Date-picker>
+        `);
 
         const picker = vm.$children[0];
         picker.handleIconClick();
@@ -283,7 +291,7 @@ describe('DatePicker.vue', () => {
         });
     });
 
-    it('Should format labels correctly', done => {
+    itToLocaleDateString('Should format labels correctly', done => {
         const formater = require('../../../src/components/date-picker/util').formatDateLabels;
         const expectedResults = require('./assets/locale-expects.js');
         const locales = [

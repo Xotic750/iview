@@ -1,1 +1,4 @@
 dist
+test/unit/coverage
+!.stylelintrc.js
+!.postcss.config.js

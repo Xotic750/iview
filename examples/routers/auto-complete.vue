@@ -8,6 +8,7 @@
     </div>
 </template>
 <script>
+    import noop from 'lodash/noop';
 
     export default {
         props: {
@@ -17,7 +18,7 @@
             return {
                 value: '',
                 data: [],
-//                data: ['Burns Bay Road', 'Downing Street', 'Wall Street']
+                // data: ['Burns Bay Road', 'Downing Street', 'Wall Street']
             };
         },
         computed: {},
@@ -29,9 +30,12 @@
                     value + '@163.com'
                 ];
             },
-            hc (/* v */) {
-//                console.log(v)
+            hc: noop,
+            /*
+            hc (v) {
+                console.log(v)
             },
+            */
             fm (value, item) {
                 return item.toUpperCase().indexOf(value.toUpperCase()) !== -1;
             }

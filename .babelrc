@@ -30,5 +30,35 @@
         "transform-runtime",
         "transform-vue-jsx"
     ],
-    "comments": false
+    "comments": false,
+    "env": {
+        "testing": {
+            "presets": [
+                ["env", {
+                    "loose": false,
+                    "modules": "commonjs",
+                    "spec": true,
+                    "targets": {
+                        "browsers": [
+                            "Explorer >= 9",
+                        ]
+                    },
+                    "useBuiltIns": "usage",
+                    "debug": false
+                }],
+                "stage-3"
+            ],
+            "plugins": [
+                "add-module-exports",
+                "dynamic-import-node",
+                "lodash",
+                "transform-class-properties",
+                "transform-es5-property-mutators",
+                "transform-object-rest-spread",
+                "transform-runtime",
+                "transform-vue-jsx"
+            ],
+            "comments": false,
+        }
+    }
 }

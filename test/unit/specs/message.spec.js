@@ -1,3 +1,4 @@
+import noop from 'lodash/noop';
 import {createVue, destroyVM, waitForIt} from '../util';
 
 describe('Message.vue', () => {
@@ -7,7 +8,7 @@ describe('Message.vue', () => {
     });
 
     it('should open a info message by default', done => {
-        vm = createVue({render: () => {}});
+        vm = createVue({render: noop});
         const testMessage = 'Hello world!';
         let messageContainer = null;
         vm.$Message.info({
@@ -26,7 +27,7 @@ describe('Message.vue', () => {
     });
 
     it('should open specific messages of different types', function(done) {
-        vm = createVue({render: () => {}});
+        vm = createVue({render: noop});
         const testMessage = type => `Hello world! this is a ${type} message`;
         const tests = ['info', 'success', 'warning', 'error', 'loading'].reduce((tests, type) => {
             return tests.concat({
@@ -45,7 +46,7 @@ describe('Message.vue', () => {
         }
 
         const checkAllMessageOpens = () => {
-            domElements = document.querySelectorAll('.ivu-message-custom-content');
+            domElements = [...document.querySelectorAll('.ivu-message-custom-content')];
             return domElements.length == tests.length && domElements;
         };
 

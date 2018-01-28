@@ -14,16 +14,16 @@ function dateToString(date) {
 
 describe('DatePicker utility functions', () => {
     const assets = [
-    {date: '2030-3-31', prevMonth: '2030-2-28', nextMonth: '2030-4-30', count: 31},
-    {date: '2030-3-28', prevMonth: '2030-2-28', nextMonth: '2030-4-28', count: 31},
-    {date: '2030-3-1', prevMonth: '2030-2-1', nextMonth: '2030-4-1', count: 31},
-    {date: '2030-2-1', prevMonth: '2030-1-1', nextMonth: '2030-3-1', count: 28},
-    {date: '2030-1-1', prevMonth: '2029-12-1', nextMonth: '2030-2-1', count: 31},
-    {date: '2030-12-31', prevMonth: '2030-11-30', nextMonth: '2031-1-31', count: 31},
-    {date: '2030-6-30', prevMonth: '2030-5-30', nextMonth: '2030-7-30', count: 30},
-    {date: '2030-5-31', prevMonth: '2030-4-30', nextMonth: '2030-6-30', count: 31},
-    {date: '2032-3-31', prevMonth: '2032-2-29', nextMonth: '2032-4-30', count: 31},
-    {date: '2032-2-1', prevMonth: '2032-1-1', nextMonth: '2032-3-1', count: 29}
+        {date: '2030-3-31', prevMonth: '2030-2-28', nextMonth: '2030-4-30', count: 31},
+        {date: '2030-3-28', prevMonth: '2030-2-28', nextMonth: '2030-4-28', count: 31},
+        {date: '2030-3-1', prevMonth: '2030-2-1', nextMonth: '2030-4-1', count: 31},
+        {date: '2030-2-1', prevMonth: '2030-1-1', nextMonth: '2030-3-1', count: 28},
+        {date: '2030-1-1', prevMonth: '2029-12-1', nextMonth: '2030-2-1', count: 31},
+        {date: '2030-12-31', prevMonth: '2030-11-30', nextMonth: '2031-1-31', count: 31},
+        {date: '2030-6-30', prevMonth: '2030-5-30', nextMonth: '2030-7-30', count: 30},
+        {date: '2030-5-31', prevMonth: '2030-4-30', nextMonth: '2030-6-30', count: 31},
+        {date: '2032-3-31', prevMonth: '2032-2-29', nextMonth: '2032-4-30', count: 31},
+        {date: '2032-2-1', prevMonth: '2032-1-1', nextMonth: '2032-3-1', count: 29}
     ];
 
     it('Should behave as pure functions and not change source date', () => {

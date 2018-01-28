@@ -1,22 +1,19 @@
 <style>
-    body{
-        /*height: 2000px;*/
+    body {
+        /* height: 2000px; */
     }
 </style>
 <template>
     <BackTop>
-       
+
     </BackTop>
 </template>
 <script>
-    export default {
-        data(){
-            return {
+    import noop from 'lodash/noop';
+    import stubObject from 'lodash/stubObject';
 
-            };
-        },
-        mounted(){
-            
-        }
+    export default {
+        data: stubObject,
+        mounted: noop,
     };
 </script>

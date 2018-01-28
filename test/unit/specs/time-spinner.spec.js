@@ -8,8 +8,8 @@ describe('TimePicker.vue', () => {
 
     it('should create a TimePicker component with hours, minutes and seconds', done => {
         vm = createVue(`
-      <Time-Picker></Time-Picker>
-    `);
+            <Time-Picker></Time-Picker>
+        `);
         const picker = vm.$children[0];
         picker.handleIconClick(); // open the picker panels
 
@@ -25,8 +25,8 @@ describe('TimePicker.vue', () => {
 
     it('should create a TimePicker component with only hours and minutes', done => {
         vm = createVue(`
-      <Time-Picker format="HH:mm"></Time-Picker>
-    `);
+            <Time-Picker format="HH:mm"></Time-Picker>
+        `);
         const picker = vm.$children[0];
         picker.handleIconClick(); // open the picker panels
 
@@ -41,8 +41,8 @@ describe('TimePicker.vue', () => {
 
     it('should create a TimePicker component with steps of 15 minutes', done => {
         vm = createVue(`
-	    <Time-Picker :steps="[1, 15]"></Time-Picker>
-	  `);
+            <Time-Picker :steps="[1, 15]"></Time-Picker>
+        `);
         const picker = vm.$children[0];
         picker.handleIconClick(); // open the picker panels
 

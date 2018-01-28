@@ -8,6 +8,7 @@ const eslint = require('./eslint');
 process.env.NODE_ENV = 'production';
 
 module.exports = {
+    context: resolve(''),
     devtool: 'source-map',
     entry,
     module: {

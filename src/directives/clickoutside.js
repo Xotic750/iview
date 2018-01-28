@@ -1,3 +1,5 @@
+import noop from 'lodash/noop';
+
 export default {
     bind (el, binding/* , vnode */) {
         function documentHandler (e) {
@@ -11,9 +13,7 @@ export default {
         el.__vueClickOutside__ = documentHandler;
         document.addEventListener('click', documentHandler);
     },
-    update () {
-
-    },
+    update: noop,
     unbind (el/* , binding */) {
         document.removeEventListener('click', el.__vueClickOutside__);
         delete el.__vueClickOutside__;

@@ -1,4 +1,5 @@
 import Vue from 'vue';
+import noop from 'lodash/noop';
 import Modal from './modal.vue';
 import Button from '../button/button.vue';
 import Locale from '../../mixins/locale';
@@ -175,9 +176,9 @@ Modal.newInstance = properties => {
                 document.body.removeChild(this.$el);
                 this.onRemove();
             },
-            onOk () {},
-            onCancel () {},
-            onRemove () {}
+            onOk: noop,
+            onCancel: noop,
+            onRemove: noop
         }
     });
 

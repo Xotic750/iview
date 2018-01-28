@@ -1,3 +1,4 @@
+import noop from 'lodash/noop';
 import Notification from '../base/notification';
 
 const prefixCls = 'ivu-notice';
@@ -32,7 +33,7 @@ function notice (type, options) {
     const title = options.title || '';
     const desc = options.desc || '';
     const noticeKey = options.name || `${prefixKey}${name}`;
-    const onClose = options.onClose || function () {};
+    const onClose = options.onClose || noop;
     const render = options.render;
     // todo const btn = options.btn || null;
     const duration = (options.duration === 0) ? 0 : options.duration || defaultDuration;

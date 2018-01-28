@@ -1,11 +1,12 @@
-const readDir = require('fs').readdirSync;
+const fs = require('fs');
+const resolve = require('./resolve');
 
-const files = readDir('./src/locale/lang');
+const files = fs.readdirSync(resolve('src/locale/lang'));
 
 module.exports = files.reduce((entry, file) => {
     const name = file.split('.').shift();
 
     return Object.assign(entry, {
-        [name]: `./src/locale/lang/${file}`,
+        [name]: resolve(`/src/locale/lang/${file}`),
     });
 }, {});

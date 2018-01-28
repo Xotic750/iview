@@ -29,7 +29,9 @@
     </transition>
 </template>
 <script>
+    import noop from 'lodash/noop';
     import RenderCell from '../render';
+
     export default {
         components: {
             RenderCell
@@ -91,7 +93,7 @@
                 return `${this.prefixCls}-notice`;
             },
             renderFunc () {
-                return this.render || function () {};
+                return this.render || noop;
             },
             classes () {
                 return [

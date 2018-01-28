@@ -85,6 +85,8 @@
 </div>
 </template>
 <script>
+    import noop from 'lodash/noop';
+
     export default {
         props: {
 
@@ -138,8 +140,11 @@
                 this.activitiList = this.activitiList.concat(this.changeList);
             }
         },
+        mounted: noop,
+        /*
         mounted () {
-//            this.change();
+            this.change();
         }
+        */
     };
 </script>

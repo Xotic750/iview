@@ -2,7 +2,6 @@
     "root": true,
     "parserOptions": {
         "ecmaFeatures": {
-            "es6": true,
             "experimentalObjectRestSpread": true,
             "impliedStrict": true,
             "jsx": true
@@ -12,7 +11,8 @@
         "sourceType": "module"
     },
     "env": {
-        "es6": true
+        "browser": true,
+        "es6": false
     },
     "extends": [
         "eslint:recommended",
@@ -27,6 +27,7 @@
     ],
     "plugins": [
         "babel",
+        "compat",
         "css-modules",
         "eslint-comments",
         "html",
@@ -41,6 +42,8 @@
     ],
     "rules": {
         "indent": ["error", 4],
+
+        "compat/compat": "warn",
 
         "css-modules/no-undef-class": "warn",
         "css-modules/no-unused-class": "off",
@@ -75,7 +78,7 @@
         "lodash/prefer-lodash-method": "off",
         "lodash/prefer-lodash-typecheck": "off",
         "lodash/prefer-matches": "off",
-        "lodash/prefer-noop": "off",
+        "lodash/prefer-noop": "error",
         "lodash/prefer-over-quantifier": "off",
         "lodash/prefer-some": "off",
         "lodash/prefer-startswith": "off",

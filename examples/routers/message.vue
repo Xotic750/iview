@@ -8,16 +8,21 @@
     </div>
 </template>
 <script>
+    import noop from 'lodash/noop';
+
     export default {
         methods: {
             info () {
-//                this.$Message.info('这是一条普通提示');
+                // this.$Message.info('这是一条普通提示');
                 this.$Message.success({
                     content: '这是一条普通提示2',
                     duration: 500,
+                    onClose: noop,
+                    /*
                     onClose () {
-//                        console.log(123)
+                        console.log(123)
                     },
+                    */
                     closable: true,
                     render (h) {
                         return h('Button',{
@@ -44,11 +49,14 @@
                 this.$Message.destroy();
             }
         },
+        mounted: noop,
+        /*
         mounted () {
-//            this.$Message.config({
-//                top: 50,
-//                duration: 3
-//            });
+            this.$Message.config({
+                top: 50,
+                duration: 3
+            });
         }
+        */
     };
 </script>

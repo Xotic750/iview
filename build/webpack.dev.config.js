@@ -27,7 +27,7 @@ module.exports = merge(webpackBaseConfig, {
     },
     resolve: {
         alias: {
-            iview: '../../src/index',
+            iview: resolve('src/index.js'),
         },
     },
     plugins: [

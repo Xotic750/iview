@@ -1,7 +1,8 @@
-import defaultLang from './lang/zh-CN';
 import Vue from 'vue';
-import deepmerge from 'deepmerge';
+import merge from 'lodash/merge';
+import isNil from 'lodash/isNil';
 import Format from './format';
+import defaultLang from './lang/zh-CN';
 
 const format = Format(Vue);
 let lang = defaultLang;
@@ -13,7 +14,7 @@ let i18nHandler = function() {
             merged = true;
             Vue.locale(
                 Vue.config.lang,
-                deepmerge(lang, Vue.locale(Vue.config.lang) || {}, { clone: true })
+                merge(lang, Vue.locale(Vue.config.lang) || {}, { clone: true })
             );
         }
         return vuei18n.apply(this, arguments);
@@ -22,7 +23,7 @@ let i18nHandler = function() {
 
 export const t = function(path, options) {
     let value = i18nHandler.apply(this, arguments);
-    if (value !== null && value !== undefined) return value;
+    if (!isNil(value)) return value;
 
     const array = path.split('.');
     let current = lang;

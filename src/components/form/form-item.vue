@@ -10,6 +10,7 @@
     </div>
 </template>
 <script>
+    import noop from 'lodash/noop';
     import AsyncValidator from 'async-validator';
     import Emitter from '../../mixins/emitter';
 
@@ -155,7 +156,7 @@
 
                 return rules.filter(rule => !rule.trigger || rule.trigger.indexOf(trigger) !== -1);
             },
-            validate(trigger, callback = function () {}) {
+            validate(trigger, callback = noop) {
                 const rules = this.getFilteredRule(trigger);
                 if (!rules || rules.length === 0) {
                     callback();

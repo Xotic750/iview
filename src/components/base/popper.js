@@ -2,8 +2,9 @@
  * https://github.com/freeze-component/vue-popper
  * */
 import Vue from 'vue';
+import noop from 'lodash/noop';
 const isServer = Vue.prototype.$isServer;
-const Popper = isServer ? function() {} : require('popper.js');  // eslint-disable-line
+const Popper = isServer ? noop : require('popper.js');
 
 export default {
     props: {

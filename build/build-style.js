@@ -1,33 +1,34 @@
 const gulp = require('gulp');
-const cleanCSS = require('gulp-clean-css');
+const postcss = require('gulp-postcss');
+const sourcemaps = require('gulp-sourcemaps');
+const autoprefixer = require('autoprefixer');
+const cssnano = require('cssnano');
+const cssnext = require('postcss-cssnext');
+const cssimport = require('postcss-import');
 const less = require('gulp-less');
 const rename = require('gulp-rename');
-const autoprefixer = require('gulp-autoprefixer');
+const resolve = require('./resolve');
 
 // 编译less
 gulp.task('css', () => {
-    gulp.src('../src/styles/index.less')
+    gulp.src(resolve('/src/styles/index.less'))
+        .pipe(sourcemaps.init())
         .pipe(less())
-        .pipe(autoprefixer({
-            browsers: [
-                'last 3 Chrome versions',
-                'last 3 Firefox versions',
-                'Safari >= 10',
-                'Explorer >= 11',
-                'Edge >= 12',
-                'iOS >= 10',
-                'Android >= 6',
-            ],
-        }))
-        .pipe(cleanCSS())
+        .pipe(postcss([
+            autoprefixer(),
+            cssnano(),
+            cssnext(),
+            cssimport(),
+        ]))
         .pipe(rename('iview.css'))
-        .pipe(gulp.dest('../dist/styles'));
+        .pipe(sourcemaps.write('.'))
+        .pipe(gulp.dest(resolve('dist/styles')));
 });
 
 // 拷贝字体文件
 gulp.task('fonts', () => {
-    gulp.src('../src/styles/common/iconfont/fonts/*.*')
-        .pipe(gulp.dest('../dist/styles/fonts'));
+    gulp.src(resolve('src/styles/common/iconfont/fonts/*.*'))
+        .pipe(gulp.dest(resolve('dist/styles/fonts')));
 });
 
 gulp.task('default', ['css', 'fonts']);

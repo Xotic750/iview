@@ -20,6 +20,7 @@
     </div>
 </template>
 <script>
+    import noop from 'lodash/noop';
     import Cell from './expand';
     import Icon from '../icon/icon.vue';
     import Checkbox from '../checkbox/checkbox.vue';
@@ -75,9 +76,8 @@
             toggleExpand () {
                 this.$parent.$parent.$parent.toggleExpand(this.index);
             },
-            handleClick () {
-                // 放置 Checkbox 冒泡
-            }
+            // 放置 Checkbox 冒泡
+            handleClick: noop,
         },
         created () {
             if (this.column.type === 'index') {

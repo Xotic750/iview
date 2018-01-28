@@ -55,21 +55,14 @@
 </template>
 
 <script>
+import noop from 'lodash/noop';
+import stubObject from 'lodash/stubObject';
+
 export default {
-    data() {
-        return {
-
-        };
-    },
-    mounted() {
-
-    },
-    beforeDestroy() {
-
-    },
-    methods: {
-
-    },
+    data: stubObject,
+    mounted: noop,
+    beforeDestroy: noop,
+    methods: {},
 };
 </script>
 

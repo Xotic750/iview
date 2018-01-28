@@ -11,10 +11,10 @@ describe('Select.vue', () => {
             const placeholder = 'Hi! Select something!';
             vm = createVue({
                 template: `
-          <Select placeholder="${placeholder}">
-            <Option v-for="item in options" :value="item.value" :key="item.value">{{ item.label }}</Option>
-          </Select>
-        `,
+                    <Select placeholder="${placeholder}">
+                        <Option v-for="item in options" :value="item.value" :key="item.value">{{ item.label }}</Option>
+                    </Select>
+                `,
                 data() {
                     return {
                         value: '',
@@ -35,10 +35,10 @@ describe('Select.vue', () => {
         it('should create a Select component and take a pre-selected value', done => {
             vm = createVue({
                 template: `
-          <Select :value="2">
-            <Option v-for="item in options" :value="item.value" :key="item.value">{{ item.label }}</Option>
-          </Select>
-        `,
+                    <Select :value="2">
+                        <Option v-for="item in options" :value="item.value" :key="item.value">{{ item.label }}</Option>
+                    </Select>
+                `,
                 data() {
                     return {
                         value: '',
@@ -59,10 +59,10 @@ describe('Select.vue', () => {
         it('should accept normal characters', done => {
             vm = createVue({
                 template: `
-          <Select :value="2">
-            <Option v-for="item in options" :value="item.value" :key="item.value">{{ item.label }}</Option>
-          </Select>
-        `,
+                    <Select :value="2">
+                        <Option v-for="item in options" :value="item.value" :key="item.value">{{ item.label }}</Option>
+                    </Select>
+                `,
                 data() {
                     return {
                         value: '',
@@ -80,10 +80,10 @@ describe('Select.vue', () => {
         it('should display normal characters in input when in filterable mode', done => {
             vm = createVue({
                 template: `
-          <Select v-model="value" filterable>
-            <Option v-for="item in options" :value="item.value" :key="item.value">{{ item.label }}</Option>
-          </Select>
-        `,
+                    <Select v-model="value" filterable>
+                        <Option v-for="item in options" :value="item.value" :key="item.value">{{ item.label }}</Option>
+                    </Select>
+                `,
                 data() {
                     return {
                         value: 2,
@@ -101,10 +101,10 @@ describe('Select.vue', () => {
         it('should use the value\'s label instead of placeholder when both are set', done => {
             vm = createVue({
                 template: `
-          <Select placeholder="Choose anything!" :value="2">
-            <Option v-for="item in options" :value="item.value" :key="item.value">{{ item.label }}</Option>
-          </Select>
-        `,
+                    <Select placeholder="Choose anything!" :value="2">
+                        <Option v-for="item in options" :value="item.value" :key="item.value">{{ item.label }}</Option>
+                    </Select>
+                `,
                 data() {
                     return {
                         value: '',
@@ -123,12 +123,12 @@ describe('Select.vue', () => {
 
         it('should set different classes for different sizes', done => {
             vm = createVue(`
-        <div>
-          <Select placeholder="Choose anything!"><Option v-for="item in []" :value="item" :key="item">{{item}}</Option></Select>
-          <Select placeholder="Choose anything!" size="large"><Option v-for="item in []" :value="item" :key="item">{{item}}</Option></Select>
-          <Select placeholder="Choose anything!" size="small"><Option v-for="item in []" :value="item" :key="item">{{item}}</Option></Select>
-        </div>
-	  `);
+                <div>
+                    <Select placeholder="Choose anything!"><Option v-for="item in []" :value="item" :key="item">{{item}}</Option></Select>
+                    <Select placeholder="Choose anything!" size="large"><Option v-for="item in []" :value="item" :key="item">{{item}}</Option></Select>
+                    <Select placeholder="Choose anything!" size="small"><Option v-for="item in []" :value="item" :key="item">{{item}}</Option></Select>
+                </div>
+            `);
             vm.$nextTick(() => {
                 const [defaultSelect, largeSelect, smallSelect] = [...vm.$el.querySelectorAll('.ivu-select')];
                 expect(defaultSelect.className).to.equal('ivu-select ivu-select-single');
@@ -143,10 +143,10 @@ describe('Select.vue', () => {
 
             vm = createVue({
                 template: `
-          <Select>
-            <Option v-for="item in options" :value="item.value" :key="item.value">{{ item.label }}</Option>
-          </Select>
-        `,
+                    <Select>
+                        <Option v-for="item in options" :value="item.value" :key="item.value">{{ item.label }}</Option>
+                    </Select>
+                `,
                 data() {
                     return {
                         value: '',
@@ -179,22 +179,22 @@ describe('Select.vue', () => {
     describe('Behavior tests', () => {
         it('should create different and independent instances', done => {
             const options = [
-        {value: 'beijing', label: 'Beijing'},
-        {value: 'stockholm', label: 'Stockholm'},
-        {value: 'lisboa', label: 'Lisboa'}
+                {value: 'beijing', label: 'Beijing'},
+                {value: 'stockholm', label: 'Stockholm'},
+                {value: 'lisboa', label: 'Lisboa'}
             ];
 
             vm = createVue({
                 template: `
-          <div>
-            <i-select v-model="modelA" multiple style="width:260px">
-              <i-option v-for="item in cityList" :value="item.value" :key="item.value">{{ item.label }}</i-option>
-            </i-select>
-            <i-select v-model="modelB" multiple style="width:260px">
-              <i-option v-for="item in cityList" :value="item.value" :key="item.value">{{ item.label }}</i-option>
-            </i-select>
-          </div>
-        `,
+                    <div>
+                        <i-select v-model="modelA" multiple style="width:260px">
+                            <i-option v-for="item in cityList" :value="item.value" :key="item.value">{{ item.label }}</i-option>
+                        </i-select>
+                            <i-select v-model="modelB" multiple style="width:260px">
+                            <i-option v-for="item in cityList" :value="item.value" :key="item.value">{{ item.label }}</i-option>
+                        </i-select>
+                    </div>
+                `,
                 data() {
                     return {
                         cityList: [],
@@ -219,7 +219,7 @@ describe('Select.vue', () => {
                 waitForIt(condition, resolve);
             })
         .then(() => {
-          // click in A options
+            // click in A options
             const optionsA = SelectA.$el.querySelectorAll('.ivu-select-item');
             optionsA[0].click();
             return promissedTick(SelectA);
@@ -229,14 +229,14 @@ describe('Select.vue', () => {
             expect(SelectA.value.length).to.equal(1);
             expect(SelectB.value.length).to.equal(0);
 
-          // click in B options
+            // click in B options
             const optionsB = SelectB.$el.querySelectorAll('.ivu-select-item');
             optionsB[1].click();
             optionsB[2].click();
             return promissedTick(SelectB);
         })
         .then(() => {
-          // lets check the values!
+            // lets check the values!
             const getSelections = component => {
                 const tags = component.$el.querySelectorAll('.ivu-select-selection .ivu-tag');
                 return [...tags].map(el => el.textContent.trim()).join(',');
@@ -260,13 +260,13 @@ describe('Select.vue', () => {
                     label: Math.random().toString(36).slice(2).toUpperCase()
                 };
             });
-            const start = +new Date();
+            const start = Date.now();
             vm = createVue({
                 template: `
-          <Select>
-            <Option v-for="item in options" :value="item.value" :key="item.value">{{ item.label }}</Option>
-          </Select>
-        `,
+                    <Select>
+                        <Option v-for="item in options" :value="item.value" :key="item.value">{{ item.label }}</Option>
+                    </Select>
+                `,
                 data() {
                     return {
                         value: '',
@@ -281,7 +281,7 @@ describe('Select.vue', () => {
                 return vm.$children[0].options.length == manyLaterOptions.length;
             };
             const callback = function() {
-                const end = +new Date();
+                const end = Date.now();
                 const renderedOptions = vm.$el.querySelectorAll('.ivu-select-dropdown-list li');
                 expect(renderedOptions.length).to.equal(manyLaterOptions.length);
                 expect(end - start).to.be.not.above(1000);

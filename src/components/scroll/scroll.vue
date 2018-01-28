@@ -22,6 +22,7 @@
 </template>
 <script>
     import throttle from 'lodash/throttle';
+    import noop from 'lodash/noop';
     import loader from './loading-component.vue';
     import { on, off } from '../../utils/dom';
     import Locale from '../../mixins/locale';
@@ -32,7 +33,7 @@
         minimumStartDragOffset: 5, // minimum start drag offset
     };
 
-    const noop = () => Promise.resolve();
+    const noopPromise = () => Promise.resolve();
 
     export default {
         name: 'Scroll',
@@ -72,9 +73,9 @@
                 isLoading: false,
                 pointerTouchDown: null,
                 touchScroll: false,
-                handleScroll: () => {},
-                pointerUpHandler: () => {},
-                pointerMoveHandler: () => {},
+                handleScroll: noop,
+                pointerUpHandler: noop,
+                pointerMoveHandler: noop,
 
                 // near to edge detectors
                 topProximityThreshold: distanceToEdge[0],
@@ -152,8 +153,8 @@
                     }
                 }
 
-                const callbacks = [this.waitOneSecond(), this.onReachEdge ? this.onReachEdge(dir) : noop()];
-                callbacks.push(dir > 0 ? this.onReachTop ? this.onReachTop() : noop() : this.onReachBottom ? this.onReachBottom() : noop());
+                const callbacks = [this.waitOneSecond(), this.onReachEdge ? this.onReachEdge(dir) : noopPromise()];
+                callbacks.push(dir > 0 ? this.onReachTop ? this.onReachTop() : noopPromise() : this.onReachBottom ? this.onReachBottom() : noopPromise());
 
                 let tooSlow = setTimeout(() => {
                     this.reset();

@@ -4,6 +4,8 @@
  *    https://github.com/Matt-Esch/string-template/index.js
  */
 
+import isNil from 'lodash/isNil';
+
 const RE_NARGS = /(%|)\{([0-9a-zA-Z_]+)\}/g;
 
 export default function() {
@@ -37,7 +39,7 @@ export default function() {
                 return i;
             } else {
                 result = hasOwn(args, i) ? args[i] : null;
-                if (result === null || result === undefined) {
+                if (isNil(result)) {
                     return '';
                 }
 
