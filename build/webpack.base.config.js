@@ -209,11 +209,13 @@ module.exports = {
             'process.env.VERSION': JSON.stringify(`'${packageJSON.version}'`),
         }),
         /**
-         * Smaller lodash builds. We are not opting in to any features.
+         * Smaller lodash builds.
          * @type {!Object}
          * @see {@link https://github.com/lodash/lodash-webpack-plugin}
          */
-        new LodashModuleReplacementPlugin({}),
+        new LodashModuleReplacementPlugin({
+            paths: true,
+        }),
         ...(RUN_REPORT ? [new BundleAnalyzerPlugin()] : []),
         ...(PERFORM_LINTING ? [styleLint] : []),
     ],

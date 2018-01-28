@@ -35,14 +35,17 @@
     ],
     "rules": {
         "indent": "off",
-        "indent-legacy": ["error", 4, { "SwitchCase": 1 }],
+        "indent-legacy": ["warn", 4],
         "quotes": ["error", "single"],
-        "semi": ["error", "always"],
+        "semi": ["warn", "always"],
         "no-console": ["error"],
-        "linebreak-style": ["error", "unix"],
-        "eol-last": ["error", "always"],
+        "linebreak-style": ["warn", "unix"],
+        "eol-last": ["warn", "always"],
+        "no-unused-vars": "warn",
 
         "compat/compat": "warn",
+
+        "import/named": "warn",
 
         "jsdoc/check-param-names": "warn",
         "jsdoc/check-tag-names": "warn",
@@ -65,7 +68,7 @@
         "lodash/prefer-lodash-method": "off",
         "lodash/prefer-lodash-typecheck": "off",
         "lodash/prefer-matches": "off",
-        "lodash/prefer-noop": "error",
+        "lodash/prefer-noop": "warn",
         "lodash/prefer-over-quantifier": "off",
         "lodash/prefer-some": "off",
         "lodash/prefer-startswith": "off",

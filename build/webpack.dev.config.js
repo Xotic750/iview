@@ -15,7 +15,7 @@ process.env.NODE_ENV = 'development';
 module.exports = merge(webpackBaseConfig, {
     // 入口
     entry: {
-        main: './examples/main',
+        main: './examples/main.js',
         vendors: ['vue', 'vue-router'],
     },
     // 输出
