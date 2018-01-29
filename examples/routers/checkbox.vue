@@ -29,30 +29,30 @@
     </div>
 </template>
 <script>
-    export default {
-        data () {
-            return {
-                social: ['facebook', 'github'],
-                fruit: ['苹果'],
-                tags: [],
-                testValue1: null,
-                testValue2: null
-            };
-        },
-        mounted () {
-            setTimeout(() => {
-                this.tags = [
-                    {
-                        label: '香蕉'
-                    },
-                    {
-                        label: '苹果'
-                    },
-                    {
-                        label: '西瓜'
-                    }
-                ];
-            }, 1000);
-        }
-    };
+export default {
+    data () {
+        return {
+            social: ['facebook', 'github'],
+            fruit: ['苹果'],
+            tags: [],
+            testValue1: null,
+            testValue2: null
+        };
+    },
+    mounted () {
+        setTimeout(() => {
+            this.tags = [
+                {
+                    label: '香蕉'
+                },
+                {
+                    label: '苹果'
+                },
+                {
+                    label: '西瓜'
+                }
+            ];
+        }, 1000);
+    }
+};
 </script>

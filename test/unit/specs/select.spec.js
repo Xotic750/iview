@@ -218,37 +218,37 @@ describe('Select.vue', () => {
                 };
                 waitForIt(condition, resolve);
             })
-        .then(() => {
-            // click in A options
-            const optionsA = SelectA.$el.querySelectorAll('.ivu-select-item');
-            optionsA[0].click();
-            return promissedTick(SelectA);
-        })
-        .then(() => {
-            expect(SelectA.value[0]).to.equal(options[0].value);
-            expect(SelectA.value.length).to.equal(1);
-            expect(SelectB.value.length).to.equal(0);
+                .then(() => {
+                    // click in A options
+                    const optionsA = SelectA.$el.querySelectorAll('.ivu-select-item');
+                    optionsA[0].click();
+                    return promissedTick(SelectA);
+                })
+                .then(() => {
+                    expect(SelectA.value[0]).to.equal(options[0].value);
+                    expect(SelectA.value.length).to.equal(1);
+                    expect(SelectB.value.length).to.equal(0);
 
-            // click in B options
-            const optionsB = SelectB.$el.querySelectorAll('.ivu-select-item');
-            optionsB[1].click();
-            optionsB[2].click();
-            return promissedTick(SelectB);
-        })
-        .then(() => {
-            // lets check the values!
-            const getSelections = component => {
-                const tags = component.$el.querySelectorAll('.ivu-select-selection .ivu-tag');
-                return [...tags].map(el => el.textContent.trim()).join(',');
-            };
-            const selectAValue = getSelections(SelectA);
-            const selectBValue = getSelections(SelectB);
+                    // click in B options
+                    const optionsB = SelectB.$el.querySelectorAll('.ivu-select-item');
+                    optionsB[1].click();
+                    optionsB[2].click();
+                    return promissedTick(SelectB);
+                })
+                .then(() => {
+                    // lets check the values!
+                    const getSelections = component => {
+                        const tags = component.$el.querySelectorAll('.ivu-select-selection .ivu-tag');
+                        return [...tags].map(el => el.textContent.trim()).join(',');
+                    };
+                    const selectAValue = getSelections(SelectA);
+                    const selectBValue = getSelections(SelectB);
 
-            expect(selectAValue).to.equal(options[0].label);
-            expect(selectBValue).to.equal(options.slice(1, 3).map(obj => obj.label.trim()).join(','));
+                    expect(selectAValue).to.equal(options[0].label);
+                    expect(selectBValue).to.equal(options.slice(1, 3).map(obj => obj.label.trim()).join(','));
 
-            done();
-        });
+                    done();
+                });
         });
     });
 

@@ -35,77 +35,77 @@
     </div>
 </template>
 <script>
-    export default {
-        data () {
-            return {
-                defaultList: [
-                    {
-                        'name': 'a42bdcc1178e62b4694c830f028db5c0',
-                        'url': 'https://o5wwk8baw.qnssl.com/a42bdcc1178e62b4694c830f028db5c0/avatar'
-                    },
-                    {
-                        'name': 'bc7521e033abdd1e92222d733590f104',
-                        'url': 'https://o5wwk8baw.qnssl.com/bc7521e033abdd1e92222d733590f104/avatar'
-                    }
-                ],
-                imgName: '',
-                visible: false,
-                uploadList: []
-            };
-        },
-        computed: {
-//            uploadList () {
-//                return this.$refs.upload ? this.$refs.upload.fileList : [];
-//            }
-        },
-        watch: {
-
-        },
-        mounted () {
-            this.uploadList = this.$refs.upload.fileList;
-//            console.log(this.$refs.upload.fileList)
-        },
-        methods: {
-            handleView (name) {
-                this.imgName = name;
-                this.visible = true;
-            },
-            handleRemove (file) {
-                // 从 upload 实例删除数据
-                const fileList = this.$refs.upload.fileList;
-                this.$refs.upload.fileList.splice(fileList.indexOf(file), 1);
-            },
-            handleSuccess (res, file) {
-                // 因为上传过程为实例，这里模拟添加 url
-                file.url = 'https://o5wwk8baw.qnssl.com/7eb99afb9d5f317c912f08b5212fd69a/avatar';
-                file.name = '7eb99afb9d5f317c912f08b5212fd69a';
-            },
-            handleFormatError (file) {
-                this.$Notice.warning({
-                    title: '文件格式不正确',
-                    desc: '文件 ' + file.name + ' 格式不正确，请上传 jpg 或 png 格式的图片。'
-                });
-            },
-            handleMaxSize (file) {
-                this.$Notice.warning({
-                    title: '超出文件大小限制',
-                    desc: '文件 ' + file.name + ' 太大，不能超过 2M。'
-                });
-            },
-            handleBeforeUpload () {
-                const check = this.uploadList.length < 5;
-                if (!check) {
-                    this.$Notice.warning({
-                        title: '最多只能上传 5 张图片。'
-                    });
+export default {
+    data () {
+        return {
+            defaultList: [
+                {
+                    'name': 'a42bdcc1178e62b4694c830f028db5c0',
+                    'url': 'https://o5wwk8baw.qnssl.com/a42bdcc1178e62b4694c830f028db5c0/avatar'
+                },
+                {
+                    'name': 'bc7521e033abdd1e92222d733590f104',
+                    'url': 'https://o5wwk8baw.qnssl.com/bc7521e033abdd1e92222d733590f104/avatar'
                 }
-                return check;
-            },
-            handleProgress (s) {
-                console.log(s);
+            ],
+            imgName: '',
+            visible: false,
+            uploadList: []
+        };
+    },
+    computed: {
+        //            uploadList () {
+        //                return this.$refs.upload ? this.$refs.upload.fileList : [];
+        //            }
+    },
+    watch: {
+
+    },
+    mounted () {
+        this.uploadList = this.$refs.upload.fileList;
+        //            console.log(this.$refs.upload.fileList)
+    },
+    methods: {
+        handleView (name) {
+            this.imgName = name;
+            this.visible = true;
+        },
+        handleRemove (file) {
+            // 从 upload 实例删除数据
+            const fileList = this.$refs.upload.fileList;
+            this.$refs.upload.fileList.splice(fileList.indexOf(file), 1);
+        },
+        handleSuccess (res, file) {
+            // 因为上传过程为实例，这里模拟添加 url
+            file.url = 'https://o5wwk8baw.qnssl.com/7eb99afb9d5f317c912f08b5212fd69a/avatar';
+            file.name = '7eb99afb9d5f317c912f08b5212fd69a';
+        },
+        handleFormatError (file) {
+            this.$Notice.warning({
+                title: '文件格式不正确',
+                desc: '文件 ' + file.name + ' 格式不正确，请上传 jpg 或 png 格式的图片。'
+            });
+        },
+        handleMaxSize (file) {
+            this.$Notice.warning({
+                title: '超出文件大小限制',
+                desc: '文件 ' + file.name + ' 太大，不能超过 2M。'
+            });
+        },
+        handleBeforeUpload () {
+            const check = this.uploadList.length < 5;
+            if (!check) {
+                this.$Notice.warning({
+                    title: '最多只能上传 5 张图片。'
+                });
             }
+            return check;
+        },
+        handleProgress (s) {
+            console.log(s);
         }
-    };
+    }
+};
 </script>
 <style>
     .demo-upload-list{

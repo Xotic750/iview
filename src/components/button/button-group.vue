@@ -4,39 +4,39 @@
     </div>
 </template>
 <script>
-    import { oneOf } from '../../utils/assist';
+import { oneOf } from '../../utils/assist';
 
-    const prefixCls = 'ivu-btn-group';
+const prefixCls = 'ivu-btn-group';
 
-    export default {
-        name: 'ButtonGroup',
-        props: {
-            size: {
-                validator (value) {
-                    return oneOf(value, ['small', 'large', 'default']);
-                }
-            },
-            shape: {
-                validator (value) {
-                    return oneOf(value, ['circle', 'circle-outline']);
-                }
-            },
-            vertical: {
-                type: Boolean,
-                default: false
+export default {
+    name: 'ButtonGroup',
+    props: {
+        size: {
+            validator (value) {
+                return oneOf(value, ['small', 'large', 'default']);
             }
         },
-        computed: {
-            classes () {
-                return [
-                    `${prefixCls}`,
-                    {
-                        [`${prefixCls}-${this.size}`]: !!this.size,
-                        [`${prefixCls}-${this.shape}`]: !!this.shape,
-                        [`${prefixCls}-vertical`]: this.vertical
-                    }
-                ];
+        shape: {
+            validator (value) {
+                return oneOf(value, ['circle', 'circle-outline']);
             }
+        },
+        vertical: {
+            type: Boolean,
+            default: false
         }
-    };
+    },
+    computed: {
+        classes () {
+            return [
+                `${prefixCls}`,
+                {
+                    [`${prefixCls}-${this.size}`]: !!this.size,
+                    [`${prefixCls}-${this.shape}`]: !!this.shape,
+                    [`${prefixCls}-vertical`]: this.vertical
+                }
+            ];
+        }
+    }
+};
 </script>

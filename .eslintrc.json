@@ -34,8 +34,7 @@
         "vue"
     ],
     "rules": {
-        "indent": "off",
-        "indent-legacy": ["warn", 4],
+        "indent": ["warn", 4],
         "quotes": ["error", "single"],
         "semi": ["warn", "always"],
         "no-console": ["error"],

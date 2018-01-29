@@ -164,18 +164,18 @@
     </Tabs>
 </template>
 <script>
-    export default {
-        data () {
-            return {
-                tabs: 2
-            };
-        },
-        methods: {
-            handleTabsAdd () {
-                this.tabs ++;
-            }
+export default {
+    data () {
+        return {
+            tabs: 2
+        };
+    },
+    methods: {
+        handleTabsAdd () {
+            this.tabs ++;
         }
-    };
+    }
+};
 </script>
 
 

@@ -6,69 +6,69 @@
     </div>
 </template>
 <script>
-    const prefixCls = 'ivu-card';
-    const defaultPadding = 16;
+const prefixCls = 'ivu-card';
+const defaultPadding = 16;
 
-    export default {
-        name: 'Card',
+export default {
+    name: 'Card',
 
-        props: {
-            bordered: {
-                type: Boolean,
-                default: true
-            },
-            disHover: {
-                type: Boolean,
-                default: false
-            },
-            shadow: {
-                type: Boolean,
-                default: false
-            },
-            padding: {
-                type: Number,
-                default: defaultPadding
-            }
+    props: {
+        bordered: {
+            type: Boolean,
+            default: true
         },
-        data () {
-            return {
-                showHead: true,
-                showExtra: true
-            };
+        disHover: {
+            type: Boolean,
+            default: false
         },
-        computed: {
-            classes () {
-                return [
-                    `${prefixCls}`,
-                    {
-                        [`${prefixCls}-bordered`]: this.bordered && !this.shadow,
-                        [`${prefixCls}-dis-hover`]: this.disHover || this.shadow,
-                        [`${prefixCls}-shadow`]: this.shadow
-                    }
-                ];
-            },
-            headClasses () {
-                return `${prefixCls}-head`;
-            },
-            extraClasses () {
-                return `${prefixCls}-extra`;
-            },
-            bodyClasses () {
-                return `${prefixCls}-body`;
-            },
-            bodyStyles () {
-                if (this.padding !== defaultPadding) {
-                    return {
-                        padding: `${this.padding}px`
-                    };
-                } else {
-                    return '';
-                }
-            }
+        shadow: {
+            type: Boolean,
+            default: false
         },
-        mounted () {
-            this.showHead = this.$slots.title !== undefined;
-            this.showExtra = this.$slots.extra !== undefined;
+        padding: {
+            type: Number,
+            default: defaultPadding
         }
-    };
+    },
+    data () {
+        return {
+            showHead: true,
+            showExtra: true
+        };
+    },
+    computed: {
+        classes () {
+            return [
+                `${prefixCls}`,
+                {
+                    [`${prefixCls}-bordered`]: this.bordered && !this.shadow,
+                    [`${prefixCls}-dis-hover`]: this.disHover || this.shadow,
+                    [`${prefixCls}-shadow`]: this.shadow
+                }
+            ];
+        },
+        headClasses () {
+            return `${prefixCls}-head`;
+        },
+        extraClasses () {
+            return `${prefixCls}-extra`;
+        },
+        bodyClasses () {
+            return `${prefixCls}-body`;
+        },
+        bodyStyles () {
+            if (this.padding !== defaultPadding) {
+                return {
+                    padding: `${this.padding}px`
+                };
+            } else {
+                return '';
+            }
+        }
+    },
+    mounted () {
+        this.showHead = this.$slots.title !== undefined;
+        this.showExtra = this.$slots.extra !== undefined;
+    }
+};
 </script>

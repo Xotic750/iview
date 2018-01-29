@@ -9,11 +9,11 @@
     </BackTop>
 </template>
 <script>
-    import noop from 'lodash/noop';
-    import stubObject from 'lodash/stubObject';
+import noop from 'lodash/noop';
+import stubObject from 'lodash/stubObject';
 
-    export default {
-        data: stubObject,
-        mounted: noop,
-    };
+export default {
+    data: stubObject,
+    mounted: noop,
+};
 </script>

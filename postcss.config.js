@@ -10,10 +10,10 @@ module.exports = (ctx) => {
             'postcss-cssnext': Object.assign({}, get(ctx, 'options.cssnext')),
             'postcss-import': Object.assign(
                 get(ctx, 'file.dirname') ?
-                {
-                    root: ctx.file.dirname,
-                } :
-                {},
+                    {
+                        root: ctx.file.dirname,
+                    } :
+                    {},
                 get(ctx, 'options.import')),
         },
     };

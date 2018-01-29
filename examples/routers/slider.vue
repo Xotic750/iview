@@ -49,20 +49,20 @@
     </div>
 </template>
 <script>
-    export default {
-        data () {
-            return {
-                modal1: false,
-                value2: [20, 50],
-            };
+export default {
+    data () {
+        return {
+            modal1: false,
+            value2: [20, 50],
+        };
+    },
+    methods: {
+        ok () {
+            this.$Message.info('Clicked ok');
         },
-        methods: {
-            ok () {
-                this.$Message.info('Clicked ok');
-            },
-            cancel () {
-                this.$Message.info('Clicked cancel');
-            }
+        cancel () {
+            this.$Message.info('Clicked cancel');
         }
-    };
+    }
+};
 </script>

@@ -8,49 +8,49 @@
     </div>
 </template>
 <script>
-    import noop from 'lodash/noop';
+import noop from 'lodash/noop';
 
-    export default {
-        methods: {
-            info () {
-                // this.$Message.info('这是一条普通提示');
-                this.$Message.success({
-                    content: '这是一条普通提示2',
-                    duration: 500,
-                    onClose: noop,
-                    /*
+export default {
+    methods: {
+        info () {
+            // this.$Message.info('这是一条普通提示');
+            this.$Message.success({
+                content: '这是一条普通提示2',
+                duration: 500,
+                onClose: noop,
+                /*
                     onClose () {
                         console.log(123)
                     },
                     */
-                    closable: true,
-                    render (h) {
-                        return h('Button',{
-                            props: {
-                                type: 'primary'
-                            }
-                        }, '这是render出来的');
-                    }
-                });
-            },
-            success () {
-                this.$Message.success({
-                    content: '这是一条成功的提示',
-                    duration: 4
-                });
-            },
-            warning () {
-                this.$Message.warning('这是一条警告的提示');
-            },
-            error () {
-                this.$Message.error('对方不想说话，并且向你抛出了一个异常');
-            },
-            destroy () {
-                this.$Message.destroy();
-            }
+                closable: true,
+                render (h) {
+                    return h('Button',{
+                        props: {
+                            type: 'primary'
+                        }
+                    }, '这是render出来的');
+                }
+            });
         },
-        mounted: noop,
-        /*
+        success () {
+            this.$Message.success({
+                content: '这是一条成功的提示',
+                duration: 4
+            });
+        },
+        warning () {
+            this.$Message.warning('这是一条警告的提示');
+        },
+        error () {
+            this.$Message.error('对方不想说话，并且向你抛出了一个异常');
+        },
+        destroy () {
+            this.$Message.destroy();
+        }
+    },
+    mounted: noop,
+    /*
         mounted () {
             this.$Message.config({
                 top: 50,
@@ -58,5 +58,5 @@
             });
         }
         */
-    };
+};
 </script>

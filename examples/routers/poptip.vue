@@ -9,14 +9,14 @@
     </div>
 </template>
 <script>
-    export default {
-        methods: {
-            ok () {
-                this.$Message.info('点击了确定');
-            },
-            cancel () {
-                this.$Message.info('点击了取消');
-            }
+export default {
+    methods: {
+        ok () {
+            this.$Message.info('点击了确定');
+        },
+        cancel () {
+            this.$Message.info('点击了取消');
         }
-    };
+    }
+};
 </script>

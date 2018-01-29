@@ -32,8 +32,8 @@
     </div>
 </template>
 <script>
-    // import { Alert, Icon } from 'iview';
-    export default {
-        // components: { Alert, Icon }
-    };
+// import { Alert, Icon } from 'iview';
+export default {
+    // components: { Alert, Icon }
+};
 </script>

@@ -75,23 +75,23 @@
     </div>
 </template>
 <script>
-    export default {
-        data () {
-            return {
-                theme1: 'dark',
-                value4: '',
-                openArr: ['3', '3-3', '3-3-3']
-            };
+export default {
+    data () {
+        return {
+            theme1: 'dark',
+            value4: '',
+            openArr: ['3', '3-3', '3-3-3']
+        };
+    },
+    methods: {
+        handleSelect (name) {
+            // console.log(name);
+            return name;
         },
-        methods: {
-            handleSelect (name) {
-                // console.log(name);
-                return name;
-            },
-            handleOpen (openArr) {
-                // console.log(openArr);
-                return openArr;
-            }
+        handleOpen (openArr) {
+            // console.log(openArr);
+            return openArr;
         }
-    };
+    }
+};
 </script>

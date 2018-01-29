@@ -36,9 +36,9 @@
     </div>
 </template>
 <script>
-    export default {
-        props: {
-            row: Object
-        }
-    };
+export default {
+    props: {
+        row: Object
+    }
+};
 </script>

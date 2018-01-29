@@ -45,28 +45,28 @@
     </div>
 </template>
 <script>
-    export default {
-        data () {
-            return {
-                show: true,
-                count: [0, 1, 2]
-            };
+export default {
+    data () {
+        return {
+            show: true,
+            count: [0, 1, 2]
+        };
+    },
+    methods: {
+        handleClose () {
+            this.show = false;
         },
-        methods: {
-            handleClose () {
-                this.show = false;
-            },
-            handleAdd () {
-                if (this.count.length) {
-                    this.count.push(this.count[this.count.length - 1] + 1);
-                } else {
-                    this.count.push(0);
-                }
-            },
-            handleClose2 (event, name) {
-                const index = this.count.indexOf(name);
-                this.count.splice(index, 1);
+        handleAdd () {
+            if (this.count.length) {
+                this.count.push(this.count[this.count.length - 1] + 1);
+            } else {
+                this.count.push(0);
             }
+        },
+        handleClose2 (event, name) {
+            const index = this.count.indexOf(name);
+            this.count.splice(index, 1);
         }
-    };
+    }
+};
 </script>

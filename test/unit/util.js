@@ -83,7 +83,7 @@ export const stringToDate = (str) => {
  * @param {Date}
  */
 export const dateToString = d => [d.getFullYear(), d.getMonth() + 1, d.getDate()]
-  .map(nr => (nr > 9 ? nr : `0${nr}`)).join('-');
+    .map(nr => (nr > 9 ? nr : `0${nr}`)).join('-');
 
 /**
  * 触发一个事件

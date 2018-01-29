@@ -9,13 +9,13 @@
     </div>
 </template>
 <script>
-    export default {
-        data () {
-            return {
-                value1: '',
-                value2: '',
-                value3: ''
-            };
-        }
-    };
+export default {
+    data () {
+        return {
+            value1: '',
+            value2: '',
+            value3: ''
+        };
+    }
+};
 </script>

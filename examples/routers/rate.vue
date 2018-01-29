@@ -10,15 +10,15 @@
     </div>
 </template>
 <script>
-    export default {
-        data () {
-            return {
-                value: 0,
-                valueHalf: 2.5,
-                valueText: 3,
-                valueCustomText: 4.0,
-                valueDisabled: 2.4
-            };
-        }
-    };
+export default {
+    data () {
+        return {
+            value: 0,
+            valueHalf: 2.5,
+            valueText: 3,
+            valueCustomText: 4.0,
+            valueDisabled: 2.4
+        };
+    }
+};
 </script>

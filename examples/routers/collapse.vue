@@ -17,14 +17,14 @@
     </div>
 </template>
 <script>
-    export default {
-        props: {},
-        data () {
-            return {
-                v1: '2'
-            };
-        },
-        computed: {},
-        methods: {}
-    };
+export default {
+    props: {},
+    data () {
+        return {
+            v1: '2'
+        };
+    },
+    computed: {},
+    methods: {}
+};
 </script>

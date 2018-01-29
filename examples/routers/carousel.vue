@@ -19,21 +19,21 @@
     </div>
 </template>
 <script>
-    export default {
-        data () {
-            return {
-                v1: 0
-            };
+export default {
+    data () {
+        return {
+            v1: 0
+        };
+    },
+    methods: {
+        push () {
+            this.pushItem.push('test');
         },
-        methods: {
-            push () {
-                this.pushItem.push('test');
-            },
-            slideChange (from, to) {
-                this.log.push(`From ${from} To ${to}`);
-            }
+        slideChange (from, to) {
+            this.log.push(`From ${from} To ${to}`);
         }
-    };
+    }
+};
 </script>
 <style>
     .demo-carousel{

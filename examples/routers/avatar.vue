@@ -65,17 +65,17 @@
     </div>
 </template>
 <script>
-    export default {
-        data () {
-            return {
-                name: 'Aresn',
-                theme1: 'dark'
-            };
-        },
-        methods: {
-            change () {
-                this.name = 'Tomserm';
-            }
+export default {
+    data () {
+        return {
+            name: 'Aresn',
+            theme1: 'dark'
+        };
+    },
+    methods: {
+        change () {
+            this.name = 'Tomserm';
         }
-    };
+    }
+};
 </script>

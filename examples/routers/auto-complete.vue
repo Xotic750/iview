@@ -8,37 +8,37 @@
     </div>
 </template>
 <script>
-    import noop from 'lodash/noop';
+import noop from 'lodash/noop';
 
-    export default {
-        props: {
+export default {
+    props: {
 
+    },
+    data () {
+        return {
+            value: '',
+            data: [],
+            // data: ['Burns Bay Road', 'Downing Street', 'Wall Street']
+        };
+    },
+    computed: {},
+    methods: {
+        handleSearch (value) {
+            this.data = !value ? [] : [
+                value + '@qq.com',
+                value + '@sina.com',
+                value + '@163.com'
+            ];
         },
-        data () {
-            return {
-                value: '',
-                data: [],
-                // data: ['Burns Bay Road', 'Downing Street', 'Wall Street']
-            };
-        },
-        computed: {},
-        methods: {
-            handleSearch (value) {
-                this.data = !value ? [] : [
-                    value + '@qq.com',
-                    value + '@sina.com',
-                    value + '@163.com'
-                ];
-            },
-            hc: noop,
-            /*
+        hc: noop,
+        /*
             hc (v) {
                 console.log(v)
             },
             */
-            fm (value, item) {
-                return item.toUpperCase().indexOf(value.toUpperCase()) !== -1;
-            }
+        fm (value, item) {
+            return item.toUpperCase().indexOf(value.toUpperCase()) !== -1;
         }
-    };
+    }
+};
 </script>

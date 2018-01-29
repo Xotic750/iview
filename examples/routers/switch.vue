@@ -9,16 +9,16 @@
     </div>
 </template>
 <script>
-    export default {
-        data () {
-            return {
-                m1: 'yes'
-            };
-        },
-        methods: {
-            change (status) {
-                console.log(status);
-            }
+export default {
+    data () {
+        return {
+            m1: 'yes'
+        };
+    },
+    methods: {
+        change (status) {
+            console.log(status);
         }
-    };
+    }
+};
 </script>

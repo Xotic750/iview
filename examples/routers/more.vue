@@ -38,30 +38,30 @@
     <div class="placeholder"></div>
 </template>
 <script>
-    export default {
-        data () {
-            return {
-                modal9: false,
-                modal10: false,
-                modal1: false,
-                scrollable: false
-            };
+export default {
+    data () {
+        return {
+            modal9: false,
+            modal10: false,
+            modal1: false,
+            scrollable: false
+        };
+    },
+    methods: {
+        ok () {
+            this.$nextTick(() => this.modal1 = true);
+            this.$Message.info('点击了确定');
         },
-        methods: {
-            ok () {
-                this.$nextTick(() => this.modal1 = true);
-                this.$Message.info('点击了确定');
-            },
-            cancel () {
-                this.$Message.info('点击了取消');
-            },
-            instance (scrollable) {
-                this.$Modal.info({
-                    title: 'test',
-                    content: 'test',
-                    scrollable: scrollable
-                });
-            }
+        cancel () {
+            this.$Message.info('点击了取消');
+        },
+        instance (scrollable) {
+            this.$Modal.info({
+                title: 'test',
+                content: 'test',
+                scrollable: scrollable
+            });
         }
-    };
+    }
+};
 </script>

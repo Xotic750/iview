@@ -192,21 +192,21 @@ Modal.newInstance = properties => {
             modal.$parent.iconType = props.icon;
 
             switch (props.icon) {
-                case 'info':
-                    modal.$parent.iconName = 'information-circled';
-                    break;
-                case 'success':
-                    modal.$parent.iconName = 'checkmark-circled';
-                    break;
-                case 'warning':
-                    modal.$parent.iconName = 'android-alert';
-                    break;
-                case 'error':
-                    modal.$parent.iconName = 'close-circled';
-                    break;
-                case 'confirm':
-                    modal.$parent.iconName = 'help-circled';
-                    break;
+            case 'info':
+                modal.$parent.iconName = 'information-circled';
+                break;
+            case 'success':
+                modal.$parent.iconName = 'checkmark-circled';
+                break;
+            case 'warning':
+                modal.$parent.iconName = 'android-alert';
+                break;
+            case 'error':
+                modal.$parent.iconName = 'close-circled';
+                break;
+            case 'confirm':
+                modal.$parent.iconName = 'help-circled';
+                break;
             }
 
             if ('width' in props) {

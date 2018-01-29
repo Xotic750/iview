@@ -10,16 +10,16 @@
     </div>
 </template>
 <script>
-    export default {
-        data () {
-            return {
-                text: 'Tooltip 文字提示'
-            };
-        },
-        methods: {
-            handleChange () {
-                this.text = '提示';
-            }
+export default {
+    data () {
+        return {
+            text: 'Tooltip 文字提示'
+        };
+    },
+    methods: {
+        handleChange () {
+            this.text = '提示';
         }
-    };
+    }
+};
 </script>

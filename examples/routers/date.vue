@@ -203,19 +203,19 @@
     </div>
 </template>
 <script>
-    export default {
-        data () {
-            return {
-                value: ['2018-03-05 10:00:00', '2018-05-15 10:01:00'],
-                value2: '2018-02-05 10:09:00',
-                value3: '1978',
-                value4: '1978-05'
-            };
-        },
-        methods: {
-            handleChange (v) {
-                console.log(v);
-            }
+export default {
+    data () {
+        return {
+            value: ['2018-03-05 10:00:00', '2018-05-15 10:01:00'],
+            value2: '2018-02-05 10:09:00',
+            value3: '1978',
+            value4: '1978-05'
+        };
+    },
+    methods: {
+        handleChange (v) {
+            console.log(v);
         }
-    };
+    }
+};
 </script>

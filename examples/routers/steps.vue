@@ -85,66 +85,66 @@
 </div>
 </template>
 <script>
-    import noop from 'lodash/noop';
+import noop from 'lodash/noop';
 
-    export default {
-        props: {
+export default {
+    props: {
 
-        },
-        data () {
-            return {
-                total: 512,
-                current: 0,
-                index:0,
-                activitiList:[
-                    {
-                        approveUserName:'123',
-                        startTime:'1'
-                    },{
-                        approveUserName:'123',
-                        startTime:'2'
-                    }
-                ],
-                changeList:[
-                    {
-                        approveUserName:'456',
-                        startTime:'1'
-                    },{
-                        approveUserName:'456',
-                        startTime:'2'
-                    },{
-                        approveUserName:'456',
-                        startTime:'3'
-                    },{
-                        approveUserName:'456',
-                        startTime:'4'
-                    },{
-                        approveUserName:'456',
-                        startTime:'5'
-                    }
-                ]
-            };
-        },
-        computed: {
-
-        },
-        methods: {
-            next () {
-                if (this.current == 3) {
-                    this.current = 0;
-                } else {
-                    this.current += 1;
+    },
+    data () {
+        return {
+            total: 512,
+            current: 0,
+            index:0,
+            activitiList:[
+                {
+                    approveUserName:'123',
+                    startTime:'1'
+                },{
+                    approveUserName:'123',
+                    startTime:'2'
                 }
-            },
-            change () {
-                this.activitiList = this.activitiList.concat(this.changeList);
+            ],
+            changeList:[
+                {
+                    approveUserName:'456',
+                    startTime:'1'
+                },{
+                    approveUserName:'456',
+                    startTime:'2'
+                },{
+                    approveUserName:'456',
+                    startTime:'3'
+                },{
+                    approveUserName:'456',
+                    startTime:'4'
+                },{
+                    approveUserName:'456',
+                    startTime:'5'
+                }
+            ]
+        };
+    },
+    computed: {
+
+    },
+    methods: {
+        next () {
+            if (this.current == 3) {
+                this.current = 0;
+            } else {
+                this.current += 1;
             }
         },
-        mounted: noop,
-        /*
+        change () {
+            this.activitiList = this.activitiList.concat(this.changeList);
+        }
+    },
+    mounted: noop,
+    /*
         mounted () {
             this.change();
         }
         */
-    };
+};
 </script>

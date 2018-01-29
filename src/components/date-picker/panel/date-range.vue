@@ -126,289 +126,289 @@
     </div>
 </template>
 <script>
-    import Icon from '../../icon/icon.vue';
-    import DateTable from '../base/date-table.vue';
-    import YearTable from '../base/year-table.vue';
-    import MonthTable from '../base/month-table.vue';
-    import TimePicker from './time-range.vue';
-    import Confirm from '../base/confirm.vue';
-    import { toDate, prevMonth, nextMonth, initTimeDate, formatDateLabels } from '../util';
-    import datePanelLabel from './date-panel-label.vue';
+import Icon from '../../icon/icon.vue';
+import DateTable from '../base/date-table.vue';
+import YearTable from '../base/year-table.vue';
+import MonthTable from '../base/month-table.vue';
+import TimePicker from './time-range.vue';
+import Confirm from '../base/confirm.vue';
+import { toDate, prevMonth, nextMonth, initTimeDate, formatDateLabels } from '../util';
+import datePanelLabel from './date-panel-label.vue';
 
-    import Mixin from './mixin';
-    import Locale from '../../../mixins/locale';
+import Mixin from './mixin';
+import Locale from '../../../mixins/locale';
 
-    const prefixCls = 'ivu-picker-panel';
-    const datePrefixCls = 'ivu-date-picker';
+const prefixCls = 'ivu-picker-panel';
+const datePrefixCls = 'ivu-date-picker';
 
-    export default {
-        name: 'DatePicker',
-        mixins: [ Mixin, Locale ],
-        components: { Icon, DateTable, YearTable, MonthTable, TimePicker, Confirm, datePanelLabel },
-        data () {
-            return {
-                prefixCls: prefixCls,
-                datePrefixCls: datePrefixCls,
-                shortcuts: [],
-                date: initTimeDate(),
-                value: '',
-                minDate: '',
-                maxDate: '',
-                confirm: false,
-                rangeState: {
-                    endDate: null,
-                    selecting: false
-                },
-                showTime: false,
-                disabledDate: '',
-                leftCurrentView: 'date',
-                rightCurrentView: 'date',
-                selectionMode: 'range',
-                leftTableYear: null,
-                rightTableYear: null,
-                isTime: false,
-                format: 'yyyy-MM-dd'
-            };
+export default {
+    name: 'DatePicker',
+    mixins: [ Mixin, Locale ],
+    components: { Icon, DateTable, YearTable, MonthTable, TimePicker, Confirm, datePanelLabel },
+    data () {
+        return {
+            prefixCls: prefixCls,
+            datePrefixCls: datePrefixCls,
+            shortcuts: [],
+            date: initTimeDate(),
+            value: '',
+            minDate: '',
+            maxDate: '',
+            confirm: false,
+            rangeState: {
+                endDate: null,
+                selecting: false
+            },
+            showTime: false,
+            disabledDate: '',
+            leftCurrentView: 'date',
+            rightCurrentView: 'date',
+            selectionMode: 'range',
+            leftTableYear: null,
+            rightTableYear: null,
+            isTime: false,
+            format: 'yyyy-MM-dd'
+        };
+    },
+    computed: {
+        classes () {
+            return [
+                `${prefixCls}-body-wrapper`,
+                `${datePrefixCls}-with-range`,
+                {
+                    [`${prefixCls}-with-sidebar`]: this.shortcuts.length
+                }
+            ];
         },
-        computed: {
-            classes () {
-                return [
-                    `${prefixCls}-body-wrapper`,
-                    `${datePrefixCls}-with-range`,
-                    {
-                        [`${prefixCls}-with-sidebar`]: this.shortcuts.length
-                    }
-                ];
-            },
-            leftYear () {
-                return this.date.getFullYear();
-            },
-            leftTableDate () {
-                if (this.leftCurrentView === 'year' || this.leftCurrentView === 'month') {
-                    return new Date(this.leftTableYear);
-                } else {
-                    return this.date;
-                }
-            },
-            leftMonth () {
-                return this.date.getMonth();
-            },
-            rightYear () {
-                return this.rightDate.getFullYear();
-            },
-            rightTableDate () {
-                if (this.rightCurrentView === 'year' || this.rightCurrentView === 'month') {
-                    return new Date(this.rightTableYear);
-                } else {
-                    return this.date;
-                }
-            },
-            rightMonth () {
-                return this.rightDate.getMonth();
-            },
-            rightDate () {
-                const newDate = new Date(this.date);
-                const month = newDate.getMonth();
-                newDate.setDate(1);
-
-                if (month === 11) {
-                    newDate.setFullYear(newDate.getFullYear() + 1);
-                    newDate.setMonth(0);
-                } else {
-                    newDate.setMonth(month + 1);
-                }
-                return newDate;
-            },
-            leftDatePanelLabel () {
-                if (!this.leftYear) return null; // not ready yet
-                return this.panelLabelConfig('left');
-            },
-            rightDatePanelLabel () {
-                if (!this.leftYear) return null; // not ready yet
-                return this.panelLabelConfig('right');
-            },
-            timeDisabled () {
-                return !(this.minDate && this.maxDate);
+        leftYear () {
+            return this.date.getFullYear();
+        },
+        leftTableDate () {
+            if (this.leftCurrentView === 'year' || this.leftCurrentView === 'month') {
+                return new Date(this.leftTableYear);
+            } else {
+                return this.date;
             }
         },
-        watch: {
-            value(newVal) {
-                if (!newVal) {
-                    this.minDate = null;
-                    this.maxDate = null;
-                } else if (Array.isArray(newVal)) {
-                    this.minDate = newVal[0] ? toDate(newVal[0]) : null;
-                    this.maxDate = newVal[1] ? toDate(newVal[1]) : null;
-                    if (this.minDate) this.date = new Date(this.minDate);
-                }
-                if (this.showTime) this.$refs.timePicker.value = newVal;
-            },
-            minDate (val) {
-                if (this.showTime) this.$refs.timePicker.date = val;
-            },
-            maxDate (val) {
-                if (this.showTime) this.$refs.timePicker.dateEnd = val;
-            },
-            format (val) {
-                if (this.showTime) this.$refs.timePicker.format = val;
-            },
-            isTime (val) {
-                if (val) this.$refs.timePicker.updateScroll();
+        leftMonth () {
+            return this.date.getMonth();
+        },
+        rightYear () {
+            return this.rightDate.getFullYear();
+        },
+        rightTableDate () {
+            if (this.rightCurrentView === 'year' || this.rightCurrentView === 'month') {
+                return new Date(this.rightTableYear);
+            } else {
+                return this.date;
             }
         },
-        methods: {
-            panelLabelConfig (direction) {
-                const locale = this.t('i.locale');
-                const datePanelLabel = this.t('i.datepicker.datePanelLabel');
-                const handler = type => {
-                    const fn = type == 'month' ? this.showMonthPicker : this.showYearPicker;
-                    return () => fn(direction);
-                };
+        rightMonth () {
+            return this.rightDate.getMonth();
+        },
+        rightDate () {
+            const newDate = new Date(this.date);
+            const month = newDate.getMonth();
+            newDate.setDate(1);
 
-                const date = new Date(this[`${direction}Year`], this[`${direction}Month`]);
-                const { labels, separator } = formatDateLabels(locale, datePanelLabel, date);
-
-                return {
-                    separator: separator,
-                    labels: labels.map(obj => ((obj.handler = handler(obj.type)), obj))
-                };
-            },
-            resetDate () {
-                this.date = new Date(this.date);
-                this.leftTableYear = this.date.getFullYear();
-                this.rightTableYear = this.rightDate.getFullYear();
-            },
-            handleClear() {
+            if (month === 11) {
+                newDate.setFullYear(newDate.getFullYear() + 1);
+                newDate.setMonth(0);
+            } else {
+                newDate.setMonth(month + 1);
+            }
+            return newDate;
+        },
+        leftDatePanelLabel () {
+            if (!this.leftYear) return null; // not ready yet
+            return this.panelLabelConfig('left');
+        },
+        rightDatePanelLabel () {
+            if (!this.leftYear) return null; // not ready yet
+            return this.panelLabelConfig('right');
+        },
+        timeDisabled () {
+            return !(this.minDate && this.maxDate);
+        }
+    },
+    watch: {
+        value(newVal) {
+            if (!newVal) {
                 this.minDate = null;
                 this.maxDate = null;
-                this.date = new Date();
-                this.handleConfirm();
-                if (this.showTime) this.$refs.timePicker.handleClear();
-            },
-            resetView(reset = false) {
-                this.leftCurrentView = 'date';
-                this.rightCurrentView = 'date';
+            } else if (Array.isArray(newVal)) {
+                this.minDate = newVal[0] ? toDate(newVal[0]) : null;
+                this.maxDate = newVal[1] ? toDate(newVal[1]) : null;
+                if (this.minDate) this.date = new Date(this.minDate);
+            }
+            if (this.showTime) this.$refs.timePicker.value = newVal;
+        },
+        minDate (val) {
+            if (this.showTime) this.$refs.timePicker.date = val;
+        },
+        maxDate (val) {
+            if (this.showTime) this.$refs.timePicker.dateEnd = val;
+        },
+        format (val) {
+            if (this.showTime) this.$refs.timePicker.format = val;
+        },
+        isTime (val) {
+            if (val) this.$refs.timePicker.updateScroll();
+        }
+    },
+    methods: {
+        panelLabelConfig (direction) {
+            const locale = this.t('i.locale');
+            const datePanelLabel = this.t('i.datepicker.datePanelLabel');
+            const handler = type => {
+                const fn = type == 'month' ? this.showMonthPicker : this.showYearPicker;
+                return () => fn(direction);
+            };
 
-                this.leftTableYear = this.leftYear;
-                this.rightTableYear = this.rightYear;
+            const date = new Date(this[`${direction}Year`], this[`${direction}Month`]);
+            const { labels, separator } = formatDateLabels(locale, datePanelLabel, date);
 
-                if (reset) this.isTime = false;
-            },
-            prevYear (direction) {
-                if (this[`${direction}CurrentView`] === 'year') {
-                    this.$refs[`${direction}YearTable`].prevTenYear();
-                } else if (this[`${direction}CurrentView`] === 'month') {
-                    this[`${direction}TableYear`]--;
-                } else {
-                    const date = this.date;
-                    date.setFullYear(date.getFullYear() - 1);
-                    this.resetDate();
-                }
-            },
-            nextYear (direction) {
-                if (this[`${direction}CurrentView`] === 'year') {
-                    this.$refs[`${direction}YearTable`].nextTenYear();
-                } else if (this[`${direction}CurrentView`] === 'month') {
-                    this[`${direction}TableYear`]++;
-                } else {
-                    const date = this.date;
-                    date.setFullYear(date.getFullYear() + 1);
-                    this.resetDate();
-                }
-            },
-            prevMonth () {
-                this.date = prevMonth(this.date);
-            },
-            nextMonth () {
-                this.date = nextMonth(this.date);
-            },
-            handleLeftYearPick (year, close = true) {
-                this.handleYearPick(year, close, 'left');
-            },
-            handleRightYearPick (year, close = true) {
-                this.handleYearPick(year, close, 'right');
-            },
-            handleYearPick (year, close, direction) {
-                this[`${direction}TableYear`] = year;
-                if (!close) return;
+            return {
+                separator: separator,
+                labels: labels.map(obj => ((obj.handler = handler(obj.type)), obj))
+            };
+        },
+        resetDate () {
+            this.date = new Date(this.date);
+            this.leftTableYear = this.date.getFullYear();
+            this.rightTableYear = this.rightDate.getFullYear();
+        },
+        handleClear() {
+            this.minDate = null;
+            this.maxDate = null;
+            this.date = new Date();
+            this.handleConfirm();
+            if (this.showTime) this.$refs.timePicker.handleClear();
+        },
+        resetView(reset = false) {
+            this.leftCurrentView = 'date';
+            this.rightCurrentView = 'date';
 
-                this[`${direction}CurrentView`] = 'month';
-            },
-            handleLeftMonthPick (month) {
-                this.handleMonthPick(month, 'left');
-            },
-            handleRightMonthPick (month) {
-                this.handleMonthPick(month, 'right');
-            },
-            handleMonthPick (month, direction) {
-                let year = this[`${direction}TableYear`];
-                if (direction === 'right') {
-                    if (month === 0) {
-                        month = 11;
-                        year--;
-                    } else {
-                        month--;
-                    }
-                }
+            this.leftTableYear = this.leftYear;
+            this.rightTableYear = this.rightYear;
 
-                this.date.setYear(year);
-                this.date.setMonth(month);
-                this[`${direction}CurrentView`] = 'date';
+            if (reset) this.isTime = false;
+        },
+        prevYear (direction) {
+            if (this[`${direction}CurrentView`] === 'year') {
+                this.$refs[`${direction}YearTable`].prevTenYear();
+            } else if (this[`${direction}CurrentView`] === 'month') {
+                this[`${direction}TableYear`]--;
+            } else {
+                const date = this.date;
+                date.setFullYear(date.getFullYear() - 1);
                 this.resetDate();
-            },
-            showYearPicker (direction) {
-                this[`${direction}CurrentView`] = 'year';
-                this[`${direction}TableYear`] = this[`${direction}Year`];
-            },
-            showMonthPicker (direction) {
-                this[`${direction}CurrentView`] = 'month';
-            },
-            handleConfirm(visible) {
-                this.$emit('on-pick', [this.minDate, this.maxDate], visible);
-            },
-            handleRangePick (val, close = true) {
-                if (this.maxDate === val.maxDate && this.minDate === val.minDate) return;
-
-                this.minDate = val.minDate;
-                this.maxDate = val.maxDate;
-
-                // todo Remove when Chromium has fixed bug
-                // https://github.com/iview/iview/issues/2122
-                this.$nextTick(() => {
-                    this.minDate = val.minDate;
-                    this.maxDate = val.maxDate;
-                });
-                /* end of #2122 patch */
-
-                if (!close) return;
-//                if (!this.showTime) {
-//                    this.handleConfirm(false);
-//                }
-                this.handleConfirm(false);
-            },
-            handleChangeRange (val) {
-                this.minDate = val.minDate;
-                this.maxDate = val.maxDate;
-                this.rangeState = val.rangeState;
-            },
-            handleToggleTime () {
-                this.isTime = !this.isTime;
-            },
-            handleTimePick (date) {
-                this.minDate = date[0];
-                this.maxDate = date[1];
-                this.handleConfirm(false);
             }
         },
-        mounted () {
-            if (this.showTime) {
-                // todo 这里也到不了
-                this.$refs.timePicker.date = this.minDate;
-                this.$refs.timePicker.dateEnd = this.maxDate;
-                this.$refs.timePicker.value = this.value;
-                this.$refs.timePicker.format = this.format;
-                this.$refs.timePicker.showDate = true;
+        nextYear (direction) {
+            if (this[`${direction}CurrentView`] === 'year') {
+                this.$refs[`${direction}YearTable`].nextTenYear();
+            } else if (this[`${direction}CurrentView`] === 'month') {
+                this[`${direction}TableYear`]++;
+            } else {
+                const date = this.date;
+                date.setFullYear(date.getFullYear() + 1);
+                this.resetDate();
             }
+        },
+        prevMonth () {
+            this.date = prevMonth(this.date);
+        },
+        nextMonth () {
+            this.date = nextMonth(this.date);
+        },
+        handleLeftYearPick (year, close = true) {
+            this.handleYearPick(year, close, 'left');
+        },
+        handleRightYearPick (year, close = true) {
+            this.handleYearPick(year, close, 'right');
+        },
+        handleYearPick (year, close, direction) {
+            this[`${direction}TableYear`] = year;
+            if (!close) return;
+
+            this[`${direction}CurrentView`] = 'month';
+        },
+        handleLeftMonthPick (month) {
+            this.handleMonthPick(month, 'left');
+        },
+        handleRightMonthPick (month) {
+            this.handleMonthPick(month, 'right');
+        },
+        handleMonthPick (month, direction) {
+            let year = this[`${direction}TableYear`];
+            if (direction === 'right') {
+                if (month === 0) {
+                    month = 11;
+                    year--;
+                } else {
+                    month--;
+                }
+            }
+
+            this.date.setYear(year);
+            this.date.setMonth(month);
+            this[`${direction}CurrentView`] = 'date';
+            this.resetDate();
+        },
+        showYearPicker (direction) {
+            this[`${direction}CurrentView`] = 'year';
+            this[`${direction}TableYear`] = this[`${direction}Year`];
+        },
+        showMonthPicker (direction) {
+            this[`${direction}CurrentView`] = 'month';
+        },
+        handleConfirm(visible) {
+            this.$emit('on-pick', [this.minDate, this.maxDate], visible);
+        },
+        handleRangePick (val, close = true) {
+            if (this.maxDate === val.maxDate && this.minDate === val.minDate) return;
+
+            this.minDate = val.minDate;
+            this.maxDate = val.maxDate;
+
+            // todo Remove when Chromium has fixed bug
+            // https://github.com/iview/iview/issues/2122
+            this.$nextTick(() => {
+                this.minDate = val.minDate;
+                this.maxDate = val.maxDate;
+            });
+            /* end of #2122 patch */
+
+            if (!close) return;
+            //                if (!this.showTime) {
+            //                    this.handleConfirm(false);
+            //                }
+            this.handleConfirm(false);
+        },
+        handleChangeRange (val) {
+            this.minDate = val.minDate;
+            this.maxDate = val.maxDate;
+            this.rangeState = val.rangeState;
+        },
+        handleToggleTime () {
+            this.isTime = !this.isTime;
+        },
+        handleTimePick (date) {
+            this.minDate = date[0];
+            this.maxDate = date[1];
+            this.handleConfirm(false);
         }
-    };
+    },
+    mounted () {
+        if (this.showTime) {
+            // todo 这里也到不了
+            this.$refs.timePicker.date = this.minDate;
+            this.$refs.timePicker.dateEnd = this.maxDate;
+            this.$refs.timePicker.value = this.value;
+            this.$refs.timePicker.format = this.format;
+            this.$refs.timePicker.showDate = true;
+        }
+    }
+};
 </script>

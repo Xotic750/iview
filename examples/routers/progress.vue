@@ -18,25 +18,25 @@
     </div>
 </template>
 <script>
-    export default {
-        data () {
-            return {
-                percent: 0
-            };
-        },
-        methods: {
-            add () {
-                if (this.percent >= 100) {
-                    return false;
-                }
-                this.percent += 10;
-            },
-            minus () {
-                if (this.percent <= 0) {
-                    return false;
-                }
-                this.percent -= 10;
+export default {
+    data () {
+        return {
+            percent: 0
+        };
+    },
+    methods: {
+        add () {
+            if (this.percent >= 100) {
+                return false;
             }
+            this.percent += 10;
+        },
+        minus () {
+            if (this.percent <= 0) {
+                return false;
+            }
+            this.percent -= 10;
         }
-    };
+    }
+};
 </script>

@@ -21,17 +21,17 @@
     </div>
 </template>
 <script>
-    export default {
-        props: {},
-        data () {
-            return {
-                count: 50
-            };
-        },
-        methods: {
-            setCount () {
-                this.count = 10;
-            }
+export default {
+    props: {},
+    data () {
+        return {
+            count: 50
+        };
+    },
+    methods: {
+        setCount () {
+            this.count = 10;
         }
-    };
+    }
+};
 </script>

@@ -39,16 +39,16 @@
     </div>
 </template>
 <script>
-    export default {
-        data () {
-            return {
-                single: true,
-                phone: '',
-                button2: '北京',
-            };
-        },
-        methods: {
+export default {
+    data () {
+        return {
+            single: true,
+            phone: '',
+            button2: '北京',
+        };
+    },
+    methods: {
 
-        }
-    };
+    }
+};
 </script>

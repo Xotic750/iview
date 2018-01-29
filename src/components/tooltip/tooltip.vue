@@ -21,80 +21,80 @@
     </div>
 </template>
 <script>
-    import Popper from '../base/popper';
-    import TransferDom from '../../directives/transfer-dom';
-    import { oneOf } from '../../utils/assist';
+import Popper from '../base/popper';
+import TransferDom from '../../directives/transfer-dom';
+import { oneOf } from '../../utils/assist';
 
-    const prefixCls = 'ivu-tooltip';
+const prefixCls = 'ivu-tooltip';
 
-    export default {
-        name: 'Tooltip',
-        directives: { TransferDom },
-        mixins: [Popper],
-        props: {
-            placement: {
-                validator (value) {
-                    return oneOf(value, ['top', 'top-start', 'top-end', 'bottom', 'bottom-start', 'bottom-end', 'left', 'left-start', 'left-end', 'right', 'right-start', 'right-end']);
-                },
-                default: 'bottom'
+export default {
+    name: 'Tooltip',
+    directives: { TransferDom },
+    mixins: [Popper],
+    props: {
+        placement: {
+            validator (value) {
+                return oneOf(value, ['top', 'top-start', 'top-end', 'bottom', 'bottom-start', 'bottom-end', 'left', 'left-start', 'left-end', 'right', 'right-start', 'right-end']);
             },
-            content: {
-                type: [String, Number],
-                default: ''
-            },
-            delay: {
-                type: Number,
-                default: 100
-            },
-            disabled: {
-                type: Boolean,
-                default: false
-            },
-            controlled: {    // under this prop,Tooltip will not close when mouseleave
-                type: Boolean,
-                default: false
-            },
-            always: {
-                type: Boolean,
-                default: false
-            },
-            transfer: {
-                type: Boolean,
-                default: false
-            }
+            default: 'bottom'
         },
-        data () {
-            return {
-                prefixCls: prefixCls
-            };
+        content: {
+            type: [String, Number],
+            default: ''
         },
-        watch: {
-            content () {
-                this.updatePopper();
-            }
+        delay: {
+            type: Number,
+            default: 100
         },
-        methods: {
-            handleShowPopper() {
-                if (this.timeout) clearTimeout(this.timeout);
-                this.timeout = setTimeout(() => {
-                    this.visible = true;
-                }, this.delay);
-            },
-            handleClosePopper() {
-                if (this.timeout) {
-                    clearTimeout(this.timeout);
-                    if (!this.controlled) {
-                        this.timeout = setTimeout(() => {
-                            this.visible = false;
-                        }, 100);
-                    }
+        disabled: {
+            type: Boolean,
+            default: false
+        },
+        controlled: {    // under this prop,Tooltip will not close when mouseleave
+            type: Boolean,
+            default: false
+        },
+        always: {
+            type: Boolean,
+            default: false
+        },
+        transfer: {
+            type: Boolean,
+            default: false
+        }
+    },
+    data () {
+        return {
+            prefixCls: prefixCls
+        };
+    },
+    watch: {
+        content () {
+            this.updatePopper();
+        }
+    },
+    methods: {
+        handleShowPopper() {
+            if (this.timeout) clearTimeout(this.timeout);
+            this.timeout = setTimeout(() => {
+                this.visible = true;
+            }, this.delay);
+        },
+        handleClosePopper() {
+            if (this.timeout) {
+                clearTimeout(this.timeout);
+                if (!this.controlled) {
+                    this.timeout = setTimeout(() => {
+                        this.visible = false;
+                    }, 100);
                 }
             }
-        },
-        mounted () {
-            if (this.always) {
-                this.updatePopper();
-            }
         }
-    };
+    },
+    mounted () {
+        if (this.always) {
+            this.updatePopper();
+        }
+    }
+};
 </script>

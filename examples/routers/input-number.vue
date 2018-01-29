@@ -11,29 +11,29 @@
     </div>
 </template>
 <script>
-    export default {
-        props: {},
-        data () {
-            return {
-                v1: 1,
-                v2: 1,
-                max: 10,
-                autofocus: true,
-                obj: {
+export default {
+    props: {},
+    data () {
+        return {
+            v1: 1,
+            v2: 1,
+            max: 10,
+            autofocus: true,
+            obj: {
 
-                },
-                value1: 1.0,
-                value2: 1
-            };
-        },
-        computed: {},
-        methods: {
-            c () {
-                this.v1 = 5;
             },
-            changeMax () {
-                this.max++;
-            }
+            value1: 1.0,
+            value2: 1
+        };
+    },
+    computed: {},
+    methods: {
+        c () {
+            this.v1 = 5;
+        },
+        changeMax () {
+            this.max++;
         }
-    };
+    }
+};
 </script>

@@ -51,7 +51,7 @@
     </i-circle>
 </template>
 <script>
-    export default {
+export default {
 
-    };
+};
 </script>

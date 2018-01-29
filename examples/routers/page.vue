@@ -8,20 +8,20 @@
     </div>
 </template>
 <script>
-    export default {
-        data () {
-            return {
-                current: 1,
-                total: 21
-            };
+export default {
+    data () {
+        return {
+            current: 1,
+            total: 21
+        };
+    },
+    methods: {
+        subject() {
+            this.total -= 1;
         },
-        methods: {
-            subject() {
-                this.total -= 1;
-            },
-            change() {
-                this.current = 1;
-            }
+        change() {
+            this.current = 1;
         }
-    };
+    }
+};
 </script>

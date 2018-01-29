@@ -6,24 +6,24 @@
     </div>
 </template>
 <script>
-    export default {
-        methods: {
-            start () {
-                this.$Loading.start();
-            },
-            finish () {
-                this.$Loading.finish();
-            },
-            error () {
-                this.$Loading.error();
-            }
+export default {
+    methods: {
+        start () {
+            this.$Loading.start();
         },
-        created () {
-            this.$Loading.config({
-                color: '#5cb85c',
-                failedColor: '#f0ad4e',
-                height: 5
-            });
+        finish () {
+            this.$Loading.finish();
+        },
+        error () {
+            this.$Loading.error();
         }
-    };
+    },
+    created () {
+        this.$Loading.config({
+            color: '#5cb85c',
+            failedColor: '#f0ad4e',
+            height: 5
+        });
+    }
+};
 </script>

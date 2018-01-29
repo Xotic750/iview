@@ -7,14 +7,14 @@
     </div>
 </template>
 <script>
-    export default {
-        props: {
-            list: Array
-        },
-        methods: {
-            handleClick (index) {
-                this.$emit('picker-color', this.list[index]);
-            }
+export default {
+    props: {
+        list: Array
+    },
+    methods: {
+        handleClick (index) {
+            this.$emit('picker-color', this.list[index]);
         }
-    };
+    }
+};
 </script>

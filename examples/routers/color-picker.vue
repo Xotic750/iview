@@ -16,26 +16,26 @@
     </div>
 </template>
 <script>
-    export default {
-        props: {},
-        data () {
-            return {
-                color: 'rgba(12,34,255,.85)',
-                color2: '',
-                color7: '#19be6b'
-            };
+export default {
+    props: {},
+    data () {
+        return {
+            color: 'rgba(12,34,255,.85)',
+            color2: '',
+            color7: '#19be6b'
+        };
+    },
+    computed: {},
+    methods: {
+        setColor () {
+            this.color = '#26bc77';
         },
-        computed: {},
-        methods: {
-            setColor () {
-                this.color = '#26bc77';
-            },
-            c1 (d) {
-                console.log(d);
-            },
-            c2 (d) {
-                console.log(d);
-            }
+        c1 (d) {
+            console.log(d);
+        },
+        c2 (d) {
+            console.log(d);
         }
-    };
+    }
+};
 </script>
