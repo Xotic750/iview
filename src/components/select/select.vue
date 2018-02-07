@@ -3,7 +3,10 @@
         <div
             :class="selectionCls"
             ref="reference"
-            @click="toggleMenu">
+            @click="toggleMenu"
+            @keydown.up="keydownUpDown"
+            @keydown.down="keydownUpDown"
+        >
             <slot name="input">
                 <input type="hidden" :name="name" :value="model">
                 <div class="ivu-tag ivu-tag-checked" v-for="(item, index) in selectedMultiple">
@@ -260,6 +263,13 @@
             }
         },
         methods: {
+            keydownUpDown () {
+              if (this.visible) {
+                return false;
+              }
+
+              return this.toggleMenu();
+            },
             toggleMenu () {
                 if (this.disabled || this.autoComplete) {
                     return false;
@@ -772,7 +782,6 @@
                     this.broadcast('Drop', 'on-update-popper');
                 } else {
                     if (this.filterable) {
-                        if (!this.autoComplete) this.$refs.input.blur();
                         // #566 reset options visible
                         setTimeout(() => {
                             this.broadcastQuery('');
