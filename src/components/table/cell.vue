@@ -31,55 +31,55 @@ export default {
         prefixCls: String,
         row: Object,
         column: Object,
-        naturalIndex: Number,    // index of rebuildData
-        index: Number,           // _index of data
+        naturalIndex: Number, // index of rebuildData
+        index: Number, // _index of data
         checked: Boolean,
         disabled: Boolean,
         expanded: Boolean,
         fixed: {
             type: [Boolean, String],
-            default: false
-        }
+            default: false,
+        },
     },
-    data () {
+    data() {
         return {
             renderType: '',
             uid: -1,
-            context: this.$parent.$parent.$parent.currentContext
+            context: this.$parent.$parent.$parent.currentContext,
         };
     },
     computed: {
-        classes () {
+        classes() {
             return [
                 `${this.prefixCls}-cell`,
                 {
                     [`${this.prefixCls}-hidden`]: !this.fixed && this.column.fixed && (this.column.fixed === 'left' || this.column.fixed === 'right'),
                     [`${this.prefixCls}-cell-ellipsis`]: this.column.ellipsis || false,
-                    [`${this.prefixCls}-cell-with-expand`]: this.renderType === 'expand'
-                }
+                    [`${this.prefixCls}-cell-with-expand`]: this.renderType === 'expand',
+                },
             ];
         },
-        expandCls () {
+        expandCls() {
             return [
                 `${this.prefixCls}-cell-expand`,
                 {
-                    [`${this.prefixCls}-cell-expand-expanded`]: this.expanded
-                }
+                    [`${this.prefixCls}-cell-expand-expanded`]: this.expanded,
+                },
             ];
-        }
+        },
     },
     methods: {
-        toggleSelect () {
+        toggleSelect() {
             this.$parent.$parent.$parent.toggleSelect(this.index);
         },
-        toggleExpand () {
+        toggleExpand() {
             this.$parent.$parent.$parent.toggleExpand(this.index);
         },
-        handleClick () {
+        handleClick() {
             // 放置 Checkbox 冒泡
-        }
+        },
     },
-    created () {
+    created() {
         if (this.column.type === 'index') {
             this.renderType = 'index';
         } else if (this.column.type === 'selection') {
@@ -93,6 +93,6 @@ export default {
         } else {
             this.renderType = 'normal';
         }
-    }
+    },
 };
 </script>

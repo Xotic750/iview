@@ -6,14 +6,14 @@ const lang = {
         select: {
             placeholder: '선택',
             noMatch: '일치하는 데이터 없음',
-            loading: '로딩'
+            loading: '로딩',
         },
         table: {
             noDataText: '데이터 없음',
             noFilteredDataText: '필터된 데이터 없음',
             confirmFilter: '확인',
             resetFilter: '초기화',
-            clearFilter: '전부'
+            clearFilter: '전부',
         },
         datepicker: {
             selectDate: '날짜 선택',
@@ -45,7 +45,7 @@ const lang = {
                 wed: '수',
                 thu: '목',
                 fri: '금',
-                sat: '토'
+                sat: '토',
             },
             months: {
                 m1: '1월',
@@ -59,24 +59,24 @@ const lang = {
                 m9: '9월',
                 m10: '10월',
                 m11: '11월',
-                m12: '12월'
-            }
+                m12: '12월',
+            },
         },
         transfer: {
             titles: {
                 source: '소스',
-                target: '타겟'
+                target: '타겟',
             },
             filterPlaceholder: '여기서 찾기',
-            notFoundText: '아무 것도 찾을 수 없음'
+            notFoundText: '아무 것도 찾을 수 없음',
         },
         modal: {
             okText: '예',
-            cancelText: '취소'
+            cancelText: '취소',
         },
         poptip: {
             okText: '예',
-            cancelText: '취소'
+            cancelText: '취소',
         },
         page: {
             prev: '이전 페이지',
@@ -88,16 +88,16 @@ const lang = {
             next5: '다음 5 페이지',
             page: '/페이지',
             goto: '이동',
-            p: ''
+            p: '',
         },
         rate: {
             star: '중요',
-            stars: '중요'
+            stars: '중요',
         },
         tree: {
-            emptyText: '데이터 없음'
-        }
-    }
+            emptyText: '데이터 없음',
+        },
+    },
 };
 
 setLang(lang);

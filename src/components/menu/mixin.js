@@ -1,19 +1,20 @@
 import { findComponentUpward, findComponentsUpward } from '../../utils/assist';
+
 export default {
-    data () {
+    data() {
         return {
-            menu: findComponentUpward(this, 'Menu')
+            menu: findComponentUpward(this, 'Menu'),
         };
     },
     computed: {
-        hasParentSubmenu () {
+        hasParentSubmenu() {
             return findComponentUpward(this, 'Submenu');
         },
-        parentSubmenuNum () {
+        parentSubmenuNum() {
             return findComponentsUpward(this, 'Submenu').length;
         },
-        mode () {
+        mode() {
             return this.menu.mode;
-        }
-    }
+        },
+    },
 };

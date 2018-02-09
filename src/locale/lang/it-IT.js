@@ -6,14 +6,14 @@ const lang = {
         select: {
             placeholder: 'Seleziona',
             noMatch: 'Nessun Risultato',
-            loading: 'Caricamento'
+            loading: 'Caricamento',
         },
         table: {
             noDataText: 'Nessun Risultato',
             noFilteredDataText: 'Filtro senza risultati',
             confirmFilter: 'Conferma',
             resetFilter: 'Reset',
-            clearFilter: 'Tutto'
+            clearFilter: 'Tutto',
         },
         datepicker: {
             selectDate: 'Seleziona data',
@@ -45,7 +45,7 @@ const lang = {
                 wed: 'Mer',
                 thu: 'Gio',
                 fri: 'Ven',
-                sat: 'Sab'
+                sat: 'Sab',
             },
             months: {
                 m1: 'Gen',
@@ -59,24 +59,24 @@ const lang = {
                 m9: 'Set',
                 m10: 'Ott',
                 m11: 'Nov',
-                m12: 'Dic'
-            }
+                m12: 'Dic',
+            },
         },
         transfer: {
             titles: {
                 source: 'Origine',
-                target: 'Destinazione'
+                target: 'Destinazione',
             },
             filterPlaceholder: 'Cerca',
-            notFoundText: 'Nessun Risultato'
+            notFoundText: 'Nessun Risultato',
         },
         modal: {
             okText: 'OK',
-            cancelText: 'Annulla'
+            cancelText: 'Annulla',
         },
         poptip: {
             okText: 'OK',
-            cancelText: 'Annulla'
+            cancelText: 'Annulla',
         },
         page: {
             prev: 'Pagina Precedente',
@@ -88,16 +88,16 @@ const lang = {
             next5: '5 Pagine Successive',
             page: '/pagina',
             goto: 'Vai a',
-            p: ''
+            p: '',
         },
         rate: {
             star: 'Stella',
-            stars: 'Stelle'
+            stars: 'Stelle',
         },
         tree: {
-            emptyText: 'Nessun Risultato'
-        }
-    }
+            emptyText: 'Nessun Risultato',
+        },
+    },
 };
 
 setLang(lang);

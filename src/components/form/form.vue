@@ -11,63 +11,63 @@ export default {
     name: 'IForm',
     props: {
         model: {
-            type: Object
+            type: Object,
         },
         rules: {
-            type: Object
+            type: Object,
         },
         labelWidth: {
-            type: Number
+            type: Number,
         },
         labelPosition: {
-            validator (value) {
+            validator(value) {
                 return oneOf(value, ['left', 'right', 'top']);
             },
-            default: 'right'
+            default: 'right',
         },
         inline: {
             type: Boolean,
-            default: false
+            default: false,
         },
         showMessage: {
             type: Boolean,
-            default: true
+            default: true,
         },
         autocomplete: {
-            validator (value) {
+            validator(value) {
                 return oneOf(value, ['on', 'off']);
             },
-            default: 'off'
-        }
+            default: 'off',
+        },
     },
-    data () {
+    data() {
         return {
-            fields: []
+            fields: [],
         };
     },
     computed: {
-        classes () {
+        classes() {
             return [
                 `${prefixCls}`,
                 `${prefixCls}-label-${this.labelPosition}`,
                 {
-                    [`${prefixCls}-inline`]: this.inline
-                }
+                    [`${prefixCls}-inline`]: this.inline,
+                },
             ];
-        }
+        },
     },
     methods: {
         resetFields() {
-            this.fields.forEach(field => {
+            this.fields.forEach((field) => {
                 field.resetField();
             });
         },
         validate(callback) {
-            return new Promise(resolve => {
+            return new Promise((resolve) => {
                 let valid = true;
                 let count = 0;
-                this.fields.forEach(field => {
-                    field.validate('', errors => {
+                this.fields.forEach((field) => {
+                    field.validate('', (errors) => {
                         if (errors) {
                             valid = false;
                         }
@@ -87,14 +87,14 @@ export default {
             if (!field) { throw new Error('[iView warn]: must call validateField with valid prop string!'); }
 
             field.validate('', cb);
-        }
+        },
     },
     watch: {
         rules() {
             this.validate();
-        }
+        },
     },
-    created () {
+    created() {
         this.$on('on-form-item-add', (field) => {
             if (field) this.fields.push(field);
             return false;
@@ -103,6 +103,6 @@ export default {
             if (field.prop) this.fields.splice(this.fields.indexOf(field), 1);
             return false;
         });
-    }
+    },
 };
 </script>

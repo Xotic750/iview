@@ -28,49 +28,49 @@ export default {
     props: {
         hours: {
             type: [Number, String],
-            default: NaN
+            default: NaN,
         },
         minutes: {
             type: [Number, String],
-            default: NaN
+            default: NaN,
         },
         seconds: {
             type: [Number, String],
-            default: NaN
+            default: NaN,
         },
         showSeconds: {
             type: Boolean,
-            default: true
+            default: true,
         },
         steps: {
             type: Array,
-            default: () => []
-        }
+            default: () => [],
+        },
     },
-    data () {
+    data() {
         return {
             spinerSteps: [1, 1, 1].map((one, i) => Math.abs(this.steps[i]) || one),
-            prefixCls: prefixCls,
-            compiled: false
+            prefixCls,
+            compiled: false,
         };
     },
     computed: {
-        classes () {
+        classes() {
             return [
                 `${prefixCls}`,
                 {
-                    [`${prefixCls}-with-seconds`]: this.showSeconds
-                }
+                    [`${prefixCls}-with-seconds`]: this.showSeconds,
+                },
             ];
         },
-        hoursList () {
-            let hours = [];
+        hoursList() {
+            const hours = [];
             const step = this.spinerSteps[0];
             const hour_tmpl = {
                 text: 0,
                 selected: false,
                 disabled: false,
-                hide: false
+                hide: false,
             };
 
             for (let i = 0; i < 24; i += step) {
@@ -87,14 +87,14 @@ export default {
 
             return hours;
         },
-        minutesList () {
-            let minutes = [];
+        minutesList() {
+            const minutes = [];
             const step = this.spinerSteps[1];
             const minute_tmpl = {
                 text: 0,
                 selected: false,
                 disabled: false,
-                hide: false
+                hide: false,
             };
 
             for (let i = 0; i < 60; i += step) {
@@ -110,14 +110,14 @@ export default {
             }
             return minutes;
         },
-        secondsList () {
-            let seconds = [];
+        secondsList() {
+            const seconds = [];
             const step = this.spinerSteps[2];
             const second_tmpl = {
                 text: 0,
                 selected: false,
                 disabled: false,
-                hide: false
+                hide: false,
             };
 
             for (let i = 0; i < 60; i += step) {
@@ -133,68 +133,68 @@ export default {
             }
 
             return seconds;
-        }
+        },
     },
     methods: {
-        getCellCls (cell) {
+        getCellCls(cell) {
             return [
                 `${prefixCls}-cell`,
                 {
                     [`${prefixCls}-cell-selected`]: cell.selected,
-                    [`${prefixCls}-cell-disabled`]: cell.disabled
-                }
+                    [`${prefixCls}-cell-disabled`]: cell.disabled,
+                },
             ];
         },
-        handleClick (type, cell) {
+        handleClick(type, cell) {
             if (cell.disabled) return;
             const data = {};
             data[type] = cell.text;
             this.$emit('on-change', data);
             this.$emit('on-pick-click');
         },
-        scroll (type, index) {
+        scroll(type, index) {
             const from = this.$refs[type].scrollTop;
             const to = 24 * this.getScrollIndex(type, index);
             scrollTop(this.$refs[type], from, to, 500);
         },
-        getScrollIndex (type, index) {
+        getScrollIndex(type, index) {
             const Type = firstUpperCase(type);
             const disabled = this[`disabled${Type}`];
             if (disabled.length && this.hideDisabledOptions) {
                 let _count = 0;
-                disabled.forEach(item => item <= index ? _count++ : '');
+                disabled.forEach(item => (item <= index ? _count++ : ''));
                 index -= _count;
             }
             return index;
         },
-        updateScroll () {
+        updateScroll() {
             const times = ['hours', 'minutes', 'seconds'];
             this.$nextTick(() => {
-                times.forEach(type => {
+                times.forEach((type) => {
                     this.$refs[type].scrollTop = 24 * this[`${type}List`].findIndex(obj => obj.text == this[type]);
                 });
             });
         },
-        formatTime (text) {
-            return text < 10 ? '0' + text : text;
-        }
+        formatTime(text) {
+            return text < 10 ? `0${text}` : text;
+        },
     },
     watch: {
-        hours (val) {
+        hours(val) {
             if (!this.compiled) return;
             this.scroll('hours', this.hoursList.findIndex(obj => obj.text == val));
         },
-        minutes (val) {
+        minutes(val) {
             if (!this.compiled) return;
             this.scroll('minutes', this.minutesList.findIndex(obj => obj.text == val));
         },
-        seconds (val) {
+        seconds(val) {
             if (!this.compiled) return;
             this.scroll('seconds', this.secondsList.findIndex(obj => obj.text == val));
-        }
+        },
     },
-    mounted () {
+    mounted() {
         this.$nextTick(() => this.compiled = true);
-    }
+    },
 };
 </script>

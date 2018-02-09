@@ -48,79 +48,79 @@ const prefixCls = 'ivu-slider';
 
 export default {
     name: 'Slider',
-    mixins: [ Emitter ],
+    mixins: [Emitter],
     components: { InputNumber, Tooltip },
     props: {
         min: {
             type: Number,
-            default: 0
+            default: 0,
         },
         max: {
             type: Number,
-            default: 100
+            default: 100,
         },
         step: {
             type: Number,
-            default: 1
+            default: 1,
         },
         range: {
             type: Boolean,
-            default: false
+            default: false,
         },
         value: {
             type: [Number, Array],
-            default: 0
+            default: 0,
         },
         disabled: {
             type: Boolean,
-            default: false
+            default: false,
         },
         showInput: {
             type: Boolean,
-            default: false
+            default: false,
         },
         showStops: {
             type: Boolean,
-            default: false
+            default: false,
         },
         tipFormat: {
             type: Function,
-            default (val) {
+            default(val) {
                 return val;
-            }
+            },
         },
         showTip: {
             type: String,
             default: 'hover',
-            validator (value) {
+            validator(value) {
                 return oneOf(value, ['hover', 'always', 'never']);
-            }
+            },
         },
         name: {
-            type: String
-        }
+            type: String,
+        },
     },
-    data () {
+    data() {
         const val = this.checkLimits(Array.isArray(this.value) ? this.value : [this.value]);
         return {
-            prefixCls: prefixCls,
+            prefixCls,
             currentValue: val,
             dragging: false,
             pointerDown: '',
             startX: 0,
             currentX: 0,
             startPos: 0,
-            oldValue: val
+            oldValue: val,
         };
     },
     watch: {
-        value (val) {
+        value(val) {
             val = this.checkLimits(Array.isArray(val) ? val : [val]);
             if (val[0] !== this.currentValue[0] || val[1] !== this.currentValue[1]) {
                 this.currentValue = val;
             }
         },
-        exportValue (values) {
+        exportValue(values) {
             this.$nextTick(() => {
                 this.$refs.minTooltip.updatePopper();
                 if (this.range) {
@@ -130,85 +130,84 @@ export default {
             const value = this.range ? values : values[0];
             this.$emit('input', value);
             this.$emit('on-input', value);
-        }
+        },
     },
     computed: {
-        classes () {
+        classes() {
             return [
                 `${prefixCls}`,
                 {
                     [`${prefixCls}-input`]: this.showInput && !this.range,
                     [`${prefixCls}-range`]: this.range,
-                    [`${prefixCls}-disabled`]: this.disabled
-                }
+                    [`${prefixCls}-disabled`]: this.disabled,
+                },
             ];
         },
-        minButtonClasses () {
+        minButtonClasses() {
             return [
                 `${prefixCls}-button`,
                 {
-                    [`${prefixCls}-button-dragging`]: this.pointerDown === 'min'
-                }
+                    [`${prefixCls}-button-dragging`]: this.pointerDown === 'min',
+                },
             ];
         },
-        maxButtonClasses () {
+        maxButtonClasses() {
             return [
                 `${prefixCls}-button`,
                 {
-                    [`${prefixCls}-button-dragging`]: this.pointerDown === 'max'
-                }
+                    [`${prefixCls}-button-dragging`]: this.pointerDown === 'max',
+                },
             ];
         },
-        exportValue(){
+        exportValue() {
             const decimalCases = (String(this.step).split('.')[1] || '').length;
             return this.currentValue.map(nr => Number(nr.toFixed(decimalCases)));
         },
-        minPosition () {
+        minPosition() {
             const val = this.currentValue;
             return (val[0] - this.min) / this.valueRange * 100;
         },
-        maxPosition: function () {
+        maxPosition() {
             const val = this.currentValue;
 
             return (val[1] - this.min) / this.valueRange * 100;
         },
-        barStyle () {
-
+        barStyle() {
             const style = {
-                width: (this.currentValue[0] - this.min) / this.valueRange * 100 + '%'
+                width: `${(this.currentValue[0] - this.min) / this.valueRange * 100}%`,
             };
 
             if (this.range) {
-                style.left = (this.currentValue[0] - this.min) / this.valueRange * 100 + '%';
-                style.width = (this.currentValue[1] - this.currentValue[0]) / this.valueRange * 100 + '%';
+                style.left = `${(this.currentValue[0] - this.min) / this.valueRange * 100}%`;
+                style.width = `${(this.currentValue[1] - this.currentValue[0]) / this.valueRange * 100}%`;
             }
 
             return style;
         },
-        stops () {
-            let stopCount = this.valueRange / this.step;
-            let result = [];
-            let stepWidth = 100 * this.step / this.valueRange;
+        stops() {
+            const stopCount = this.valueRange / this.step;
+            const result = [];
+            const stepWidth = 100 * this.step / this.valueRange;
             for (let i = 1; i < stopCount; i++) {
                 result.push(i * stepWidth);
             }
             return result;
         },
-        sliderWidth () {
+        sliderWidth() {
             return parseInt(getStyle(this.$refs.slider, 'width'), 10);
         },
-        tipDisabled () {
+        tipDisabled() {
             return this.tipFormat(this.currentValue[0]) === null || this.showTip === 'never';
         },
-        valueRange(){
+        valueRange() {
             return this.max - this.min;
-        }
+        },
     },
     methods: {
-        getPointerX (e) {
+        getPointerX(e) {
             return e.type.indexOf('touch') !== -1 ? e.touches[0].clientX : e.clientX;
         },
-        checkLimits ([min, max]) {
+        checkLimits([min, max]) {
             min = Math.max(this.min, min);
             min = Math.min(this.max, min);
 
@@ -216,7 +215,7 @@ export default {
             max = Math.min(this.max, max);
             return [min, max];
         },
-        onPointerDown (event, type) {
+        onPointerDown(event, type) {
             if (this.disabled) return;
             event.preventDefault();
             this.pointerDown = type;
@@ -227,12 +226,12 @@ export default {
             on(window, 'mouseup', this.onPointerDragEnd);
             on(window, 'touchend', this.onPointerDragEnd);
         },
-        onPointerDragStart (event) {
+        onPointerDragStart(event) {
             this.dragging = false;
             this.startX = this.getPointerX(event);
             this.startPos = (this[`${this.pointerDown}Position`] * this.valueRange / 100) + this.min;
         },
-        onPointerDrag (event) {
+        onPointerDrag(event) {
             this.dragging = true;
             this.$refs[`${this.pointerDown}Tooltip`].visible = true;
             this.currentX = this.getPointerX(event);
@@ -240,7 +239,7 @@ export default {
 
             this.changeButtonPosition(this.startPos + diff);
         },
-        onPointerDragEnd () {
+        onPointerDragEnd() {
             if (this.dragging) {
                 this.dragging = false;
                 this.$refs[`${this.pointerDown}Tooltip`].visible = false;
@@ -253,7 +252,7 @@ export default {
             off(window, 'mouseup', this.onPointerDragEnd);
             off(window, 'touchend', this.onPointerDragEnd);
         },
-        changeButtonPosition (newPos, forceType) {
+        changeButtonPosition(newPos, forceType) {
             const type = forceType || this.pointerDown;
             const index = type === 'min' ? 0 : 1;
             if (type === 'min') newPos = this.checkLimits([newPos, this.maxPosition])[0];
@@ -272,29 +271,29 @@ export default {
             }
         },
 
-        emitChange(){
+        emitChange() {
             const value = this.range ? this.exportValue : this.exportValue[0];
             this.$emit('on-change', value);
             this.dispatch('FormItem', 'on-form-change', value);
         },
 
-        sliderClick (event) {
+        sliderClick(event) {
             if (this.disabled) return;
             const currentX = this.getPointerX(event);
             const sliderOffsetLeft = this.$refs.slider.getBoundingClientRect().left;
-            let newPos = ((currentX - sliderOffsetLeft) / this.sliderWidth * this.valueRange) + this.min;
+            const newPos = ((currentX - sliderOffsetLeft) / this.sliderWidth * this.valueRange) + this.min;
 
             if (!this.range || newPos <= this.minPosition) this.changeButtonPosition(newPos, 'min');
             else if (newPos >= this.maxPosition) this.changeButtonPosition(newPos, 'max');
             else this.changeButtonPosition(newPos, ((newPos - this.firstPosition) <= (this.secondPosition - newPos)) ? 'min' : 'max');
         },
 
-        handleInputChange (val) {
+        handleInputChange(val) {
             this.currentValue = [val, this.currentValue[1]];
             this.emitChange();
         },
     },
-    mounted () {
+    mounted() {
         // #2852
         this.$on('on-visible-change', (val) => {
             if (val && this.showTip === 'always') {
@@ -310,6 +309,6 @@ export default {
                 });
             }
         });
-    }
+    },
 };
 </script>

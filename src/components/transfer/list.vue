@@ -46,94 +46,94 @@ export default {
         filterPlaceholder: String,
         filterMethod: Function,
         notFoundText: String,
-        validKeysCount: Number
+        validKeysCount: Number,
     },
-    data () {
+    data() {
         return {
             showItems: [],
             query: '',
-            showFooter: true
+            showFooter: true,
         };
     },
     watch: {
-        data () {
+        data() {
             this.updateFilteredData();
-        }
+        },
     },
     computed: {
-        classes () {
+        classes() {
             return [
                 `${this.prefixCls}`,
                 {
-                    [`${this.prefixCls}-with-footer`]: this.showFooter
-                }
+                    [`${this.prefixCls}-with-footer`]: this.showFooter,
+                },
             ];
         },
-        bodyClasses () {
+        bodyClasses() {
             return [
                 `${this.prefixCls}-body`,
                 {
                     [`${this.prefixCls}-body-with-search`]: this.filterable,
-                    [`${this.prefixCls}-body-with-footer`]: this.showFooter
-                }
+                    [`${this.prefixCls}-body-with-footer`]: this.showFooter,
+                },
             ];
         },
-        count () {
+        count() {
             const validKeysCount = this.validKeysCount;
-            return (validKeysCount > 0 ? `${validKeysCount}/` : '') + `${this.data.length}`;
+            return `${validKeysCount > 0 ? `${validKeysCount}/` : ''}${this.data.length}`;
         },
-        checkedAll () {
+        checkedAll() {
             return this.data.filter(data => !data.disabled).length === this.validKeysCount && this.validKeysCount !== 0;
         },
-        checkedAllDisabled () {
+        checkedAllDisabled() {
             return this.data.filter(data => !data.disabled).length <= 0;
         },
-        filterData () {
+        filterData() {
             return this.showItems.filter(item => this.filterMethod(item, this.query));
-        }
+        },
     },
     methods: {
-        itemClasses (item) {
+        itemClasses(item) {
             return [
                 `${this.prefixCls}-content-item`,
                 {
-                    [`${this.prefixCls}-content-item-disabled`]: item.disabled
-                }
+                    [`${this.prefixCls}-content-item-disabled`]: item.disabled,
+                },
             ];
         },
-        showLabel (item) {
+        showLabel(item) {
             return this.renderFormat(item);
         },
-        isCheck (item) {
+        isCheck(item) {
             return this.checkedKeys.some(key => key === item.key);
         },
-        select (item) {
+        select(item) {
             if (item.disabled) return;
             const index = this.checkedKeys.indexOf(item.key);
             index > -1 ? this.checkedKeys.splice(index, 1) : this.checkedKeys.push(item.key);
             this.$parent.handleCheckedKeys();
         },
-        updateFilteredData () {
+        updateFilteredData() {
             this.showItems = this.data;
         },
-        toggleSelectAll (status) {
+        toggleSelectAll(status) {
             const keys = status ?
                 this.data.filter(data => !data.disabled || this.checkedKeys.indexOf(data.key) > -1).map(data => data.key) :
                 this.data.filter(data => data.disabled && this.checkedKeys.indexOf(data.key) > -1).map(data => data.key);
             this.$emit('on-checked-keys-change', keys);
         },
-        handleQueryClear () {
+        handleQueryClear() {
             this.query = '';
         },
-        handleQueryChange (val) {
+        handleQueryChange(val) {
             this.query = val;
-        }
+        },
     },
-    created () {
+    created() {
         this.updateFilteredData();
     },
-    mounted () {
+    mounted() {
         this.showFooter = this.$slots.default !== undefined;
-    }
+    },
 };
 </script>

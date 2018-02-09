@@ -11,33 +11,33 @@ export default {
     props: {
         separator: {
             type: String,
-            default: '/'
-        }
+            default: '/',
+        },
     },
     computed: {
-        classes () {
+        classes() {
             return `${prefixCls}`;
-        }
+        },
     },
-    mounted () {
+    mounted() {
         this.updateChildren();
     },
-    updated () {
+    updated() {
         this.$nextTick(() => {
             this.updateChildren();
         });
     },
     methods: {
-        updateChildren () {
+        updateChildren() {
             this.$children.forEach((child) => {
                 child.separator = this.separator;
             });
-        }
+        },
     },
     watch: {
-        separator () {
+        separator() {
             this.updateChildren();
-        }
-    }
+        },
+    },
 };
 </script>

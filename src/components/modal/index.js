@@ -2,20 +2,20 @@ import Modal from './confirm';
 
 let modalInstance;
 
-function getModalInstance (render = undefined) {
+function getModalInstance(render = undefined) {
     modalInstance = modalInstance || Modal.newInstance({
         closable: false,
         maskClosable: false,
         footerHide: true,
-        render: render
+        render,
     });
 
     return modalInstance;
 }
 
-function confirm (options) {
+function confirm(options) {
     const render = ('render' in options) ? options.render : undefined;
-    let instance  = getModalInstance(render);
+    const instance = getModalInstance(render);
 
     options.onRemove = function () {
         modalInstance = null;
@@ -55,7 +55,7 @@ Modal.confirm = function (props = {}) {
 };
 
 Modal.remove = function () {
-    if (!modalInstance) {   // at loading status, remove after Cancel
+    if (!modalInstance) { // at loading status, remove after Cancel
         return false;
     }
 

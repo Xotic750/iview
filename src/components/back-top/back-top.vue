@@ -10,72 +10,73 @@
 <script>
 import { scrollTop } from '../../utils/assist';
 import { on, off } from '../../utils/dom';
+
 const prefixCls = 'ivu-back-top';
 
 export default {
     props: {
         height: {
             type: Number,
-            default: 400
+            default: 400,
         },
         bottom: {
             type: Number,
-            default: 30
+            default: 30,
         },
         right: {
             type: Number,
-            default: 30
+            default: 30,
         },
         duration: {
             type: Number,
-            default: 1000
-        }
+            default: 1000,
+        },
     },
-    data () {
+    data() {
         return {
-            backTop: false
+            backTop: false,
         };
     },
-    mounted () {
+    mounted() {
         //            window.addEventListener('scroll', this.handleScroll, false);
         //            window.addEventListener('resize', this.handleScroll, false);
         on(window, 'scroll', this.handleScroll);
         on(window, 'resize', this.handleScroll);
     },
-    beforeDestroy () {
+    beforeDestroy() {
         //            window.removeEventListener('scroll', this.handleScroll, false);
         //            window.removeEventListener('resize', this.handleScroll, false);
         off(window, 'scroll', this.handleScroll);
         off(window, 'resize', this.handleScroll);
     },
     computed: {
-        classes () {
+        classes() {
             return [
                 `${prefixCls}`,
                 {
-                    [`${prefixCls}-show`]: this.backTop
-                }
+                    [`${prefixCls}-show`]: this.backTop,
+                },
             ];
         },
-        styles () {
+        styles() {
             return {
                 bottom: `${this.bottom}px`,
-                right: `${this.right}px`
+                right: `${this.right}px`,
             };
         },
-        innerClasses () {
+        innerClasses() {
             return `${prefixCls}-inner`;
-        }
+        },
     },
     methods: {
-        handleScroll () {
+        handleScroll() {
             this.backTop = window.pageYOffset >= this.height;
         },
-        back () {
+        back() {
             const sTop = document.documentElement.scrollTop || document.body.scrollTop;
             scrollTop(window, sTop, 0, this.duration);
             this.$emit('on-click');
-        }
-    }
+        },
+    },
 };
 </script>

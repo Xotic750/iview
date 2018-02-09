@@ -40,18 +40,18 @@ import Emitter from '../../mixins/emitter';
 const prefixCls = 'ivu-input-number';
 const iconPrefixCls = 'ivu-icon';
 
-function addNum (num1, num2) {
-    let sq1, sq2, m;
+function addNum(num1, num2) {
+    let sq1,
+        sq2,
+        m;
     try {
         sq1 = num1.toString().split('.')[1].length;
-    }
-    catch (e) {
+    } catch (e) {
         sq1 = 0;
     }
     try {
         sq2 = num2.toString().split('.')[1].length;
-    }
-    catch (e) {
+    } catch (e) {
         sq2 = 0;
     }
     //        if (sq1 === 0 || sq2 === 0) {
@@ -66,131 +66,131 @@ function addNum (num1, num2) {
 
 export default {
     name: 'InputNumber',
-    mixins: [ Emitter ],
+    mixins: [Emitter],
     props: {
         max: {
             type: Number,
-            default: Infinity
+            default: Infinity,
         },
         min: {
             type: Number,
-            default: -Infinity
+            default: -Infinity,
         },
         step: {
             type: Number,
-            default: 1
+            default: 1,
         },
         value: {
             type: Number,
-            default: 1
+            default: 1,
         },
         size: {
-            validator (value) {
+            validator(value) {
                 return oneOf(value, ['small', 'large', 'default']);
-            }
+            },
         },
         disabled: {
             type: Boolean,
-            default: false
+            default: false,
         },
         autofocus: {
             type: Boolean,
-            default: false
+            default: false,
         },
         readonly: {
             type: Boolean,
-            default: false
+            default: false,
         },
         editable: {
             type: Boolean,
-            default: true
+            default: true,
         },
         name: {
-            type: String
+            type: String,
         },
         precision: {
-            type: Number
+            type: Number,
         },
         elementId: {
-            type: String
-        }
+            type: String,
+        },
     },
-    data () {
+    data() {
         return {
             focused: false,
             upDisabled: false,
             downDisabled: false,
-            currentValue: this.value
+            currentValue: this.value,
         };
     },
     computed: {
-        wrapClasses () {
+        wrapClasses() {
             return [
                 `${prefixCls}`,
                 {
                     [`${prefixCls}-${this.size}`]: !!this.size,
                     [`${prefixCls}-disabled`]: this.disabled,
-                    [`${prefixCls}-focused`]: this.focused
-                }
+                    [`${prefixCls}-focused`]: this.focused,
+                },
             ];
         },
-        handlerClasses () {
+        handlerClasses() {
             return `${prefixCls}-handler-wrap`;
         },
-        upClasses () {
+        upClasses() {
             return [
                 `${prefixCls}-handler`,
                 `${prefixCls}-handler-up`,
                 {
-                    [`${prefixCls}-handler-up-disabled`]: this.upDisabled
-                }
+                    [`${prefixCls}-handler-up-disabled`]: this.upDisabled,
+                },
             ];
         },
-        innerUpClasses () {
+        innerUpClasses() {
             return `${prefixCls}-handler-up-inner ${iconPrefixCls} ${iconPrefixCls}-ios-arrow-up`;
         },
-        downClasses () {
+        downClasses() {
             return [
                 `${prefixCls}-handler`,
                 `${prefixCls}-handler-down`,
                 {
-                    [`${prefixCls}-handler-down-disabled`]: this.downDisabled
-                }
+                    [`${prefixCls}-handler-down-disabled`]: this.downDisabled,
+                },
             ];
         },
-        innerDownClasses () {
+        innerDownClasses() {
             return `${prefixCls}-handler-down-inner ${iconPrefixCls} ${iconPrefixCls}-ios-arrow-down`;
         },
-        inputWrapClasses () {
+        inputWrapClasses() {
             return `${prefixCls}-input-wrap`;
         },
-        inputClasses () {
+        inputClasses() {
             return `${prefixCls}-input`;
         },
-        precisionValue () {
+        precisionValue() {
             // can not display 1.0
             return this.precision ? this.currentValue.toFixed(this.precision) : this.currentValue;
-        }
+        },
     },
     methods: {
-        preventDefault (e) {
+        preventDefault(e) {
             e.preventDefault();
         },
-        up (e) {
+        up(e) {
             const targetVal = Number(e.target.value);
             if (this.upDisabled && isNaN(targetVal)) {
                 return false;
             }
             this.changeStep('up', e);
         },
-        down (e) {
+        down(e) {
             const targetVal = Number(e.target.value);
             if (this.downDisabled && isNaN(targetVal)) {
                 return false;
             }
             this.changeStep('down', e);
         },
-        changeStep (type, e) {
+        changeStep(type, e) {
             if (this.disabled || this.readonly) {
                 return false;
             }
@@ -226,7 +226,7 @@ export default {
             }
             this.setValue(val);
         },
-        setValue (val) {
+        setValue(val) {
             // 如果 step 是小数，且没有设置 precision，是有问题的
             if (!isNaN(this.precision)) val = Number(Number(val).toFixed(this.precision));
 
@@ -237,15 +237,15 @@ export default {
                 this.dispatch('FormItem', 'on-form-change', val);
             });
         },
-        focus () {
+        focus() {
             this.focused = true;
             this.$emit('on-focus');
         },
-        blur () {
+        blur() {
             this.focused = false;
             this.$emit('on-blur');
         },
-        keyDown (e) {
+        keyDown(e) {
             if (e.keyCode === 38) {
                 e.preventDefault();
                 this.up(e);
@@ -254,16 +254,16 @@ export default {
                 this.down(e);
             }
         },
-        change (event) {
+        change(event) {
             let val = event.target.value.trim();
 
             if (event.type == 'input' && val.match(/^\-?\.?$|\.$/)) return; // prevent fire early if decimal. If no more input the change event will fire later
 
-            const {min, max} = this;
+            const { min, max } = this;
             const isEmptyString = val.length === 0;
             val = Number(val);
 
-            if (event.type == 'change'){
+            if (event.type == 'change') {
                 if (val === this.currentValue && val > min && val < max) return; // already fired change for input event
             }
 
@@ -282,7 +282,7 @@ export default {
                 event.target.value = this.currentValue;
             }
         },
-        changeVal (val) {
+        changeVal(val) {
             val = Number(val);
             if (!isNaN(val)) {
                 const step = this.step;
@@ -293,24 +293,24 @@ export default {
                 this.upDisabled = true;
                 this.downDisabled = true;
             }
-        }
+        },
     },
-    mounted () {
+    mounted() {
         this.changeVal(this.currentValue);
     },
     watch: {
-        value (val) {
+        value(val) {
             this.currentValue = val;
         },
-        currentValue (val) {
+        currentValue(val) {
             this.changeVal(val);
         },
-        min () {
+        min() {
             this.changeVal(this.currentValue);
         },
-        max () {
+        max() {
             this.changeVal(this.currentValue);
-        }
-    }
+        },
+    },
 };
 </script>

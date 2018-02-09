@@ -11,45 +11,45 @@ const prefixCls = 'ivu-checkbox-group';
 
 export default {
     name: 'CheckboxGroup',
-    mixins: [ Emitter ],
+    mixins: [Emitter],
     props: {
         value: {
             type: Array,
-            default () {
+            default() {
                 return [];
-            }
+            },
         },
         size: {
-            validator (value) {
+            validator(value) {
                 return oneOf(value, ['small', 'large', 'default']);
-            }
-        }
+            },
+        },
     },
-    data () {
+    data() {
         return {
             currentValue: this.value,
-            childrens: []
+            childrens: [],
         };
     },
     computed: {
-        classes () {
+        classes() {
             return [
                 `${prefixCls}`,
                 {
-                    [`ivu-checkbox-${this.size}`]: !!this.size
-                }
+                    [`ivu-checkbox-${this.size}`]: !!this.size,
+                },
             ];
-        }
+        },
     },
-    mounted () {
+    mounted() {
         this.updateModel(true);
     },
     methods: {
-        updateModel (update) {
+        updateModel(update) {
             this.childrens = findComponentsDownward(this, 'Checkbox');
             if (this.childrens) {
                 const { value } = this;
-                this.childrens.forEach(child => {
+                this.childrens.forEach((child) => {
                     child.model = value;
 
                     if (update) {
@@ -59,17 +59,17 @@ export default {
                 });
             }
         },
-        change (data) {
+        change(data) {
             this.currentValue = data;
             this.$emit('input', data);
             this.$emit('on-change', data);
             this.dispatch('FormItem', 'on-form-change', data);
-        }
+        },
     },
     watch: {
-        value () {
+        value() {
             this.updateModel(true);
-        }
-    }
+        },
+    },
 };
 </script>

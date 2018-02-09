@@ -8,10 +8,9 @@ const prefixCls = 'ivu-transfer';
 
 export default {
     name: 'Transfer',
-    mixins: [ Emitter, Locale ],
-    render (h) {
-
-        function cloneVNode (vnode) {
+    mixins: [Emitter, Locale],
+    render(h) {
+        function cloneVNode(vnode) {
             const clonedChildren = vnode.children && vnode.children.map(vnode => cloneVNode(vnode));
             const cloned = h(vnode.tag, vnode.data, clonedChildren);
             cloned.text = vnode.text;
@@ -30,12 +29,12 @@ export default {
         const clonedVNodes = this.$slots.default === undefined ? [] : vNodes.map(vnode => cloneVNode(vnode));
 
         return h('div', {
-            'class': this.classes
+            class: this.classes,
         }, [
             h(List, {
                 ref: 'left',
                 props: {
-                    prefixCls: this.prefixCls + '-list',
+                    prefixCls: `${this.prefixCls}-list`,
                     data: this.leftData,
                     renderFormat: this.renderFormat,
                     checkedKeys: this.leftCheckedKeys,
@@ -45,11 +44,11 @@ export default {
                     filterable: this.filterable,
                     filterPlaceholder: this.localeFilterPlaceholder,
                     filterMethod: this.filterMethod,
-                    notFoundText: this.localeNotFoundText
+                    notFoundText: this.localeNotFoundText,
                 },
                 on: {
-                    'on-checked-keys-change': this.handleLeftCheckedKeysChange
-                }
+                    'on-checked-keys-change': this.handleLeftCheckedKeysChange,
+                },
             }, vNodes),
 
             h(Operation, {
@@ -57,14 +56,14 @@ export default {
                     prefixCls: this.prefixCls,
                     operations: this.operations,
                     leftActive: this.leftValidKeysCount > 0,
-                    rightActive: this.rightValidKeysCount > 0
-                }
+                    rightActive: this.rightValidKeysCount > 0,
+                },
             }),
 
             h(List, {
                 ref: 'right',
                 props: {
-                    prefixCls: this.prefixCls + '-list',
+                    prefixCls: `${this.prefixCls}-list`,
                     data: this.rightData,
                     renderFormat: this.renderFormat,
                     checkedKeys: this.rightCheckedKeys,
@@ -74,120 +73,117 @@ export default {
                     filterable: this.filterable,
                     filterPlaceholder: this.localeFilterPlaceholder,
                     filterMethod: this.filterMethod,
-                    notFoundText: this.localeNotFoundText
+                    notFoundText: this.localeNotFoundText,
                 },
                 on: {
-                    'on-checked-keys-change': this.handleRightCheckedKeysChange
-                }
-            }, clonedVNodes)
+                    'on-checked-keys-change': this.handleRightCheckedKeysChange,
+                },
+            }, clonedVNodes),
         ]);
     },
     props: {
         data: {
             type: Array,
-            default () {
+            default() {
                 return [];
-            }
+            },
         },
         renderFormat: {
             type: Function,
-            default (item) {
+            default(item) {
                 return item.label || item.key;
-            }
+            },
         },
         targetKeys: {
             type: Array,
-            default () {
+            default() {
                 return [];
-            }
+            },
         },
         selectedKeys: {
             type: Array,
-            default () {
+            default() {
                 return [];
-            }
+            },
         },
         listStyle: {
             type: Object,
-            default () {
+            default() {
                 return {};
-            }
+            },
         },
         titles: {
-            type: Array
+            type: Array,
         },
         operations: {
             type: Array,
-            default () {
+            default() {
                 return [];
-            }
+            },
         },
         filterable: {
             type: Boolean,
-            default: false
+            default: false,
         },
         filterPlaceholder: {
-            type: String
+            type: String,
         },
         filterMethod: {
             type: Function,
-            default (data, query) {
+            default(data, query) {
                 const type = ('label' in data) ? 'label' : 'key';
                 return data[type].indexOf(query) > -1;
-            }
+            },
         },
         notFoundText: {
-            type: String
-        }
+            type: String,
+        },
     },
-    data () {
+    data() {
         return {
-            prefixCls: prefixCls,
+            prefixCls,
             leftData: [],
             rightData: [],
             leftCheckedKeys: [],
-            rightCheckedKeys: []
+            rightCheckedKeys: [],
         };
     },
     computed: {
-        classes () {
+        classes() {
             return [
-                `${prefixCls}`
+                `${prefixCls}`,
             ];
         },
-        leftValidKeysCount () {
+        leftValidKeysCount() {
             return this.getValidKeys('left').length;
         },
-        rightValidKeysCount () {
+        rightValidKeysCount() {
             return this.getValidKeys('right').length;
         },
-        localeFilterPlaceholder () {
+        localeFilterPlaceholder() {
             if (this.filterPlaceholder === undefined) {
                 return this.t('i.transfer.filterPlaceholder');
-            } else {
-                return this.filterPlaceholder;
             }
+            return this.filterPlaceholder;
         },
-        localeNotFoundText () {
+        localeNotFoundText() {
             if (this.notFoundText === undefined) {
                 return this.t('i.transfer.notFoundText');
-            } else {
-                return this.notFoundText;
             }
+            return this.notFoundText;
         },
-        localeTitles () {
+        localeTitles() {
             if (this.titles === undefined) {
                 return [this.t('i.transfer.titles.source'), this.t('i.transfer.titles.target')];
-            } else {
-                return this.titles;
             }
-        }
+            return this.titles;
+        },
     },
     methods: {
-        getValidKeys (direction) {
+        getValidKeys(direction) {
             return this[`${direction}Data`].filter(data => !data.disabled && this[`${direction}CheckedKeys`].indexOf(data.key) > -1).map(data => data.key);
         },
-        splitData (init = false) {
+        splitData(init = false) {
             this.leftData = [...this.data];
             this.rightData = [];
             if (this.targetKeys.length > 0) {
@@ -206,7 +202,7 @@ export default {
                 this.splitSelectedKey();
             }
         },
-        splitSelectedKey () {
+        splitSelectedKey() {
             const selectedKeys = this.selectedKeys;
             if (selectedKeys.length > 0) {
                 this.leftCheckedKeys = this.leftData
@@ -217,7 +213,7 @@ export default {
                     .map(data => data.key);
             }
         },
-        moveTo (direction) {
+        moveTo(direction) {
             const targetKeys = this.targetKeys;
             const opposite = direction === 'left' ? 'right' : 'left';
             const moveKeys = this.getValidKeys(opposite);
@@ -229,32 +225,32 @@ export default {
             this.$emit('on-change', newTargetKeys, direction, moveKeys);
             this.dispatch('FormItem', 'on-form-change', {
                 tarketKeys: newTargetKeys,
-                direction: direction,
-                moveKeys: moveKeys
+                direction,
+                moveKeys,
             });
         },
-        handleLeftCheckedKeysChange (keys) {
+        handleLeftCheckedKeysChange(keys) {
             this.leftCheckedKeys = keys;
         },
-        handleRightCheckedKeysChange (keys) {
+        handleRightCheckedKeysChange(keys) {
             this.rightCheckedKeys = keys;
         },
-        handleCheckedKeys () {
+        handleCheckedKeys() {
             const sourceSelectedKeys = this.getValidKeys('left');
             const targetSelectedKeys = this.getValidKeys('right');
             this.$emit('on-selected-change', sourceSelectedKeys, targetSelectedKeys);
-        }
+        },
     },
     watch: {
-        targetKeys () {
+        targetKeys() {
             this.splitData(false);
         },
-        data () {
+        data() {
             this.splitData(false);
-        }
+        },
     },
-    mounted () {
+    mounted() {
         this.splitData(true);
-    }
+    },
 };
 </script>

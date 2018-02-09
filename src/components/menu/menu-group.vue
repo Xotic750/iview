@@ -6,28 +6,29 @@
 </template>
 <script>
 import mixin from './mixin';
+
 const prefixCls = 'ivu-menu';
 
 export default {
     name: 'MenuGroup',
-    mixins: [ mixin ],
+    mixins: [mixin],
     props: {
         title: {
             type: String,
-            default: ''
-        }
+            default: '',
+        },
     },
-    data () {
+    data() {
         return {
-            prefixCls: prefixCls
+            prefixCls,
         };
     },
     computed: {
-        groupStyle () {
+        groupStyle() {
             return this.hasParentSubmenu && this.mode !== 'horizontal' ? {
-                paddingLeft: 43 + (this.parentSubmenuNum - 1) * 28 + 'px'
+                paddingLeft: `${43 + (this.parentSubmenuNum - 1) * 28}px`,
             } : {};
-        }
-    }
+        },
+    },
 };
 </script>

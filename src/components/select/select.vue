@@ -9,12 +9,13 @@
     >
         <div
             :class="selectionCls"
-            :tabindex="filterable ? -1 : 0"
+            :tabindex="disabled || filterable ? -1 : 0"
             ref="reference"
             @click="toggleMenu"
             @keydown.up="keydownUpDown"
             @keydown.down="keydownUpDown"
             @keydown.tab="keydownTab"
+            @keydown.delete="keydownDelete"
             @blur="setFocused(false)"
             @focus="setFocused(true)"
         >
@@ -114,22 +115,21 @@ import Icon from '../icon';
 import Drop from './dropdown.vue';
 import clickoutside from '../../directives/clickoutside';
 import TransferDom from '../../directives/transfer-dom';
-import {oneOf, findComponentDownward} from '../../utils/assist';
+import { oneOf, findComponentDownward } from '../../utils/assist';
 import Emitter from '../../mixins/emitter';
 import Locale from '../../mixins/locale';
-import {debounce} from './utils';
+import { debounce } from './utils';
 
 const prefixCls = 'ivu-select';
-const noop = () => {};
 
 export default {
     name: 'iSelect',
 
     mixins: [Emitter, Locale],
 
-    components: {Icon, Drop},
+    components: { Icon, Drop },
 
-    directives: {clickoutside, TransferDom},
+    directives: { clickoutside, TransferDom },
 
     props: {
         value: {
@@ -148,14 +148,13 @@ export default {
         disabled: {
             default: false,
             type: Boolean,
-
         },
         clearable: {
             default: false,
             type: Boolean,
         },
         placeholder: {
-            default: '',
+            default: undefined,
             type: String,
         },
         filterable: {
@@ -163,15 +162,15 @@ export default {
             type: Boolean,
         },
         filterMethod: {
-            default: noop,
             type: Function,
+            default: undefined,
         },
         remote: {
             default: false,
             type: Boolean,
         },
         remoteMethod: {
-            default: noop,
+            default: undefined,
             type: Function,
         },
         loading: {
@@ -179,13 +178,13 @@ export default {
             type: Boolean,
         },
         loadingText: {
-            default: '',
+            default: undefined,
             type: String,
         },
         size: {
             default: 'default',
             type: String,
-            validator(value){
+            validator(value) {
                 return oneOf(value, ['small', 'large', 'default']);
             },
         },
@@ -194,13 +193,13 @@ export default {
             type: Boolean,
         },
         notFoundText: {
-            defalt: '',
+            default: undefined,
             type: String,
         },
         placement: {
             default: 'bottom',
             type: String,
-            validator(value){
+            validator(value) {
                 return oneOf(value, ['top', 'bottom']);
             },
         },
@@ -214,16 +213,15 @@ export default {
             type: Boolean,
         },
         name: {
-            default: '',
+            default: undefined,
             type: String,
         },
         elementId: {
-            default: '',
+            default: undefined,
             type: String,
         },
     },
-
-    data(){
+    data() {
         return {
             prefixCls,
             visible: false,
@@ -235,17 +233,19 @@ export default {
             focusIndex: 0,
             query: '',
             lastQuery: '',
-            selectToChangeQuery: false, // when select an option, set this first and set query, because query is watching, it will emit event
+            // when select an option, set this first and set query, because query is watching, it will emit event
+            selectToChangeQuery: false,
             inputLength: 20,
             notFound: false,
-            slotChangeDuration: false, // if slot change duration and in multiple, set true and after slot change, set false
+            // if slot change duration and in multiple, set true and after slot change, set false
+            slotChangeDuration: false,
             model: this.value,
             currentLabel: this.label,
         };
     },
 
     computed: {
-        classes(){
+        classes() {
             return [
                 `${prefixCls}`,
                 {
@@ -260,7 +260,7 @@ export default {
             ];
         },
 
-        dropdownCls(){
+        dropdownCls() {
             return {
                 [`${prefixCls}-dropdown-transfer`]: this.transfer,
                 [`${prefixCls}-multiple`]: this.multiple && this.transfer,
@@ -268,13 +268,13 @@ export default {
             };
         },
 
-        selectionCls(){
+        selectionCls() {
             return {
                 [`${prefixCls}-selection`]: !this.autoComplete,
             };
         },
 
-        showPlaceholder(){
+        showPlaceholder() {
             if (typeof this.model === 'string') {
                 return this.model === '';
             }
@@ -286,11 +286,11 @@ export default {
             return this.model === null;
         },
 
-        showCloseIcon(){
+        showCloseIcon() {
             return !this.multiple && this.clearable && !this.showPlaceholder;
         },
 
-        inputStyle(){
+        inputStyle() {
             const style = {};
 
             if (this.multiple) {
@@ -300,27 +300,27 @@ export default {
             return style;
         },
 
-        localePlaceholder(){
+        localePlaceholder() {
             return this.placeholder === undefined ? this.t('i.select.placeholder') : this.placeholder;
         },
 
-        localeNotFoundText(){
+        localeNotFoundText() {
             return this.notFoundText === undefined ? this.t('i.select.noMatch') : this.notFoundText;
         },
 
-        localeLoadingText(){
+        localeLoadingText() {
             return this.loadingText === undefined ? this.t('i.select.loading') : this.loadingText;
         },
 
-        transitionName(){
+        transitionName() {
             return this.placement === 'bottom' ? 'slide-up' : 'slide-down';
         },
 
-        getOptions(){
+        getOptions() {
             return this.$slots.default || [];
         },
 
-        dropVisible(){
+        dropVisible() {
             if (!this.visible) {
                 return false;
             }
@@ -332,33 +332,49 @@ export default {
             return this.loading && !this.remote && this.query !== '';
         },
 
-        notFoundShow(){
+        notFoundShow() {
             return this.remote ? !this.loading && !this.getOptions.length : this.notFound;
         },
     },
 
     methods: {
         setFocused(value) {
-            if (!this.filterable) {
-                this.focused = !!value;
+            if (this.disabled || this.filterable) {
+                return false;
             }
+
+            this.focused = !!value;
         },
 
-        onFocus(){
+        onFocus() {
+            if (this.disabled) {
+                return false;
+            }
+
             this.visible = true;
         },
 
-        keydownUpDown(){
+        keydownUpDown() {
             return this.visible ? false : this.toggleMenu();
         },
 
-        keydownTab(event){
+        keydownTab(event) {
             if (this.visible) {
                 event.preventDefault();
             }
         },
 
-        toggleMenu(){
+        keydownDelete(event) {
+            if (this.disabled || this.visible || this.autoComplete) {
+                return false;
+            }
+
+            if (this.clearable) {
+                this.clearSingleSelect();
+            }
+        },
+
+        toggleMenu() {
             if (this.disabled || this.autoComplete) {
                 return false;
             }
@@ -366,14 +382,14 @@ export default {
             this.visible = !this.visible;
         },
 
-        hideMenu(){
+        hideMenu() {
             this.visible = false;
             this.focusIndex = 0;
             this.broadcast('iOption', 'on-select-close');
         },
 
         // find option component
-        findChild(cb){
+        findChild(cb) {
             const find = (child) => {
                 if (child.$options.componentName) {
                     cb(child);
@@ -386,8 +402,7 @@ export default {
             instances.forEach(find);
         },
 
-        updateOptions(slot = false){
-            console.log('updateOptions');
+        updateOptions(slot = false) {
             const options = [];
             let index = 1;
 
@@ -411,8 +426,7 @@ export default {
             }
         },
 
-        updateSingleSelected(init = false, slot = false){
-            console.log('updateSingleSelected');
+        updateSingleSelected(init = false, slot = false) {
             const {
                 model,
             } = this;
@@ -430,7 +444,7 @@ export default {
             this.toggleSingleSelected(this.model, init);
         },
 
-        clearSingleSelect(){
+        clearSingleSelect() {
             if (this.showCloseIcon) {
                 this.findChild((child) => {
                     child.selected = false;
@@ -444,7 +458,7 @@ export default {
             }
         },
 
-        updateMultipleSelected(init = false, slot = false){
+        updateMultipleSelected(init = false, slot = false) {
             if (this.multiple && Array.isArray(this.model)) {
                 const selected = this.remote ? this.selectedMultiple : [];
 
@@ -487,10 +501,11 @@ export default {
                     this.model = selectedModel;
                 }
             }
+
             this.toggleMultipleSelected(this.model, init);
         },
 
-        removeTag(index){
+        removeTag(index) {
             if (this.disabled) {
                 return false;
             }
@@ -511,8 +526,7 @@ export default {
         },
 
         // to select option for single
-        toggleSingleSelected(value, init = false){
-            console.log('toggleSingleSelected');
+        toggleSingleSelected(value, init = false) {
             if (!this.multiple) {
                 let label = '';
 
@@ -526,7 +540,7 @@ export default {
                 this.hideMenu();
 
                 if (!init) {
-                    const val = this.labelInValue ? {value, label} : value;
+                    const val = this.labelInValue ? { value, label } : value;
 
                     this.$emit('on-change', val);
                     this.dispatch('FormItem', 'on-form-change', val);
@@ -535,7 +549,8 @@ export default {
         },
 
         // to select option for multiple
-        toggleMultipleSelected(value, init = false){
+        toggleMultipleSelected(value, init = false) {
+            console.log('toggleMultipleSelected', value, typeof value);
             if (this.multiple) {
                 const hybridValue = value.map(val => ({
                     value: val,
@@ -559,45 +574,44 @@ export default {
             }
         },
 
-        handleClose(){
+        handleClose() {
             this.hideMenu();
         },
 
-        onEscape(event){
+        onEscape(event) {
             if (this.visible) {
                 event.preventDefault();
                 this.hideMenu();
             }
         },
 
-        onDown(event){
+        onDown(event) {
             if (this.visible) {
                 event.preventDefault();
                 this.navigateOptions('next');
             }
         },
 
-        onUp(event){
+        onUp(event) {
             if (this.visible) {
                 event.preventDefault();
                 this.navigateOptions('prev');
             }
         },
 
-        onEnter(event){
+        onEnter(event) {
             if (this.visible) {
                 event.preventDefault();
 
                 this.findChild((child) => {
                     if (child.isFocus) {
-                        console.log('Select', child);
                         child.select();
                     }
                 });
             }
         },
 
-        navigateOptions(direction){
+        navigateOptions(direction) {
             if (direction === 'next') {
                 this.focusIndex = this.focusIndex === this.options.length ? 1 : this.focusIndex + 1;
             } else if (direction === 'prev') {
@@ -635,7 +649,7 @@ export default {
             }
         },
 
-        resetScrollTop(){
+        resetScrollTop() {
             if (!this.optionInstances.length) {
                 return;
             }
@@ -663,7 +677,11 @@ export default {
             }
         },
 
-        handleBlur(){
+        handleBlur() {
+            if (this.disabled) {
+                return false;
+            }
+
             this.visible = false;
 
             setTimeout(() => {
@@ -696,23 +714,23 @@ export default {
             }, 300);
         },
 
-        resetInputState(){
+        resetInputState() {
             this.inputLength = this.$refs.input.value.length * 12 + 20;
         },
 
-        handleInputDelete(){
+        handleInputDelete() {
             if (this.multiple && this.model.length && this.query === '') {
                 this.removeTag(this.model.length - 1);
             }
         },
 
         // use when slot changed
-        slotChange(){
+        slotChange() {
             this.options = [];
             this.optionInstances = [];
         },
 
-        setQuery(query){
+        setQuery(query) {
             if (!this.filterable) {
                 return;
             }
@@ -720,7 +738,7 @@ export default {
             this.query = query;
         },
 
-        modelToQuery(){
+        modelToQuery() {
             if (!this.multiple && this.filterable && this.model !== undefined) {
                 this.findChild((child) => {
                     if (this.model === child.value) {
@@ -736,7 +754,7 @@ export default {
             }
         },
 
-        broadcastQuery(val){
+        broadcastQuery(val) {
             if (findComponentDownward(this, 'OptionGroup')) {
                 this.broadcast('OptionGroup', 'on-query-change', val);
             }
@@ -744,8 +762,8 @@ export default {
             this.broadcast('iOption', 'on-query-change', val);
         },
 
-        debouncedAppendRemove(){
-            return debounce(function(){
+        debouncedAppendRemove() {
+            return debounce(function () {
                 if (!this.remote) {
                     this.modelToQuery();
                     this.$nextTick(() => this.broadcastQuery(''));
@@ -762,7 +780,7 @@ export default {
         },
 
         // 处理 remote 初始值
-        updateLabel(){
+        updateLabel() {
             if (this.remote) {
                 if (!this.multiple && this.model !== '') {
                     this.selectToChangeQuery = true;
@@ -788,7 +806,7 @@ export default {
         },
     },
 
-    mounted(){
+    mounted() {
         this.modelToQuery();
         // 处理 remote 初始值
         this.updateLabel();
@@ -802,7 +820,6 @@ export default {
         this.$on('remove', this.debouncedAppendRemove());
 
         this.$on('on-select-selected', (value) => {
-            console.log('on-select-selected');
             if (this.model === value) {
                 if (this.autoComplete) {
                     this.$emit('on-change', value);
@@ -847,7 +864,7 @@ export default {
     },
 
     watch: {
-        value(val){
+        value(val) {
             this.model = val;
             // #982
             if (val === '' || val === null) {
@@ -855,15 +872,15 @@ export default {
             }
         },
 
-        label(val){
+        label(val) {
             this.currentLabel = val;
             this.updateLabel();
         },
 
-        model(){
-            console.log('model');
+        model() {
             this.$emit('input', this.model);
             this.modelToQuery();
+
             if (this.multiple) {
                 if (this.slotChangeDuration) {
                     this.slotChangeDuration = false;
@@ -882,8 +899,7 @@ export default {
             }
         },
 
-        visible(val){
-            console.log('visible');
+        visible(val) {
             if (val) {
                 if (this.filterable) {
                     if (this.multiple) {
@@ -924,8 +940,7 @@ export default {
             }
         },
 
-        query(val){
-            console.log('query');
+        query(val) {
             if (this.remote && this.remoteMethod) {
                 if (!this.selectToChangeQuery) {
                     this.$emit('on-query-change', val);
@@ -933,7 +948,6 @@ export default {
                 }
 
                 this.focusIndex = 0;
-                console.log('Reset child.isFocus');
                 this.findChild((child) => {
                     child.isFocus = false;
                 });

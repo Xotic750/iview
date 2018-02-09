@@ -6,14 +6,14 @@ const lang = {
         select: {
             placeholder: 'Seleccionar',
             noMatch: 'Sin coincidencias',
-            loading: 'Cargando'
+            loading: 'Cargando',
         },
         table: {
             noDataText: 'Sin Datos',
             noFilteredDataText: 'Sin Datos para el filtro',
             confirmFilter: 'Aceptar',
             resetFilter: 'Quitar filtro',
-            clearFilter: 'Todos'
+            clearFilter: 'Todos',
         },
         datepicker: {
             selectDate: 'Seleccionar fecha',
@@ -45,7 +45,7 @@ const lang = {
                 wed: 'Mié',
                 thu: 'Jue',
                 fri: 'Vie',
-                sat: 'Sáb'
+                sat: 'Sáb',
             },
             months: {
                 m1: 'Ene',
@@ -59,24 +59,24 @@ const lang = {
                 m9: 'Sep',
                 m10: 'Oct',
                 m11: 'Nov',
-                m12: 'Dic'
-            }
+                m12: 'Dic',
+            },
         },
         transfer: {
             titles: {
                 source: 'Origen',
-                target: 'Destino'
+                target: 'Destino',
             },
             filterPlaceholder: 'Buscar aquí',
-            notFoundText: 'Sin resultados'
+            notFoundText: 'Sin resultados',
         },
         modal: {
             okText: 'Aceptar',
-            cancelText: 'Cancelar'
+            cancelText: 'Cancelar',
         },
         poptip: {
             okText: 'Aceptar',
-            cancelText: 'Cancelar'
+            cancelText: 'Cancelar',
         },
         page: {
             prev: 'Página Anterior',
@@ -88,16 +88,16 @@ const lang = {
             next5: '5 Páginas Siguientes',
             page: '/page',
             goto: 'Ir a',
-            p: ''
+            p: '',
         },
         rate: {
             star: 'Estrella',
-            stars: 'Estrellas'
+            stars: 'Estrellas',
         },
         tree: {
-            emptyText: 'Sin Datos'
-        }
-    }
+            emptyText: 'Sin Datos',
+        },
+    },
 };
 
 setLang(lang);

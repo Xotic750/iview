@@ -23,48 +23,48 @@ const prefixCls = 'ivu-radio';
 
 export default {
     name: 'Radio',
-    mixins: [ Emitter ],
+    mixins: [Emitter],
     props: {
         value: {
             type: [String, Number, Boolean],
-            default: false
+            default: false,
         },
         trueValue: {
             type: [String, Number, Boolean],
-            default: true
+            default: true,
         },
         falseValue: {
             type: [String, Number, Boolean],
-            default: false
+            default: false,
         },
         label: {
-            type: [String, Number]
+            type: [String, Number],
         },
         disabled: {
             type: Boolean,
-            default: false
+            default: false,
         },
         size: {
-            validator (value) {
+            validator(value) {
                 return oneOf(value, ['small', 'large', 'default']);
-            }
+            },
         },
         name: {
-            type: String
-        }
+            type: String,
+        },
     },
-    data () {
+    data() {
         return {
             currentValue: this.value,
             group: false,
             groupName: this.name,
             parent: findComponentUpward(this, 'RadioGroup'),
             focusWrapper: false,
-            focusInner: false
+            focusInner: false,
         };
     },
     computed: {
-        wrapClasses () {
+        wrapClasses() {
             return [
                 `${prefixCls}-wrapper`,
                 {
@@ -72,32 +72,32 @@ export default {
                     [`${prefixCls}-wrapper-checked`]: this.currentValue,
                     [`${prefixCls}-wrapper-disabled`]: this.disabled,
                     [`${prefixCls}-${this.size}`]: !!this.size,
-                    [`${prefixCls}-focus`]: this.focusWrapper
-                }
+                    [`${prefixCls}-focus`]: this.focusWrapper,
+                },
             ];
         },
-        radioClasses () {
+        radioClasses() {
             return [
                 `${prefixCls}`,
                 {
                     [`${prefixCls}-checked`]: this.currentValue,
-                    [`${prefixCls}-disabled`]: this.disabled
-                }
+                    [`${prefixCls}-disabled`]: this.disabled,
+                },
             ];
         },
-        innerClasses () {
+        innerClasses() {
             return [
                 `${prefixCls}-inner`,
                 {
-                    [`${prefixCls}-focus`]: this.focusInner
-                }
+                    [`${prefixCls}-focus`]: this.focusInner,
+                },
             ];
         },
-        inputClasses () {
+        inputClasses() {
             return `${prefixCls}-input`;
-        }
+        },
     },
-    mounted () {
+    mounted() {
         if (this.parent) {
             this.group = true;
             if (this.name && this.name !== this.parent.name) {
@@ -107,7 +107,7 @@ export default {
                 }
                 /* eslint-enable no-console */
             } else {
-                this.groupName = this.parent.name; 
+                this.groupName = this.parent.name;
             }
         }
 
@@ -118,7 +118,7 @@ export default {
         }
     },
     methods: {
-        change (event) {
+        change(event) {
             if (this.disabled) {
                 return false;
             }
@@ -133,7 +133,7 @@ export default {
                 if (this.label !== undefined) {
                     this.parent.change({
                         value: this.label,
-                        checked: this.value
+                        checked: this.value,
                     });
                 }
             } else {
@@ -141,29 +141,29 @@ export default {
                 this.dispatch('FormItem', 'on-form-change', value);
             }
         },
-        updateValue () {
+        updateValue() {
             this.currentValue = this.value === this.trueValue;
         },
-        onBlur () {
+        onBlur() {
             this.focusWrapper = false;
             this.focusInner = false;
         },
-        onFocus () {
+        onFocus() {
             if (this.group && this.parent.type === 'button') {
                 this.focusWrapper = true;
             } else {
                 this.focusInner = true;
             }
-        }
+        },
     },
     watch: {
-        value (val) {
+        value(val) {
             if (val === this.trueValue || val === this.falseValue) {
                 this.updateValue();
             } else {
                 throw 'Value should be trueValue or falseValue.';
             }
-        }
-    }
+        },
+    },
 };
 </script>

@@ -24,8 +24,8 @@ const prefixCls = 'ivu-notification';
 let seed = 0;
 const now = Date.now();
 
-function getUuid () {
-    return 'ivuNotification_' + now + '_' + (seed++);
+function getUuid() {
+    return `ivuNotification_${now}_${seed++}`;
 }
 
 export default {
@@ -33,56 +33,56 @@ export default {
     props: {
         prefixCls: {
             type: String,
-            default: prefixCls
+            default: prefixCls,
         },
         styles: {
             type: Object,
-            default: function () {
+            default() {
                 return {
                     top: '65px',
-                    left: '50%'
+                    left: '50%',
                 };
-            }
+            },
         },
         content: {
-            type: String
+            type: String,
         },
         className: {
-            type: String
-        }
+            type: String,
+        },
     },
-    data () {
+    data() {
         return {
-            notices: []
+            notices: [],
         };
     },
     computed: {
-        classes () {
+        classes() {
             return [
                 `${this.prefixCls}`,
                 {
-                    [`${this.className}`]: !!this.className
-                }
+                    [`${this.className}`]: !!this.className,
+                },
             ];
-        }
+        },
     },
     methods: {
-        add (notice) {
+        add(notice) {
             const name = notice.name || getUuid();
 
-            let _notice = Object.assign({
+            const _notice = Object.assign({
                 styles: {
-                    right: '50%'
+                    right: '50%',
                 },
                 content: '',
                 duration: 1.5,
                 closable: false,
-                name: name
+                name,
             }, notice);
 
             this.notices.push(_notice);
         },
-        close (name) {
+        close(name) {
             const notices = this.notices;
             for (let i = 0; i < notices.length; i++) {
                 if (notices[i].name === name) {
@@ -91,9 +91,9 @@ export default {
                 }
             }
         },
-        closeAll () {
+        closeAll() {
             this.notices = [];
-        }
-    }
+        },
+    },
 };
 </script>

@@ -6,14 +6,14 @@ const lang = {
         select: {
             placeholder: 'Seç',
             noMatch: 'Eşleşen veri yok',
-            loading: 'yükleme'
+            loading: 'yükleme',
         },
         table: {
             noDataText: 'Veri Yok',
             noFilteredDataText: 'Süzülen veri yok',
             confirmFilter: 'Onayla',
             resetFilter: 'Sıfırla',
-            clearFilter: 'Hepsi'
+            clearFilter: 'Hepsi',
         },
         datepicker: {
             selectDate: 'Tarih seç',
@@ -45,7 +45,7 @@ const lang = {
                 wed: 'Çar',
                 thu: 'Per',
                 fri: 'Cum',
-                sat: 'Cmt'
+                sat: 'Cmt',
             },
             months: {
                 m1: 'Oca',
@@ -59,24 +59,24 @@ const lang = {
                 m9: 'Eyl',
                 m10: 'Ekm',
                 m11: 'Kas',
-                m12: 'Ara'
-            }
+                m12: 'Ara',
+            },
         },
         transfer: {
             titles: {
                 source: 'Kaynak',
-                target: 'Hedef'
+                target: 'Hedef',
             },
             filterPlaceholder: 'Arama yapın',
-            notFoundText: 'Bulunamadı'
+            notFoundText: 'Bulunamadı',
         },
         modal: {
             okText: 'Tamam',
-            cancelText: 'İptal'
+            cancelText: 'İptal',
         },
         poptip: {
             okText: 'Tamam',
-            cancelText: 'İptal'
+            cancelText: 'İptal',
         },
         page: {
             prev: 'Önceki',
@@ -88,16 +88,16 @@ const lang = {
             next5: 'Sonraki 5 Sayfa',
             page: '/sayfa',
             goto: 'Git',
-            p: ''
+            p: '',
         },
         rate: {
             star: 'Yıldız',
-            stars: 'Yıldız'
+            stars: 'Yıldız',
         },
         tree: {
-            emptyText: 'Veri Yok'
-        }
-    }
+            emptyText: 'Veri Yok',
+        },
+    },
 };
 
 setLang(lang);

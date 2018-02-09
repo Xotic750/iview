@@ -20,55 +20,55 @@ const prefixCls = 'ivu-switch';
 
 export default {
     name: 'ISwitch',
-    mixins: [ Emitter ],
+    mixins: [Emitter],
     props: {
         value: {
             type: [String, Number, Boolean],
-            default: false
+            default: false,
         },
         trueValue: {
             type: [String, Number, Boolean],
-            default: true
+            default: true,
         },
         falseValue: {
             type: [String, Number, Boolean],
-            default: false
+            default: false,
         },
         disabled: {
             type: Boolean,
-            default: false
+            default: false,
         },
         size: {
-            validator (value) {
+            validator(value) {
                 return oneOf(value, ['large', 'small', 'default']);
-            }
+            },
         },
         name: {
-            type: String
-        }
+            type: String,
+        },
     },
-    data () {
+    data() {
         return {
-            currentValue: this.value
+            currentValue: this.value,
         };
     },
     computed: {
-        wrapClasses () {
+        wrapClasses() {
             return [
                 `${prefixCls}`,
                 {
                     [`${prefixCls}-checked`]: this.currentValue === this.trueValue,
                     [`${prefixCls}-disabled`]: this.disabled,
-                    [`${prefixCls}-${this.size}`]: !!this.size
-                }
+                    [`${prefixCls}-${this.size}`]: !!this.size,
+                },
             ];
         },
-        innerClasses () {
+        innerClasses() {
             return `${prefixCls}-inner`;
-        }
+        },
     },
     methods: {
-        toggle () {
+        toggle() {
             if (this.disabled) {
                 return false;
             }
@@ -79,15 +79,15 @@ export default {
             this.$emit('input', checked);
             this.$emit('on-change', checked);
             this.dispatch('FormItem', 'on-form-change', checked);
-        }
+        },
     },
     watch: {
-        value (val) {
+        value(val) {
             if (val !== this.trueValue && val !== this.falseValue) {
                 throw 'Value should be trueValue or falseValue.';
             }
             this.currentValue = val;
-        }
-    }
+        },
+    },
 };
 </script>

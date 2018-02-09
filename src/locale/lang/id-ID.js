@@ -6,14 +6,14 @@ const lang = {
         select: {
             placeholder: 'Pilih',
             noMatch: 'Tidak ada data yang cocok',
-            loading: 'Memuat'
+            loading: 'Memuat',
         },
         table: {
             noDataText: 'Tidak ada data',
             noFilteredDataText: 'Tidak ada data filter',
             confirmFilter: 'Konfirmasi',
             resetFilter: 'Tata ulang',
-            clearFilter: 'Semua'
+            clearFilter: 'Semua',
         },
         datepicker: {
             selectDate: 'Pilih tanggal',
@@ -45,7 +45,7 @@ const lang = {
                 wed: 'Rab',
                 thu: 'Kam',
                 fri: 'Jum',
-                sat: 'Sab'
+                sat: 'Sab',
             },
             months: {
                 m1: 'Jan',
@@ -59,24 +59,24 @@ const lang = {
                 m9: 'Sep',
                 m10: 'Okt',
                 m11: 'Nov',
-                m12: 'Dec'
-            }
+                m12: 'Dec',
+            },
         },
         transfer: {
             titles: {
                 source: 'Sumber',
-                target: 'Tujuan'
+                target: 'Tujuan',
             },
             filterPlaceholder: 'Cari disini',
-            notFoundText: 'Tidak ditemukan'
+            notFoundText: 'Tidak ditemukan',
         },
         modal: {
             okText: 'OK',
-            cancelText: 'Batal'
+            cancelText: 'Batal',
         },
         poptip: {
             okText: 'OK',
-            cancelText: 'Batal'
+            cancelText: 'Batal',
         },
         page: {
             prev: 'Halaman Sebelumnya',
@@ -88,16 +88,16 @@ const lang = {
             next5: '5 Halaman Selanjutnya',
             page: '/page',
             goto: 'Pergi ke',
-            p: ''
+            p: '',
         },
         rate: {
             star: 'Star',
-            stars: 'Stars'
+            stars: 'Stars',
         },
         tree: {
-            emptyText: 'Tidak ada data'
-        }
-    }
+            emptyText: 'Tidak ada data',
+        },
+    },
 };
 
 setLang(lang);

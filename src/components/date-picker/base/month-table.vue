@@ -19,21 +19,21 @@ import mixin from './mixin';
 import prefixCls from './prefixCls';
 
 export default {
-    mixins: [ Locale, mixin ],
+    mixins: [Locale, mixin],
     props: {/* in mixin */},
     computed: {
         classes() {
             return [
                 `${prefixCls}`,
-                `${prefixCls}-month`
+                `${prefixCls}-month`,
             ];
         },
-        cells () {
-            let cells = [];
+        cells() {
+            const cells = [];
             const cell_tmpl = {
                 text: '',
                 selected: false,
-                disabled: false
+                disabled: false,
             };
 
             const tableYear = this.tableDate.getFullYear();
@@ -50,22 +50,22 @@ export default {
             }
 
             return cells;
-        }
+        },
     },
     methods: {
-        getCellCls (cell) {
+        getCellCls(cell) {
             return [
                 `${prefixCls}-cell`,
                 {
                     [`${prefixCls}-cell-selected`]: cell.selected,
                     [`${prefixCls}-cell-disabled`]: cell.disabled,
-                    [`${prefixCls}-cell-range`]: cell.range && !cell.start && !cell.end
-                }
+                    [`${prefixCls}-cell-range`]: cell.range && !cell.start && !cell.end,
+                },
             ];
         },
-        tCell (nr) {
+        tCell(nr) {
             return this.t(`i.datepicker.months.m${nr}`);
-        }
-    }
+        },
+    },
 };
 </script>

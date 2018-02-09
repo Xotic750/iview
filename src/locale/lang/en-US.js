@@ -6,14 +6,14 @@ const lang = {
         select: {
             placeholder: 'Select',
             noMatch: 'No matching data',
-            loading: 'Loading'
+            loading: 'Loading',
         },
         table: {
             noDataText: 'No Data',
             noFilteredDataText: 'No filter data',
             confirmFilter: 'Confirm',
             resetFilter: 'Reset',
-            clearFilter: 'All'
+            clearFilter: 'All',
         },
         datepicker: {
             selectDate: 'Select date',
@@ -45,7 +45,7 @@ const lang = {
                 wed: 'Wed',
                 thu: 'Thu',
                 fri: 'Fri',
-                sat: 'Sat'
+                sat: 'Sat',
             },
             months: {
                 m1: 'Jan',
@@ -59,24 +59,24 @@ const lang = {
                 m9: 'Sep',
                 m10: 'Oct',
                 m11: 'Nov',
-                m12: 'Dec'
-            }
+                m12: 'Dec',
+            },
         },
         transfer: {
             titles: {
                 source: 'Source',
-                target: 'Target'
+                target: 'Target',
             },
             filterPlaceholder: 'Search here',
-            notFoundText: 'Not Found'
+            notFoundText: 'Not Found',
         },
         modal: {
             okText: 'OK',
-            cancelText: 'Cancel'
+            cancelText: 'Cancel',
         },
         poptip: {
             okText: 'OK',
-            cancelText: 'Cancel'
+            cancelText: 'Cancel',
         },
         page: {
             prev: 'Previous Page',
@@ -88,16 +88,16 @@ const lang = {
             next5: 'Next 5 Pages',
             page: '/page',
             goto: 'Goto',
-            p: ''
+            p: '',
         },
         rate: {
             star: 'Star',
-            stars: 'Stars'
+            stars: 'Stars',
         },
         tree: {
-            emptyText: 'No Data'
-        }
-    }
+            emptyText: 'No Data',
+        },
+    },
 };
 
 setLang(lang);

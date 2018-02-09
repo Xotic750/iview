@@ -25,6 +25,7 @@
 <script>
 import Icon from '../icon/icon.vue';
 import iProgress from '../progress/progress.vue';
+
 const prefixCls = 'ivu-upload';
 
 export default {
@@ -35,60 +36,60 @@ export default {
             type: Array,
             default() {
                 return [];
-            }
-        }
+            },
+        },
     },
-    data () {
+    data() {
         return {
-            prefixCls: prefixCls
+            prefixCls,
         };
     },
     methods: {
-        fileCls (file) {
+        fileCls(file) {
             return [
                 `${prefixCls}-list-file`,
                 {
-                    [`${prefixCls}-list-file-finish`]: file.status === 'finished'
-                }
+                    [`${prefixCls}-list-file-finish`]: file.status === 'finished',
+                },
             ];
         },
-        handleClick (file) {
+        handleClick(file) {
             this.$emit('on-file-click', file);
         },
-        handlePreview (file) {
+        handlePreview(file) {
             this.$emit('on-file-preview', file);
         },
-        handleRemove (file) {
+        handleRemove(file) {
             this.$emit('on-file-remove', file);
         },
-        format (file) {
+        format(file) {
             const format = file.name.split('.').pop().toLocaleLowerCase() || '';
             let type = 'document';
 
-            if (['gif','jpg','jpeg','png','bmp','webp'].indexOf(format) > -1) {
+            if (['gif', 'jpg', 'jpeg', 'png', 'bmp', 'webp'].indexOf(format) > -1) {
                 type = 'image';
             }
-            if (['mp4','m3u8','rmvb','avi','swf','3gp','mkv','flv'].indexOf(format) > -1) {
+            if (['mp4', 'm3u8', 'rmvb', 'avi', 'swf', '3gp', 'mkv', 'flv'].indexOf(format) > -1) {
                 type = 'ios-film';
             }
-            if (['mp3','wav','wma','ogg','aac','flac'].indexOf(format) > -1) {
+            if (['mp3', 'wav', 'wma', 'ogg', 'aac', 'flac'].indexOf(format) > -1) {
                 type = 'ios-musical-notes';
             }
-            if (['doc','txt','docx','pages','epub','pdf'].indexOf(format) > -1) {
+            if (['doc', 'txt', 'docx', 'pages', 'epub', 'pdf'].indexOf(format) > -1) {
                 type = 'document-text';
             }
-            if (['numbers','csv','xls','xlsx'].indexOf(format) > -1) {
+            if (['numbers', 'csv', 'xls', 'xlsx'].indexOf(format) > -1) {
                 type = 'stats-bars';
             }
-            if (['keynote','ppt','pptx'].indexOf(format) > -1) {
+            if (['keynote', 'ppt', 'pptx'].indexOf(format) > -1) {
                 type = 'ios-videocam';
             }
 
             return type;
         },
-        parsePercentage (val) {
+        parsePercentage(val) {
             return parseInt(val, 10);
-        }
-    }
+        },
+    },
 };
 </script>

@@ -1,6 +1,6 @@
 <template>
-    <div 
-        :class="wrapClasses" 
+    <div
+        :class="wrapClasses"
         :style="wrapStyles">
         <span v-show="showZeroTrigger" @click="toggleCollapse" :class="zeroWidthTriggerClasses">
             <i class="ivu-icon ivu-icon-navicon-round"/>
@@ -18,143 +18,142 @@
 <script>
 import { on, off } from '../../utils/dom';
 import { oneOf, dimensionMap, setMatchMedia } from '../../utils/assist';
+
 const prefixCls = 'ivu-layout-sider';
 setMatchMedia();
 export default {
     name: 'Sider',
     props: {
-        value: {  // if it's collpased now
+        value: { // if it's collpased now
             type: Boolean,
-            default: false
+            default: false,
         },
         width: {
             type: [Number, String],
-            default: 200
+            default: 200,
         },
         collapsedWidth: {
             type: [Number, String],
-            default: 64
+            default: 64,
         },
         hideTrigger: {
             type: Boolean,
-            default: false
+            default: false,
         },
         breakpoint: {
             type: String,
-            validator (val) {
+            validator(val) {
                 return oneOf(val, ['xs', 'sm', 'md', 'lg', 'xl']);
-            }
+            },
         },
         collapsible: {
             type: Boolean,
-            default: false
+            default: false,
         },
         defaultCollapsed: {
             type: Boolean,
-            default: false
+            default: false,
         },
         reverseArrow: {
             type: Boolean,
-            default: false
-        }
+            default: false,
+        },
     },
-    data () {
+    data() {
         return {
-            prefixCls: prefixCls,
+            prefixCls,
             mediaMatched: false,
-            isCollapsed: false
+            isCollapsed: false,
         };
     },
     computed: {
-        wrapClasses () {
+        wrapClasses() {
             return [
                 `${prefixCls}`,
                 this.siderWidth ? '' : `${prefixCls}-zero-width`,
-                this.isCollapsed ? `${prefixCls}-collapsed` : ''
+                this.isCollapsed ? `${prefixCls}-collapsed` : '',
             ];
         },
-        wrapStyles () {
+        wrapStyles() {
             return {
                 width: `${this.siderWidth}px`,
                 minWidth: `${this.siderWidth}px`,
                 maxWidth: `${this.siderWidth}px`,
-                flex: `0 0 ${this.siderWidth}px`
+                flex: `0 0 ${this.siderWidth}px`,
             };
         },
-        triggerClasses () {
+        triggerClasses() {
             return [
                 `${prefixCls}-trigger`,
                 this.isCollapsed ? `${prefixCls}-trigger-collapsed` : '',
             ];
         },
-        childClasses () {
+        childClasses() {
             return `${this.prefixCls}-children`;
         },
-        zeroWidthTriggerClasses () {
+        zeroWidthTriggerClasses() {
             return [
                 `${prefixCls}-zero-width-trigger`,
-                this.reverseArrow ? `${prefixCls}-zero-width-trigger-left` : ''
+                this.reverseArrow ? `${prefixCls}-zero-width-trigger-left` : '',
             ];
         },
-        triggerIconClasses () {
+        triggerIconClasses() {
             return [
                 'ivu-icon',
                 `ivu-icon-chevron-${this.reverseArrow ? 'right' : 'left'}`,
                 `${prefixCls}-trigger-icon`,
             ];
         },
-        siderWidth () {
+        siderWidth() {
             return this.collapsible ? (this.isCollapsed ? (this.mediaMatched ? 0 : parseInt(this.collapsedWidth)) : parseInt(this.width)) : this.width;
         },
-        showZeroTrigger () {
+        showZeroTrigger() {
             return this.collapsible ? (this.mediaMatched && !this.hideTrigger || (parseInt(this.collapsedWidth) === 0) && this.isCollapsed && !this.hideTrigger) : false;
         },
-        showBottomTrigger () {
+        showBottomTrigger() {
             return this.collapsible ? !this.mediaMatched && !this.hideTrigger : false;
-        }
+        },
     },
     methods: {
-        toggleCollapse () {
+        toggleCollapse() {
             this.isCollapsed = this.collapsible ? !this.isCollapsed : false;
             this.$emit('input', this.isCollapsed);
             this.$emit('on-collapse', this.isCollapsed);
         },
-        matchMedia () {
+        matchMedia() {
             let matchMedia;
             if (window.matchMedia) {
                 matchMedia = window.matchMedia;
             }
-            let mediaMatched = this.mediaMatched;
+            const mediaMatched = this.mediaMatched;
             this.mediaMatched = matchMedia(`(max-width: ${dimensionMap[this.breakpoint]})`).matches;
-                
+
             if (this.mediaMatched !== mediaMatched) {
                 this.isCollapsed = this.collapsible ? this.mediaMatched : false;
                 this.$emit('input', this.mediaMatched);
                 this.$emit('on-collapse', this.mediaMatched);
             }
         },
-        onWindowResize () {
+        onWindowResize() {
             this.matchMedia();
-        }
+        },
     },
-    mounted () {
+    mounted() {
         if (this.defaultCollapsed) {
             this.isCollapsed = true;
             this.$emit('input', this.defaultCollapsed);
-        } else {
-            if (this.value !== undefined) {
-                this.isCollapsed = this.value;
-            }
+        } else if (this.value !== undefined) {
+            this.isCollapsed = this.value;
         }
         if (this.breakpoint !== undefined) {
             on(window, 'resize', this.onWindowResize);
             this.matchMedia();
         }
     },
-    beforeDestroy () {
+    beforeDestroy() {
         if (this.breakpoint !== undefined) {
             off(window, 'resize', this.onWindowResize);
         }
-    }
+    },
 };
 </script>

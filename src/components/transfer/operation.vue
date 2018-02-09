@@ -19,15 +19,15 @@ export default {
         prefixCls: String,
         operations: Array,
         leftActive: Boolean,
-        rightActive: Boolean
+        rightActive: Boolean,
     },
     methods: {
-        moveToLeft () {
+        moveToLeft() {
             this.$parent.moveTo('left');
         },
-        moveToRight () {
+        moveToRight() {
             this.$parent.moveTo('right');
-        }
-    }
+        },
+    },
 };
 </script>

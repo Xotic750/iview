@@ -8,6 +8,7 @@
 </template>
 <script>
 import { on, off } from '../../utils/dom';
+
 const prefixCls = 'ivu-affix';
 
 function getScroll(target, top) {
@@ -35,7 +36,7 @@ function getOffset(element) {
 
     return {
         top: rect.top + scrollTop - clientTop,
-        left: rect.left + scrollLeft - clientLeft
+        left: rect.left + scrollLeft - clientLeft,
     };
 }
 
@@ -44,22 +45,22 @@ export default {
     props: {
         offsetTop: {
             type: Number,
-            default: 0
+            default: 0,
         },
         offsetBottom: {
-            type: Number
-        }
+            type: Number,
+        },
     },
-    data () {
+    data() {
         return {
             affix: false,
             styles: {},
             slot: false,
-            slotStyle: {}
+            slotStyle: {},
         };
     },
     computed: {
-        offsetType () {
+        offsetType() {
             let type = 'top';
             if (this.offsetBottom >= 0) {
                 type = 'bottom';
@@ -67,28 +68,28 @@ export default {
 
             return type;
         },
-        classes () {
+        classes() {
             return [
                 {
-                    [`${prefixCls}`]: this.affix
-                }
+                    [`${prefixCls}`]: this.affix,
+                },
             ];
-        }
+        },
     },
-    mounted () {
+    mounted() {
         //            window.addEventListener('scroll', this.handleScroll, false);
         //            window.addEventListener('resize', this.handleScroll, false);
         on(window, 'scroll', this.handleScroll);
         on(window, 'resize', this.handleScroll);
     },
-    beforeDestroy () {
+    beforeDestroy() {
         //            window.removeEventListener('scroll', this.handleScroll, false);
         //            window.removeEventListener('resize', this.handleScroll, false);
         off(window, 'scroll', this.handleScroll);
         off(window, 'resize', this.handleScroll);
     },
     methods: {
-        handleScroll () {
+        handleScroll() {
             const affix = this.affix;
             const scrollTop = getScroll(window, true);
             const elOffset = getOffset(this.$el);
@@ -99,14 +100,14 @@ export default {
             if ((elOffset.top - this.offsetTop) < scrollTop && this.offsetType == 'top' && !affix) {
                 this.affix = true;
                 this.slotStyle = {
-                    width: this.$refs.point.clientWidth + 'px',
-                    height: this.$refs.point.clientHeight + 'px'
+                    width: `${this.$refs.point.clientWidth}px`,
+                    height: `${this.$refs.point.clientHeight}px`,
                 };
                 this.slot = true;
                 this.styles = {
                     top: `${this.offsetTop}px`,
                     left: `${elOffset.left}px`,
-                    width: `${this.$el.offsetWidth}px`
+                    width: `${this.$el.offsetWidth}px`,
                 };
 
                 this.$emit('on-change', true);
@@ -125,7 +126,7 @@ export default {
                 this.styles = {
                     bottom: `${this.offsetBottom}px`,
                     left: `${elOffset.left}px`,
-                    width: `${this.$el.offsetWidth}px`
+                    width: `${this.$el.offsetWidth}px`,
                 };
 
                 this.$emit('on-change', true);
@@ -135,7 +136,7 @@ export default {
 
                 this.$emit('on-change', false);
             }
-        }
-    }
+        },
+    },
 };
 </script>

@@ -17,34 +17,34 @@ export default {
         count: [Number, String],
         dot: {
             type: Boolean,
-            default: false
+            default: false,
         },
         overflowCount: {
             type: [Number, String],
-            default: 99
+            default: 99,
         },
-        className: String
+        className: String,
     },
     computed: {
-        classes () {
+        classes() {
             return `${prefixCls}`;
         },
-        dotClasses () {
+        dotClasses() {
             return `${prefixCls}-dot`;
         },
-        countClasses () {
+        countClasses() {
             return [
                 `${prefixCls}-count`,
                 {
                     [`${this.className}`]: !!this.className,
-                    [`${prefixCls}-count-alone`]: this.alone
-                }
+                    [`${prefixCls}-count-alone`]: this.alone,
+                },
             ];
         },
-        finalCount () {
+        finalCount() {
             return parseInt(this.count) >= parseInt(this.overflowCount) ? `${this.overflowCount}+` : this.count;
         },
-        badge () {
+        badge() {
             let status = false;
 
             if (this.count) {
@@ -62,9 +62,9 @@ export default {
 
             return status;
         },
-        alone () {
+        alone() {
             return this.$slots.default === undefined;
-        }
-    }
+        },
+    },
 };
 </script>

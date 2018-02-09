@@ -66,88 +66,88 @@ const prefixCls = 'ivu-input';
 
 export default {
     name: 'Input',
-    mixins: [ Emitter ],
+    mixins: [Emitter],
     props: {
         type: {
-            validator (value) {
+            validator(value) {
                 return oneOf(value, ['text', 'textarea', 'password', 'url', 'email', 'date']);
             },
-            default: 'text'
+            default: 'text',
         },
         value: {
             type: [String, Number],
-            default: ''
+            default: '',
         },
         size: {
-            validator (value) {
+            validator(value) {
                 return oneOf(value, ['small', 'large', 'default']);
-            }
+            },
         },
         placeholder: {
             type: String,
-            default: ''
+            default: '',
         },
         maxlength: {
-            type: Number
+            type: Number,
         },
         disabled: {
             type: Boolean,
-            default: false
+            default: false,
         },
         icon: String,
         autosize: {
             type: [Boolean, Object],
-            default: false
+            default: false,
         },
         rows: {
             type: Number,
-            default: 2
+            default: 2,
         },
         readonly: {
             type: Boolean,
-            default: false
+            default: false,
         },
         name: {
-            type: String
+            type: String,
         },
         number: {
             type: Boolean,
-            default: false
+            default: false,
         },
         autofocus: {
             type: Boolean,
-            default: false
+            default: false,
         },
         spellcheck: {
             type: Boolean,
-            default: false
+            default: false,
         },
         autocomplete: {
-            validator (value) {
+            validator(value) {
                 return oneOf(value, ['on', 'off']);
             },
-            default: 'off'
+            default: 'off',
         },
         clearable: {
             type: Boolean,
-            default: false
+            default: false,
         },
         elementId: {
-            type: String
-        }
+            type: String,
+        },
     },
-    data () {
+    data() {
         return {
             currentValue: this.value,
-            prefixCls: prefixCls,
+            prefixCls,
             prepend: true,
             append: true,
             slotReady: false,
-            textareaStyles: {}
+            textareaStyles: {},
         };
     },
     computed: {
-        wrapClasses () {
+        wrapClasses() {
             return [
                 `${prefixCls}-wrapper`,
                 {
@@ -157,64 +157,64 @@ export default {
                     [`${prefixCls}-group-${this.size}`]: (this.prepend || this.append) && !!this.size,
                     [`${prefixCls}-group-with-prepend`]: this.prepend,
                     [`${prefixCls}-group-with-append`]: this.append,
-                    [`${prefixCls}-hide-icon`]: this.append  // #554
-                }
+                    [`${prefixCls}-hide-icon`]: this.append, // #554
+                },
             ];
         },
-        inputClasses () {
+        inputClasses() {
             return [
                 `${prefixCls}`,
                 {
                     [`${prefixCls}-${this.size}`]: !!this.size,
-                    [`${prefixCls}-disabled`]: this.disabled
-                }
+                    [`${prefixCls}-disabled`]: this.disabled,
+                },
             ];
         },
-        textareaClasses () {
+        textareaClasses() {
             return [
                 `${prefixCls}`,
                 {
-                    [`${prefixCls}-disabled`]: this.disabled
-                }
+                    [`${prefixCls}-disabled`]: this.disabled,
+                },
             ];
-        }
+        },
     },
     methods: {
-        handleEnter (event) {
+        handleEnter(event) {
             this.$emit('on-enter', event);
         },
-        handleKeydown (event) {
+        handleKeydown(event) {
             this.$emit('on-keydown', event);
         },
         handleKeypress(event) {
             this.$emit('on-keypress', event);
         },
-        handleKeyup (event) {
+        handleKeyup(event) {
             this.$emit('on-keyup', event);
         },
-        handleIconClick (event) {
+        handleIconClick(event) {
             this.$emit('on-click', event);
         },
-        handleFocus (event) {
+        handleFocus(event) {
             this.$emit('on-focus', event);
         },
-        handleBlur (event) {
+        handleBlur(event) {
             this.$emit('on-blur', event);
             if (!findComponentUpward(this, ['DatePicker', 'TimePicker', 'Cascader', 'Search'])) {
                 this.dispatch('FormItem', 'on-form-blur', this.currentValue);
             }
         },
-        handleInput (event) {
+        handleInput(event) {
             let value = event.target.value;
             if (this.number) value = Number.isNaN(Number(value)) ? value : Number(value);
             this.$emit('input', value);
             this.setCurrentValue(value);
             this.$emit('on-change', event);
         },
-        handleChange (event) {
+        handleChange(event) {
             this.$emit('on-input-change', event);
         },
-        setCurrentValue (value) {
+        setCurrentValue(value) {
             if (value === this.currentValue) return;
             this.$nextTick(() => {
                 this.resizeTextarea();
@@ -224,7 +224,7 @@ export default {
                 this.dispatch('FormItem', 'on-form-change', value);
             }
         },
-        resizeTextarea () {
+        resizeTextarea() {
             const autosize = this.autosize;
             if (!autosize || this.type !== 'textarea') {
                 return false;
@@ -235,33 +235,33 @@ export default {
 
             this.textareaStyles = calcTextareaHeight(this.$refs.textarea, minRows, maxRows);
         },
-        focus () {
+        focus() {
             if (this.type === 'textarea') {
                 this.$refs.textarea.focus();
             } else {
                 this.$refs.input.focus();
             }
         },
-        blur () {
+        blur() {
             if (this.type === 'textarea') {
                 this.$refs.textarea.blur();
             } else {
                 this.$refs.input.blur();
             }
         },
-        handleClear () {
+        handleClear() {
             const e = { target: { value: '' } };
             this.$emit('input', '');
             this.setCurrentValue('');
             this.$emit('on-change', e);
-        }
+        },
     },
     watch: {
-        value (val) {
+        value(val) {
             this.setCurrentValue(val);
-        }
+        },
     },
-    mounted () {
+    mounted() {
         if (this.type !== 'textarea') {
             this.prepend = this.$slots.prepend !== undefined;
             this.append = this.$slots.append !== undefined;
@@ -271,6 +271,6 @@ export default {
         }
         this.slotReady = true;
         this.resizeTextarea();
-    }
+    },
 };
 </script>

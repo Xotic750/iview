@@ -1,57 +1,57 @@
 
 import { oneOf } from '../../../../utils/assist';
-import {initTimeDate } from '../../util';
+import { initTimeDate } from '../../util';
 
 
 export default {
     props: {
         showTime: {
             type: Boolean,
-            default: false
+            default: false,
         },
         format: {
             type: String,
-            default: 'yyyy-MM-dd'
+            default: 'yyyy-MM-dd',
         },
         selectionMode: {
             type: String,
-            validator (value) {
+            validator(value) {
                 return oneOf(value, ['year', 'month', 'date', 'time']);
             },
-            default: 'date'
+            default: 'date',
         },
         shortcuts: {
             type: Array,
-            default: () => []
+            default: () => [],
         },
         disabledDate: {
             type: Function,
-            default: () => false
+            default: () => false,
         },
         value: {
             type: Array,
-            default: () => [initTimeDate(), initTimeDate()]
+            default: () => [initTimeDate(), initTimeDate()],
         },
         showWeekNumbers: {
             type: Boolean,
-            default: false
+            default: false,
         },
         startDate: {
-            type: Date
+            type: Date,
         },
         pickerType: {
             type: String,
-            require: true
-        }
+            require: true,
+        },
     },
     computed: {
-        isTime(){
+        isTime() {
             return this.currentView === 'time';
-        }
+        },
     },
     methods: {
-        handleToggleTime(){
+        handleToggleTime() {
             this.currentView = this.currentView === 'time' ? 'date' : 'time';
         },
-    }
+    },
 };

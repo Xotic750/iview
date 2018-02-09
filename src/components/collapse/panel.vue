@@ -14,6 +14,7 @@
 <script>
 import Icon from '../icon/icon.vue';
 import CollapseTransition from '../base/collapse-transition';
+
 const prefixCls = 'ivu-collapse';
 
 export default {
@@ -21,41 +22,41 @@ export default {
     components: { Icon, CollapseTransition },
     props: {
         name: {
-            type: String
-        }
+            type: String,
+        },
     },
-    data () {
+    data() {
         return {
             index: 0, // use index for default when name is null
-            isActive: false
+            isActive: false,
         };
     },
     computed: {
-        itemClasses () {
+        itemClasses() {
             return [
                 `${prefixCls}-item`,
                 {
-                    [`${prefixCls}-item-active`]: this.isActive
-                }
+                    [`${prefixCls}-item-active`]: this.isActive,
+                },
             ];
         },
-        headerClasses () {
+        headerClasses() {
             return `${prefixCls}-header`;
         },
-        contentClasses () {
+        contentClasses() {
             return `${prefixCls}-content`;
         },
-        boxClasses () {
+        boxClasses() {
             return `${prefixCls}-content-box`;
-        }
+        },
     },
     methods: {
-        toggle () {
+        toggle() {
             this.$parent.toggle({
                 name: this.name || this.index,
-                isActive: this.isActive
+                isActive: this.isActive,
             });
-        }
-    }
+        },
+    },
 };
 </script>

@@ -18,15 +18,15 @@ export default {
         //            },
         color: {
             type: String,
-            default: 'primary'
+            default: 'primary',
         },
         failedColor: {
             type: String,
-            default: 'error'
+            default: 'error',
         },
         height: {
             type: Number,
-            default: 2
+            default: 2,
         },
         //            status: {
         //                type: String,
@@ -40,38 +40,38 @@ export default {
         //                default: false
         //            }
     },
-    data () {
+    data() {
         return {
             percent: 0,
             //                color: 'primary',
             //                failedColor: 'error',
             //                height: 2,
             status: 'success',
-            show: false
+            show: false,
         };
     },
     computed: {
-        classes () {
+        classes() {
             return `${prefixCls}`;
         },
-        innerClasses () {
+        innerClasses() {
             return [
                 `${prefixCls}-inner`,
                 {
                     [`${prefixCls}-inner-color-primary`]: this.color === 'primary' && this.status === 'success',
-                    [`${prefixCls}-inner-failed-color-error`]: this.failedColor === 'error' && this.status === 'error'
-                }
+                    [`${prefixCls}-inner-failed-color-error`]: this.failedColor === 'error' && this.status === 'error',
+                },
             ];
         },
-        outerStyles () {
+        outerStyles() {
             return {
-                height: `${this.height}px`
+                height: `${this.height}px`,
             };
         },
-        styles () {
-            let style = {
+        styles() {
+            const style = {
                 width: `${this.percent}%`,
-                height: `${this.height}px`
+                height: `${this.height}px`,
             };
 
             if (this.color !== 'primary' && this.status === 'success') {
@@ -83,7 +83,7 @@ export default {
             }
 
             return style;
-        }
-    }
+        },
+    },
 };
 </script>

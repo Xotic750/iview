@@ -42,7 +42,7 @@ export default function upload(option) {
     const formData = new FormData();
 
     if (option.data) {
-        Object.keys(option.data).map(key => {
+        Object.keys(option.data).map((key) => {
             formData.append(key, option.data[key]);
         });
     }
@@ -73,7 +73,7 @@ export default function upload(option) {
     //   xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
     // }
 
-    for (let item in headers) {
+    for (const item in headers) {
         if (headers.hasOwnProperty(item) && headers[item] !== null) {
             xhr.setRequestHeader(item, headers[item]);
         }

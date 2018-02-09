@@ -11,24 +11,24 @@ export default {
     props: {
         data: Object,
         prefixCls: String,
-        tmpItem: Object
+        tmpItem: Object,
     },
     computed: {
-        classes () {
+        classes() {
             return [
                 `${this.prefixCls}-menu-item`,
                 {
                     [`${this.prefixCls}-menu-item-active`]: this.tmpItem.value === this.data.value,
-                    [`${this.prefixCls}-menu-item-disabled`]: this.data.disabled
-                }
+                    [`${this.prefixCls}-menu-item-disabled`]: this.data.disabled,
+                },
             ];
         },
-        showArrow () {
+        showArrow() {
             return (this.data.children && this.data.children.length) || ('loading' in this.data && !this.data.loading);
         },
-        showLoading () {
+        showLoading() {
             return 'loading' in this.data && this.data.loading;
-        }
-    }
+        },
+    },
 };
 </script>

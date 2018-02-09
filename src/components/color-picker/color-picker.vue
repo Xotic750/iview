@@ -72,7 +72,7 @@ import Emitter from '../../mixins/emitter';
 const prefixCls = 'ivu-color-picker';
 const inputPrefixCls = 'ivu-input';
 
-function _colorChange (data, oldHue) {
+function _colorChange(data, oldHue) {
     data = data === '' ? '#2d8cf0' : data;
     const alpha = data && data.a;
     let color;
@@ -111,79 +111,81 @@ function _colorChange (data, oldHue) {
     }
 
     return {
-        hsl: hsl,
+        hsl,
         hex: color.toHexString().toUpperCase(),
         rgba: color.toRgb(),
-        hsv: hsv,
+        hsv,
         oldHue: data.h || oldHue || hsl.h,
         source: data.source,
-        a: data.a || color.getAlpha()
+        a: data.a || color.getAlpha(),
     };
 }
 
 export default {
     name: 'ColorPicker',
-    mixins: [ Emitter ],
-    components: { Drop, Confirm, RecommendColors, Saturation, Hue, Alpha },
+    mixins: [Emitter],
+    components: {
+        Drop, Confirm, RecommendColors, Saturation, Hue, Alpha,
+    },
     directives: { clickoutside, TransferDom },
     props: {
         value: {
-            type: String
+            type: String,
         },
         hue: {
             type: Boolean,
-            default: true
+            default: true,
         },
         alpha: {
             type: Boolean,
-            default: false
+            default: false,
         },
         recommend: {
             type: Boolean,
-            default: false
+            default: false,
         },
         format: {
-            validator (value) {
+            validator(value) {
                 return oneOf(value, ['hsl', 'hsv', 'hex', 'rgb']);
-            }
+            },
         },
         colors: {
             type: Array,
-            default () {
+            default() {
                 return [];
-            }
+            },
         },
         disabled: {
             type: Boolean,
-            default: false
+            default: false,
         },
         size: {
-            validator (value) {
+            validator(value) {
                 return oneOf(value, ['small', 'large', 'default']);
             },
-            default: 'default'
+            default: 'default',
         },
         placement: {
-            validator (value) {
+            validator(value) {
                 return oneOf(value, ['top', 'top-start', 'top-end', 'bottom', 'bottom-start', 'bottom-end', 'left', 'left-start', 'left-end', 'right', 'right-start', 'right-end']);
             },
-            default: 'bottom'
+            default: 'bottom',
         },
         transfer: {
             type: Boolean,
-            default: false
+            default: false,
         },
         name: {
-            type: String
-        }
+            type: String,
+        },
     },
-    data () {
+    data() {
         return {
             val: _colorChange(this.value),
             currentValue: this.value,
-            prefixCls: prefixCls,
+            prefixCls,
             visible: false,
-            disableCloseUnderTransfer: false,  // transfer 模式下，点击Drop也会触发关闭
+            disableCloseUnderTransfer: false, // transfer 模式下，点击Drop也会触发关闭
             recommendedColor: [
                 '#2d8cf0',
                 '#19be6b',
@@ -208,54 +210,53 @@ export default {
                 '#cddc39',
                 '#607d8b',
                 '#000000',
-                '#ffffff'
-            ]
+                '#ffffff',
+            ],
         };
     },
     computed: {
-        transition () {
+        transition() {
             if (this.placement === 'bottom-start' || this.placement === 'bottom' || this.placement === 'bottom-end') {
                 return 'slide-up';
-            } else {
-                return 'fade';
             }
+            return 'fade';
         },
         saturationColors: {
-            get () {
+            get() {
                 return this.val;
             },
-            set (newVal) {
+            set(newVal) {
                 this.val = newVal;
                 this.$emit('on-active-change', this.formatColor);
-            }
+            },
         },
-        classes () {
+        classes() {
             return [
                 `${prefixCls}`,
                 {
-                    [`${prefixCls}-transfer`]: this.transfer
-                }
+                    [`${prefixCls}-transfer`]: this.transfer,
+                },
             ];
         },
-        wrapClasses () {
+        wrapClasses() {
             return [
                 `${prefixCls}-rel`,
                 `${prefixCls}-${this.size}`,
                 `${inputPrefixCls}-wrapper`,
-                `${inputPrefixCls}-wrapper-${this.size}`
+                `${inputPrefixCls}-wrapper-${this.size}`,
             ];
         },
-        inputClasses () {
+        inputClasses() {
             return [
                 `${prefixCls}-input`,
                 `${inputPrefixCls}`,
                 `${inputPrefixCls}-${this.size}`,
                 {
-                    [`${inputPrefixCls}-disabled`]: this.disabled
-                }
+                    [`${inputPrefixCls}-disabled`]: this.disabled,
+                },
             ];
         },
-        displayedColor () {
+        displayedColor() {
             let color;
             if (this.visible) {
                 const rgba = this.saturationColors.rgba;
@@ -263,14 +264,14 @@ export default {
                     r: rgba.r,
                     g: rgba.g,
                     b: rgba.b,
-                    a: rgba.a
+                    a: rgba.a,
                 };
             } else {
                 color = tinycolor(this.value).toRgb();
             }
             return `rgba(${color.r}, ${color.g}, ${color.b}, ${color.a})`;
         },
-        formatColor () {
+        formatColor() {
             const value = this.saturationColors;
             const format = this.format;
             let color;
@@ -292,47 +293,47 @@ export default {
                 color = value.hex;
             }
             return color;
-        }
+        },
     },
     watch: {
-        value (newVal) {
+        value(newVal) {
             this.val = _colorChange(newVal);
         },
-        visible (val) {
+        visible(val) {
             this.val = _colorChange(this.value);
             if (val) {
                 this.$refs.drop.update();
             } else {
                 this.$refs.drop.destroy();
             }
-        }
+        },
     },
     methods: {
         // 开启 transfer 时，点击 Drop 即会关闭，这里不让其关闭
-        handleTransferClick () {
+        handleTransferClick() {
             if (this.transfer) this.disableCloseUnderTransfer = true;
         },
-        handleClose () {
+        handleClose() {
             if (this.disableCloseUnderTransfer) {
                 this.disableCloseUnderTransfer = false;
                 return false;
             }
             this.visible = false;
         },
-        toggleVisible () {
+        toggleVisible() {
             this.visible = !this.visible;
         },
-        childChange (data) {
+        childChange(data) {
             this.colorChange(data);
         },
-        colorChange (data, oldHue) {
+        colorChange(data, oldHue) {
             this.oldHue = this.saturationColors.hsl.h;
             this.saturationColors = _colorChange(data, oldHue || this.oldHue);
         },
-        isValidHex (hex) {
+        isValidHex(hex) {
             return tinycolor(hex).isValid();
         },
-        simpleCheckForValidColor (data) {
+        simpleCheckForValidColor(data) {
             const keysToCheck = ['r', 'g', 'b', 'a', 'h', 's', 'l', 'v'];
             let checked = 0;
             let passed = 0;
@@ -351,7 +352,7 @@ export default {
                 return data;
             }
         },
-        handleSuccess () {
+        handleSuccess() {
             const color = this.formatColor;
             this.currentValue = color;
             this.$emit('input', color);
@@ -359,16 +360,16 @@ export default {
             this.dispatch('FormItem', 'on-form-change', color);
             this.handleClose();
         },
-        handleClear () {
+        handleClear() {
             this.currentValue = '';
             this.$emit('input', '');
             this.$emit('on-change', '');
             this.dispatch('FormItem', 'on-form-change', '');
             this.handleClose();
         },
-        handleSelectColor (color) {
+        handleSelectColor(color) {
             this.val = _colorChange(color);
-        }
-    }
+        },
+    },
 };
 </script>

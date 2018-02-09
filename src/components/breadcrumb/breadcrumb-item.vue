@@ -20,42 +20,42 @@ export default {
     name: 'BreadcrumbItem',
     props: {
         href: {
-            type: [Object, String]
+            type: [Object, String],
         },
         to: {
-            type: [Object, String]
+            type: [Object, String],
         },
         replace: {
             type: Boolean,
-            default: false
-        }
+            default: false,
+        },
     },
-    data () {
+    data() {
         return {
             separator: '',
-            showSeparator: false
+            showSeparator: false,
         };
     },
     computed: {
-        linkClasses () {
+        linkClasses() {
             return `${prefixCls}-link`;
         },
-        separatorClasses () {
+        separatorClasses() {
             return `${prefixCls}-separator`;
-        }
+        },
     },
-    mounted () {
+    mounted() {
         this.showSeparator = this.$slots.separator !== undefined;
     },
     methods: {
-        handleClick () {
+        handleClick() {
             const isRoute = this.$router;
             if (isRoute) {
                 this.replace ? this.$router.replace(this.to || this.href) : this.$router.push(this.to || this.href);
             } else {
                 window.location.href = this.to || this.href;
             }
-        }
-    }
+        },
+    },
 };
 </script>

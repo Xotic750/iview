@@ -6,14 +6,14 @@ const lang = {
         select: {
             placeholder: 'Selecionar',
             noMatch: 'Não encontrado',
-            loading: 'Carregando'
+            loading: 'Carregando',
         },
         table: {
             noDataText: 'Sem dados',
             noFilteredDataText: 'Sem dados filtrados',
             confirmFilter: 'Confirmar',
             resetFilter: 'Limpar',
-            clearFilter: 'Todos'
+            clearFilter: 'Todos',
         },
         datepicker: {
             selectDate: 'Selecione a data',
@@ -45,7 +45,7 @@ const lang = {
                 wed: 'Qua',
                 thu: 'Qui',
                 fri: 'Sex',
-                sat: 'Sáb'
+                sat: 'Sáb',
             },
             months: {
                 m1: 'Jan',
@@ -59,24 +59,24 @@ const lang = {
                 m9: 'Set',
                 m10: 'Out',
                 m11: 'Nov',
-                m12: 'Dez'
-            }
+                m12: 'Dez',
+            },
         },
         transfer: {
             titles: {
                 source: 'Origem',
-                target: 'Destino'
+                target: 'Destino',
             },
             filterPlaceholder: 'Pesquise aqui',
-            notFoundText: 'Não encontrado'
+            notFoundText: 'Não encontrado',
         },
         modal: {
             okText: 'Confirmar',
-            cancelText: 'Cancelar'
+            cancelText: 'Cancelar',
         },
         poptip: {
             okText: 'Confirmar',
-            cancelText: 'Cancelar'
+            cancelText: 'Cancelar',
         },
         page: {
             prev: 'Página Anterior',
@@ -88,16 +88,16 @@ const lang = {
             next5: 'Avançar 5 Páginas',
             page: '/page',
             goto: 'Ir para',
-            p: ''
+            p: '',
         },
         rate: {
             star: 'Estrela',
-            stars: 'Estrelas'
+            stars: 'Estrelas',
         },
         tree: {
-            emptyText: 'Sem dados'
-        }
-    }
+            emptyText: 'Sem dados',
+        },
+    },
 };
 
 setLang(lang);

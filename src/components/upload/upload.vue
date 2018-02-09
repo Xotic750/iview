@@ -33,133 +33,133 @@ const prefixCls = 'ivu-upload';
 
 export default {
     name: 'Upload',
-    mixins: [ Emitter ],
+    mixins: [Emitter],
     components: { UploadList },
     props: {
         action: {
             type: String,
-            required: true
+            required: true,
         },
         headers: {
             type: Object,
-            default () {
+            default() {
                 return {};
-            }
+            },
         },
         multiple: {
             type: Boolean,
-            default: false
+            default: false,
         },
         data: {
-            type: Object
+            type: Object,
         },
         name: {
             type: String,
-            default: 'file'
+            default: 'file',
         },
         withCredentials: {
             type: Boolean,
-            default: false
+            default: false,
         },
         showUploadList: {
             type: Boolean,
-            default: true
+            default: true,
         },
         type: {
             type: String,
-            validator (value) {
+            validator(value) {
                 return oneOf(value, ['select', 'drag']);
             },
-            default: 'select'
+            default: 'select',
         },
         format: {
             type: Array,
-            default () {
+            default() {
                 return [];
-            }
+            },
         },
         accept: {
-            type: String
+            type: String,
         },
         maxSize: {
-            type: Number
+            type: Number,
         },
         beforeUpload: Function,
         onProgress: {
             type: Function,
-            default () {
+            default() {
                 return {};
-            }
+            },
         },
         onSuccess: {
             type: Function,
-            default () {
+            default() {
                 return {};
-            }
+            },
         },
         onError: {
             type: Function,
-            default () {
+            default() {
                 return {};
-            }
+            },
         },
         onRemove: {
             type: Function,
-            default () {
+            default() {
                 return {};
-            }
+            },
         },
         onPreview: {
             type: Function,
-            default () {
+            default() {
                 return {};
-            }
+            },
         },
         onExceededSize: {
             type: Function,
-            default () {
+            default() {
                 return {};
-            }
+            },
         },
         onFormatError: {
             type: Function,
-            default () {
+            default() {
                 return {};
-            }
+            },
         },
         defaultFileList: {
             type: Array,
             default() {
                 return [];
-            }
-        }
+            },
+        },
     },
-    data () {
+    data() {
         return {
-            prefixCls: prefixCls,
+            prefixCls,
             dragOver: false,
             fileList: [],
-            tempIndex: 1
+            tempIndex: 1,
         };
     },
     computed: {
-        classes () {
+        classes() {
             return [
                 `${prefixCls}`,
                 {
                     [`${prefixCls}-select`]: this.type === 'select',
                     [`${prefixCls}-drag`]: this.type === 'drag',
-                    [`${prefixCls}-dragOver`]: this.type === 'drag' && this.dragOver
-                }
+                    [`${prefixCls}-dragOver`]: this.type === 'drag' && this.dragOver,
+                },
             ];
         },
 
     },
     methods: {
-        handleClick () {
+        handleClick() {
             this.$refs.input.click();
         },
-        handleChange (e) {
+        handleChange(e) {
             const files = e.target.files;
 
             if (!files) {
@@ -168,28 +168,28 @@ export default {
             this.uploadFiles(files);
             this.$refs.input.value = null;
         },
-        onDrop (e) {
+        onDrop(e) {
             this.dragOver = false;
             this.uploadFiles(e.dataTransfer.files);
         },
-        uploadFiles (files) {
+        uploadFiles(files) {
             let postFiles = Array.prototype.slice.call(files);
             if (!this.multiple) postFiles = postFiles.slice(0, 1);
 
             if (postFiles.length === 0) return;
 
-            postFiles.forEach(file => {
+            postFiles.forEach((file) => {
                 this.upload(file);
             });
         },
-        upload (file) {
+        upload(file) {
             if (!this.beforeUpload) {
                 return this.post(file);
             }
 
             const before = this.beforeUpload(file);
             if (before && before.then) {
-                before.then(processedFile => {
+                before.then((processedFile) => {
                     if (Object.prototype.toString.call(processedFile) === '[object File]') {
                         this.post(processedFile);
                     } else {
@@ -204,7 +204,7 @@ export default {
                 // this.$emit('cancel', file);
             }
         },
-        post (file) {
+        post(file) {
             // check format
             if (this.format.length) {
                 const _file_format = file.name.split('.').pop().toLocaleLowerCase();
@@ -224,28 +224,28 @@ export default {
             }
 
             this.handleStart(file);
-            let formData = new FormData();
+            const formData = new FormData();
             formData.append(this.name, file);
 
             ajax({
                 headers: this.headers,
                 withCredentials: this.withCredentials,
-                file: file,
+                file,
                 data: this.data,
                 filename: this.name,
                 action: this.action,
-                onProgress: e => {
+                onProgress: (e) => {
                     this.handleProgress(e, file);
                 },
-                onSuccess: res => {
+                onSuccess: (res) => {
                     this.handleSuccess(res, file);
                 },
                 onError: (err, response) => {
                     this.handleError(err, response, file);
-                }
+                },
             });
         },
-        handleStart (file) {
+        handleStart(file) {
             file.uid = Date.now() + this.tempIndex++;
             const _file = {
                 status: 'uploading',
@@ -253,26 +253,26 @@ export default {
                 size: file.size,
                 percentage: 0,
                 uid: file.uid,
-                showProgress: true
+                showProgress: true,
             };
 
             this.fileList.push(_file);
         },
-        getFile (file) {
+        getFile(file) {
             const fileList = this.fileList;
             let target;
-            fileList.every(item => {
+            fileList.every((item) => {
                 target = file.uid === item.uid ? item : null;
                 return !target;
             });
             return target;
         },
-        handleProgress (e, file) {
+        handleProgress(e, file) {
             const _file = this.getFile(file);
             this.onProgress(e, _file, this.fileList);
             _file.percentage = e.percent || 0;
         },
-        handleSuccess (res, file) {
+        handleSuccess(res, file) {
             const _file = this.getFile(file);
 
             if (_file) {
@@ -287,7 +287,7 @@ export default {
                 }, 1000);
             }
         },
-        handleError (err, response, file) {
+        handleError(err, response, file) {
             const _file = this.getFile(file);
             const fileList = this.fileList;
 
@@ -309,20 +309,20 @@ export default {
         },
         clearFiles() {
             this.fileList = [];
-        }
+        },
     },
     watch: {
         defaultFileList: {
             immediate: true,
             handler(fileList) {
-                this.fileList = fileList.map(item => {
+                this.fileList = fileList.map((item) => {
                     item.status = 'finished';
                     item.percentage = 100;
                     item.uid = Date.now() + this.tempIndex++;
                     return item;
                 });
-            }
-        }
+            },
+        },
     },
 };
 </script>

@@ -25,13 +25,13 @@ import Locale from '../../mixins/locale';
 
 const prefixCls = 'ivu-page';
 
-function isValueNumber (value) {
-    return (/^[1-9][0-9]*$/).test(value + '');
+function isValueNumber(value) {
+    return (/^[1-9][0-9]*$/).test(`${value}`);
 }
 
 export default {
     name: 'PageOption',
-    mixins: [ Locale ],
+    mixins: [Locale],
     components: { iSelect, iOption },
     props: {
         pageSizeOpts: Array,
@@ -42,43 +42,43 @@ export default {
         pageSize: Number,
         allPages: Number,
         isSmall: Boolean,
-        placement: String
+        placement: String,
     },
-    data () {
+    data() {
         return {
-            currentPageSize: this.pageSize
+            currentPageSize: this.pageSize,
         };
     },
     watch: {
-        pageSize (val) {
+        pageSize(val) {
             this.currentPageSize = val;
-        }
+        },
     },
     computed: {
-        size () {
+        size() {
             return this.isSmall ? 'small' : 'default';
         },
-        optsClasses () {
+        optsClasses() {
             return [
-                `${prefixCls}-options`
+                `${prefixCls}-options`,
             ];
         },
-        sizerClasses () {
+        sizerClasses() {
             return [
-                `${prefixCls}-options-sizer`
+                `${prefixCls}-options-sizer`,
             ];
         },
-        ElevatorClasses () {
+        ElevatorClasses() {
             return [
-                `${prefixCls}-options-elevator`
+                `${prefixCls}-options-elevator`,
             ];
-        }
+        },
     },
     methods: {
-        changeSize () {
+        changeSize() {
             this.$emit('on-size', this.currentPageSize);
         },
-        changePage (event) {
+        changePage(event) {
             let val = event.target.value.trim();
             let page = 0;
 
@@ -101,7 +101,7 @@ export default {
                 this.$emit('on-page', page);
                 event.target.value = page;
             }
-        }
-    }
+        },
+    },
 };
 </script>

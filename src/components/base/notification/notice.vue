@@ -30,116 +30,117 @@
 </template>
 <script>
 import RenderCell from '../render';
+
 export default {
     components: {
-        RenderCell
+        RenderCell,
     },
     props: {
         prefixCls: {
             type: String,
-            default: ''
+            default: '',
         },
         duration: {
             type: Number,
-            default: 1.5
+            default: 1.5,
         },
         type: {
-            type: String
+            type: String,
         },
         content: {
             type: String,
-            default: ''
+            default: '',
         },
         withIcon: Boolean,
         render: {
-            type: Function
+            type: Function,
         },
         hasTitle: Boolean,
         styles: {
             type: Object,
-            default: function() {
+            default() {
                 return {
-                    right: '50%'
+                    right: '50%',
                 };
-            }
+            },
         },
         closable: {
             type: Boolean,
-            default: false
+            default: false,
         },
         className: {
-            type: String
+            type: String,
         },
         name: {
             type: String,
-            required: true
+            required: true,
         },
         onClose: {
-            type: Function
+            type: Function,
         },
         transitionName: {
-            type: String
-        }
+            type: String,
+        },
     },
-    data () {
+    data() {
         return {
-            withDesc: false
+            withDesc: false,
         };
     },
     computed: {
-        baseClass () {
+        baseClass() {
             return `${this.prefixCls}-notice`;
         },
-        renderFunc () {
+        renderFunc() {
             return this.render || function () {};
         },
-        classes () {
+        classes() {
             return [
                 this.baseClass,
                 {
                     [`${this.className}`]: !!this.className,
                     [`${this.baseClass}-closable`]: this.closable,
-                    [`${this.baseClass}-with-desc`]: this.withDesc
-                }
+                    [`${this.baseClass}-with-desc`]: this.withDesc,
+                },
             ];
         },
-        contentClasses () {
+        contentClasses() {
             return [
                 `${this.baseClass}-content`,
-                this.render !== undefined ? `${this.baseClass}-content-with-render` : ''
+                this.render !== undefined ? `${this.baseClass}-content-with-render` : '',
             ];
         },
-        contentWithIcon () {
+        contentWithIcon() {
             return [
                 this.withIcon ? `${this.prefixCls}-content-with-icon` : '',
-                !this.hasTitle && this.withIcon ? `${this.prefixCls}-content-with-render-notitle` : ''
+                !this.hasTitle && this.withIcon ? `${this.prefixCls}-content-with-render-notitle` : '',
             ];
         },
-        messageClasses () {
+        messageClasses() {
             return [
                 `${this.baseClass}-content`,
-                this.render !== undefined ? `${this.baseClass}-content-with-render` : ''
+                this.render !== undefined ? `${this.baseClass}-content-with-render` : '',
             ];
-        }
+        },
     },
     methods: {
-        clearCloseTimer () {
+        clearCloseTimer() {
             if (this.closeTimer) {
                 clearTimeout(this.closeTimer);
                 this.closeTimer = null;
             }
         },
-        close () {
+        close() {
             this.clearCloseTimer();
             this.onClose();
             this.$parent.close(this.name);
         },
-        handleEnter (el) {
+        handleEnter(el) {
             if (this.type === 'message') {
-                el.style.height = el.scrollHeight + 'px';
+                el.style.height = `${el.scrollHeight}px`;
             }
         },
-        handleLeave (el) {
+        handleLeave(el) {
             if (this.type === 'message') {
                 // 优化一下，如果当前只有一个 Message，则不使用 js 过渡动画，这样更优美
                 if (document.getElementsByClassName('ivu-message-notice').length !== 1) {
@@ -148,9 +149,9 @@ export default {
                     el.style.paddingBottom = 0;
                 }
             }
-        }
+        },
     },
-    mounted () {
+    mounted() {
         this.clearCloseTimer();
 
         if (this.duration !== 0) {
@@ -161,12 +162,12 @@ export default {
 
         // check if with desc in Notice component
         if (this.prefixCls === 'ivu-notice') {
-            let desc = this.$refs.content.querySelectorAll(`.${this.prefixCls}-desc`)[0];
+            const desc = this.$refs.content.querySelectorAll(`.${this.prefixCls}-desc`)[0];
             this.withDesc = this.render ? true : (desc ? desc.innerHTML !== '' : false);
         }
     },
-    beforeDestroy () {
+    beforeDestroy() {
         this.clearCloseTimer();
-    }
+    },
 };
 </script>

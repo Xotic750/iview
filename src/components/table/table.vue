@@ -105,80 +105,80 @@ let columnKey = 1;
 
 export default {
     name: 'Table',
-    mixins: [ Locale ],
+    mixins: [Locale],
     components: { tableHead, tableBody, Spin },
     props: {
         data: {
             type: Array,
-            default () {
+            default() {
                 return [];
-            }
+            },
         },
         columns: {
             type: Array,
-            default () {
+            default() {
                 return [];
-            }
+            },
         },
         size: {
-            validator (value) {
+            validator(value) {
                 return oneOf(value, ['small', 'large', 'default']);
-            }
+            },
         },
         width: {
-            type: [Number, String]
+            type: [Number, String],
         },
         height: {
-            type: [Number, String]
+            type: [Number, String],
         },
         stripe: {
             type: Boolean,
-            default: false
+            default: false,
         },
         border: {
             type: Boolean,
-            default: false
+            default: false,
         },
         showHeader: {
             type: Boolean,
-            default: true
+            default: true,
         },
         highlightRow: {
             type: Boolean,
-            default: false
+            default: false,
         },
         rowClassName: {
             type: Function,
-            default () {
+            default() {
                 return '';
-            }
+            },
         },
         context: {
-            type: Object
+            type: Object,
         },
         noDataText: {
-            type: String
+            type: String,
         },
         noFilteredDataText: {
-            type: String
+            type: String,
         },
         disabledHover: {
-            type: Boolean
+            type: Boolean,
         },
         loading: {
             type: Boolean,
-            default: false
-        }
+            default: false,
+        },
     },
-    data () {
+    data() {
         return {
             ready: false,
             tableWidth: 0,
             columnsWidth: {},
-            prefixCls: prefixCls,
+            prefixCls,
             compiledUids: [],
-            objData: this.makeObjData(),     // checkbox or highlight-row
-            rebuildData: [],    // for sort or filter
+            objData: this.makeObjData(), // checkbox or highlight-row
+            rebuildData: [], // for sort or filter
             cloneColumns: this.makeColumns(),
             showSlotHeader: true,
             showSlotFooter: true,
@@ -186,55 +186,53 @@ export default {
             bodyRealHeight: 0,
             scrollBarWidth: getScrollBarSize(),
             currentContext: this.context,
-            cloneData: deepCopy(this.data)    // when Cell has a button to delete row data, clickCurrentRow will throw an error, so clone a data
+            cloneData: deepCopy(this.data), // when Cell has a button to delete row data, clickCurrentRow will throw an error, so clone a data
         };
     },
     computed: {
-        localeNoDataText () {
+        localeNoDataText() {
             if (this.noDataText === undefined) {
                 return this.t('i.table.noDataText');
-            } else {
-                return this.noDataText;
             }
+            return this.noDataText;
         },
-        localeNoFilteredDataText () {
+        localeNoFilteredDataText() {
             if (this.noFilteredDataText === undefined) {
                 return this.t('i.table.noFilteredDataText');
-            } else {
-                return this.noFilteredDataText;
             }
+            return this.noFilteredDataText;
         },
-        wrapClasses () {
+        wrapClasses() {
             return [
                 `${prefixCls}-wrapper`,
                 {
                     [`${prefixCls}-hide`]: !this.ready,
                     [`${prefixCls}-with-header`]: this.showSlotHeader,
-                    [`${prefixCls}-with-footer`]: this.showSlotFooter
-                }
+                    [`${prefixCls}-with-footer`]: this.showSlotFooter,
+                },
             ];
         },
-        classes () {
+        classes() {
             return [
                 `${prefixCls}`,
                 {
                     [`${prefixCls}-${this.size}`]: !!this.size,
                     [`${prefixCls}-border`]: this.border,
                     [`${prefixCls}-stripe`]: this.stripe,
-                    [`${prefixCls}-with-fixed-top`]: !!this.height
-                }
+                    [`${prefixCls}-with-fixed-top`]: !!this.height,
+                },
             ];
         },
-        fixedHeaderClasses () {
+        fixedHeaderClasses() {
             return [
                 `${prefixCls}-fixed-header`,
                 {
-                    [`${prefixCls}-fixed-header-with-empty`]: !this.rebuildData.length
-                }
+                    [`${prefixCls}-fixed-header-with-empty`]: !this.rebuildData.length,
+                },
             ];
         },
-        styles () {
-            let style = {};
+        styles() {
+            const style = {};
             if (this.height) {
                 const height = (this.isLeftFixed || this.isRightFixed) ? parseInt(this.height) + this.scrollBarWidth : parseInt(this.height);
                 style.height = `${height}px`;
@@ -242,26 +240,24 @@ export default {
             if (this.width) style.width = `${this.width}px`;
             return style;
         },
-        tableStyle () {
-            let style = {};
+        tableStyle() {
+            const style = {};
             if (this.tableWidth !== 0) {
                 let width = '';
                 if (this.bodyHeight === 0) {
                     width = this.tableWidth;
+                } else if (this.bodyHeight > this.bodyRealHeight) {
+                    width = this.tableWidth;
                 } else {
-                    if (this.bodyHeight > this.bodyRealHeight) {
-                        width = this.tableWidth;
-                    } else {
-                        width = this.tableWidth - this.scrollBarWidth;
-                    }
+                    width = this.tableWidth - this.scrollBarWidth;
                 }
                 //                    const width = this.bodyHeight === 0 ? this.tableWidth : this.tableWidth - this.scrollBarWidth;
                 style.width = `${width}px`;
             }
             return style;
         },
-        fixedTableStyle () {
-            let style = {};
+        fixedTableStyle() {
+            const style = {};
             let width = 0;
             this.leftFixedColumns.forEach((col) => {
                 if (col.fixed && col.fixed === 'left') width += col._width;
@@ -269,8 +265,8 @@ export default {
             style.width = `${width}px`;
             return style;
         },
-        fixedRightTableStyle () {
-            let style = {};
+        fixedRightTableStyle() {
+            const style = {};
             let width = 0;
             this.rightFixedColumns.forEach((col) => {
                 if (col.fixed && col.fixed === 'right') width += col._width;
@@ -279,8 +275,8 @@ export default {
             style.width = `${width}px`;
             return style;
         },
-        bodyStyle () {
-            let style = {};
+        bodyStyle() {
+            const style = {};
             if (this.bodyHeight !== 0) {
                 // add a height to resolve scroll bug when browser has a scrollBar in fixed type and height prop
                 const height = (this.isLeftFixed || this.isRightFixed) ? this.bodyHeight + this.scrollBarWidth : this.bodyHeight;
@@ -288,14 +284,14 @@ export default {
             }
             return style;
         },
-        fixedBodyStyle () {
-            let style = {};
+        fixedBodyStyle() {
+            const style = {};
             if (this.bodyHeight !== 0) {
                 let height = this.bodyHeight + this.scrollBarWidth - 1;
 
                 // #2102 里，如果 Table 没有设置 width，而是集成父级的 width，固定列也应该不包含滚动条高度，所以这里直接计算表格宽度
                 const tableWidth = parseInt(getStyle(this.$el, 'width')) - 1;
-                if ((this.width && this.width < this.tableWidth) || tableWidth < this.tableWidth){
+                if ((this.width && this.width < this.tableWidth) || tableWidth < this.tableWidth) {
                     height = this.bodyHeight;
                 }
                 //                    style.height = this.scrollBarWidth > 0 ? `${this.bodyHeight}px` : `${this.bodyHeight - 1}px`;
@@ -303,9 +299,9 @@ export default {
             }
             return style;
         },
-        leftFixedColumns () {
-            let left = [];
-            let other = [];
+        leftFixedColumns() {
+            const left = [];
+            const other = [];
             this.cloneColumns.forEach((col) => {
                 if (col.fixed && col.fixed === 'left') {
                     left.push(col);
@@ -315,9 +311,9 @@ export default {
             });
             return left.concat(other);
         },
-        rightFixedColumns () {
-            let right = [];
-            let other = [];
+        rightFixedColumns() {
+            const right = [];
+            const other = [];
             this.cloneColumns.forEach((col) => {
                 if (col.fixed && col.fixed === 'right') {
                     right.push(col);
@@ -327,20 +323,20 @@ export default {
             });
             return right.concat(other);
         },
-        isLeftFixed () {
+        isLeftFixed() {
             return this.columns.some(col => col.fixed && col.fixed === 'left');
         },
-        isRightFixed () {
+        isRightFixed() {
             return this.columns.some(col => col.fixed && col.fixed === 'right');
-        }
+        },
     },
     methods: {
-        rowClsName (index) {
+        rowClsName(index) {
             return this.rowClassName(this.data[index], index);
         },
-        handleResize () {
+        handleResize() {
             this.$nextTick(() => {
-                const allWidth = !this.columns.some(cell => !cell.width);    // each column set a width
+                const allWidth = !this.columns.some(cell => !cell.width); // each column set a width
                 if (allWidth) {
                     this.tableWidth = this.columns.map(cell => cell.width).reduce((a, b) => a + b, 0);
                 } else {
@@ -349,16 +345,16 @@ export default {
                 this.columnsWidth = {};
                 if (!this.$refs.tbody) return;
                 this.$nextTick(() => {
-                    let columnsWidth = {};
+                    const columnsWidth = {};
                     let autoWidthIndex = -1;
-                    if (allWidth) autoWidthIndex = this.cloneColumns.findIndex(cell => !cell.width);//todo 这行可能有问题
+                    if (allWidth) autoWidthIndex = this.cloneColumns.findIndex(cell => !cell.width);// todo 这行可能有问题
 
                     if (this.data.length) {
                         const $tr = this.$refs.tbody.$el.querySelectorAll('tbody tr');
                         if ($tr.length === 0) return;
                         const $td = $tr[0].children;
 
-                        for (let i = 0; i < $td.length; i++) {    // can not use forEach in Firefox
+                        for (let i = 0; i < $td.length; i++) { // can not use forEach in Firefox
                             const column = this.cloneColumns[i];
 
                             let width = parseInt(getStyle($td[i], 'width'));
@@ -370,7 +366,7 @@ export default {
                             this.cloneColumns[i]._width = width;
 
                             columnsWidth[column._index] = {
-                                width: width
+                                width,
                             };
                         }
                         this.columnsWidth = columnsWidth;
@@ -380,19 +376,19 @@ export default {
                 this.bodyRealHeight = parseInt(getStyle(this.$refs.tbody.$el, 'height'));
             });
         },
-        handleMouseIn (_index) {
+        handleMouseIn(_index) {
             if (this.disabledHover) return;
             if (this.objData[_index]._isHover) return;
             this.objData[_index]._isHover = true;
         },
-        handleMouseOut (_index) {
+        handleMouseOut(_index) {
             if (this.disabledHover) return;
             this.objData[_index]._isHover = false;
         },
         // 通用处理 highlightCurrentRow 和 clearCurrentRow
-        handleCurrentRow (type, _index) {
+        handleCurrentRow(type, _index) {
             let oldIndex = -1;
-            for (let i in this.objData) {
+            for (const i in this.objData) {
                 if (this.objData[i]._isHighlight) {
                     oldIndex = parseInt(i);
                     this.objData[i]._isHighlight = false;
@@ -403,33 +399,33 @@ export default {
             const newData = type === 'highlight' ? JSON.parse(JSON.stringify(this.cloneData[_index])) : null;
             this.$emit('on-current-change', newData, oldData);
         },
-        highlightCurrentRow (_index) {
+        highlightCurrentRow(_index) {
             if (!this.highlightRow || this.objData[_index]._isHighlight) return;
             this.handleCurrentRow('highlight', _index);
         },
-        clearCurrentRow () {
+        clearCurrentRow() {
             if (!this.highlightRow) return;
             this.handleCurrentRow('clear');
         },
-        clickCurrentRow (_index) {
-            this.highlightCurrentRow (_index);
+        clickCurrentRow(_index) {
+            this.highlightCurrentRow(_index);
             this.$emit('on-row-click', JSON.parse(JSON.stringify(this.cloneData[_index])), _index);
         },
-        dblclickCurrentRow (_index) {
-            this.highlightCurrentRow (_index);
+        dblclickCurrentRow(_index) {
+            this.highlightCurrentRow(_index);
             this.$emit('on-row-dblclick', JSON.parse(JSON.stringify(this.cloneData[_index])), _index);
         },
-        getSelection () {
-            let selectionIndexes = [];
-            for (let i in this.objData) {
+        getSelection() {
+            const selectionIndexes = [];
+            for (const i in this.objData) {
                 if (this.objData[i]._isChecked) selectionIndexes.push(parseInt(i));
             }
             return JSON.parse(JSON.stringify(this.data.filter((data, index) => selectionIndexes.indexOf(index) > -1)));
         },
-        toggleSelect (_index) {
+        toggleSelect(_index) {
             let data = {};
 
-            for (let i in this.objData) {
+            for (const i in this.objData) {
                 if (parseInt(i) === _index) {
                     data = this.objData[i];
                     break;
@@ -443,10 +439,10 @@ export default {
             this.$emit(status ? 'on-select' : 'on-select-cancel', selection, JSON.parse(JSON.stringify(this.data[_index])));
             this.$emit('on-selection-change', selection);
         },
-        toggleExpand (_index) {
+        toggleExpand(_index) {
             let data = {};
 
-            for (let i in this.objData) {
+            for (const i in this.objData) {
                 if (parseInt(i) === _index) {
                     data = this.objData[i];
                     break;
@@ -456,7 +452,7 @@ export default {
             this.objData[_index]._isExpanded = status;
             this.$emit('on-expand', JSON.parse(JSON.stringify(this.cloneData[_index])), status);
         },
-        selectAll (status) {
+        selectAll(status) {
             // this.rebuildData.forEach((data) => {
             //     if(this.objData[data._index]._isDisabled){
             //         this.objData[data._index]._isChecked = false;
@@ -465,10 +461,10 @@ export default {
             //     }
 
             // });
-            for(const data of this.rebuildData){
-                if(this.objData[data._index]._isDisabled){
+            for (const data of this.rebuildData) {
+                if (this.objData[data._index]._isDisabled) {
                     continue;
-                }else{
+                } else {
                     this.objData[data._index]._isChecked = status;
                 }
             }
@@ -478,7 +474,7 @@ export default {
             }
             this.$emit('on-selection-change', selection);
         },
-        fixedHeader () {
+        fixedHeader() {
             if (this.height) {
                 this.$nextTick(() => {
                     const titleHeight = parseInt(getStyle(this.$refs.title, 'height')) || 0;
@@ -490,46 +486,45 @@ export default {
                 this.bodyHeight = 0;
             }
         },
-        hideColumnFilter () {
-            this.cloneColumns.forEach((col) => col._filterVisible = false);
+        hideColumnFilter() {
+            this.cloneColumns.forEach(col => col._filterVisible = false);
         },
-        handleBodyScroll (event) {
+        handleBodyScroll(event) {
             if (this.showHeader) this.$refs.header.scrollLeft = event.target.scrollLeft;
             if (this.isLeftFixed) this.$refs.fixedBody.scrollTop = event.target.scrollTop;
             if (this.isRightFixed) this.$refs.fixedRightBody.scrollTop = event.target.scrollTop;
             this.hideColumnFilter();
         },
-        handleMouseWheel (event) {
+        handleMouseWheel(event) {
             const deltaX = event.deltaX;
             const $body = this.$refs.body;
 
             if (deltaX > 0) {
-                $body.scrollLeft = $body.scrollLeft + 10;
+                $body.scrollLeft += 10;
             } else {
-                $body.scrollLeft = $body.scrollLeft - 10;
+                $body.scrollLeft -= 10;
             }
         },
-        sortData (data, type, index) {
+        sortData(data, type, index) {
             const key = this.cloneColumns[index].key;
             data.sort((a, b) => {
                 if (this.cloneColumns[index].sortMethod) {
                     return this.cloneColumns[index].sortMethod(a[key], b[key], type);
-                } else {
-                    if (type === 'asc') {
-                        return a[key] > b[key] ? 1 : -1;
-                    } else if (type === 'desc') {
-                        return a[key] < b[key] ? 1 : -1;
-                    }
+                }
+                if (type === 'asc') {
+                    return a[key] > b[key] ? 1 : -1;
+                } else if (type === 'desc') {
+                    return a[key] < b[key] ? 1 : -1;
                 }
             });
             return data;
         },
-        handleSort (_index, type) {
+        handleSort(_index, type) {
             const index = this.GetOriginalIndex(_index);
-            this.cloneColumns.forEach((col) => col._sortType = 'normal');
+            this.cloneColumns.forEach(col => col._sortType = 'normal');
 
             const key = this.cloneColumns[index].key;
-            if (this.cloneColumns[index].sortable !== 'custom') {    // custom is for remote sort
+            if (this.cloneColumns[index].sortable !== 'custom') { // custom is for remote sort
                 if (type === 'normal') {
                     this.rebuildData = this.makeDataWithFilter();
                 } else {
@@ -540,16 +535,16 @@ export default {
 
             this.$emit('on-sort-change', {
                 column: JSON.parse(JSON.stringify(this.columns[this.cloneColumns[index]._index])),
-                key: key,
-                order: type
+                key,
+                order: type,
             });
         },
-        handleFilterHide (index) {    // clear checked that not filter now
+        handleFilterHide(index) { // clear checked that not filter now
             if (!this.cloneColumns[index]._isFiltered) this.cloneColumns[index]._filterChecked = [];
         },
-        filterData (data, column) {
+        filterData(data, column) {
             return data.filter((row) => {
-                //如果定义了远程过滤方法则忽略此方法
+                // 如果定义了远程过滤方法则忽略此方法
                 if (typeof column.filterRemote === 'function') return true;
 
                 let status = !column._filterChecked.length;
@@ -560,8 +555,8 @@ export default {
                 return status;
             });
         },
-        filterOtherData (data, index) {
-            let column = this.cloneColumns[index];
+        filterOtherData(data, index) {
+            const column = this.cloneColumns[index];
             if (typeof column.filterRemote === 'function') {
                 column.filterRemote.call(this.$parent, column._filterChecked, column.key, column);
             }
@@ -573,7 +568,7 @@ export default {
             });
             return data;
         },
-        handleFilter (index) {
+        handleFilter(index) {
             const column = this.cloneColumns[index];
             let filterData = this.makeDataWithSort();
 
@@ -592,15 +587,15 @@ export default {
              * 左固定和右固定，要区分对待
              * 所以，此方法用来获取正确的 index
              * */
-        GetOriginalIndex (_index) {
+        GetOriginalIndex(_index) {
             return this.cloneColumns.findIndex(item => item._index === _index);
         },
-        handleFilterSelect (_index, value) {
+        handleFilterSelect(_index, value) {
             const index = this.GetOriginalIndex(_index);
             this.cloneColumns[index]._filterChecked = [value];
             this.handleFilter(index);
         },
-        handleFilterReset (_index) {
+        handleFilterReset(_index) {
             const index = this.GetOriginalIndex(_index);
             this.cloneColumns[index]._isFiltered = false;
             this.cloneColumns[index]._filterVisible = false;
@@ -611,15 +606,15 @@ export default {
             this.rebuildData = filterData;
             this.$emit('on-filter-change', this.cloneColumns[index]);
         },
-        makeData () {
-            let data = deepCopy(this.data);
+        makeData() {
+            const data = deepCopy(this.data);
             data.forEach((row, index) => {
                 row._index = index;
                 row._rowKey = rowKey++;
             });
             return data;
         },
-        makeDataWithSort () {
+        makeDataWithSort() {
             let data = this.makeData();
             let sortType = 'normal';
             let sortIndex = -1;
@@ -633,21 +628,21 @@ export default {
                     break;
                 }
             }
-            if (sortType !== 'normal' && !isCustom) data =  this.sortData(data, sortType, sortIndex);
+            if (sortType !== 'normal' && !isCustom) data = this.sortData(data, sortType, sortIndex);
             return data;
         },
-        makeDataWithFilter () {
+        makeDataWithFilter() {
             let data = this.makeData();
             this.cloneColumns.forEach(col => data = this.filterData(data, col));
             return data;
         },
-        makeDataWithSortAndFilter () {
+        makeDataWithSortAndFilter() {
             let data = this.makeDataWithSort();
             this.cloneColumns.forEach(col => data = this.filterData(data, col));
             return data;
         },
-        makeObjData () {
-            let data = {};
+        makeObjData() {
+            const data = {};
             this.data.forEach((row, index) => {
                 const newRow = deepCopy(row);// todo 直接替换
                 newRow._isHover = false;
@@ -675,16 +670,16 @@ export default {
             });
             return data;
         },
-        makeColumns () {
-            let columns = deepCopy(this.columns);
-            let left = [];
-            let right = [];
-            let center = [];
+        makeColumns() {
+            const columns = deepCopy(this.columns);
+            const left = [];
+            const right = [];
+            const center = [];
 
             columns.forEach((column, index) => {
                 column._index = index;
                 column._columnKey = columnKey++;
-                column._width = column.width ? column.width : '';    // update in handleResize()
+                column._width = column.width ? column.width : ''; // update in handleResize()
                 column._sortType = 'normal';
                 column._filterVisible = false;
                 column._isFiltered = false;
@@ -714,7 +709,7 @@ export default {
             });
             return left.concat(center).concat(right);
         },
-        exportCsv (params) {
+        exportCsv(params) {
             if (params.filename) {
                 if (params.filename.indexOf('.csv') === -1) {
                     params.filename += '.csv';
@@ -740,15 +735,15 @@ export default {
             const data = Csv(columns, datas, params, noHeader);
             if (params.callback) params.callback(data);
             else ExportCsv.download(params.filename, data);
-        }
+        },
     },
-    created () {
+    created() {
         if (!this.context) this.currentContext = this.$parent;
         this.showSlotHeader = this.$slots.header !== undefined;
         this.showSlotFooter = this.$slots.footer !== undefined;
         this.rebuildData = this.makeDataWithSortAndFilter();
     },
-    mounted () {
+    mounted() {
         this.handleResize();
         this.fixedHeader();
         this.$nextTick(() => this.ready = true);
@@ -764,13 +759,13 @@ export default {
             }
         });
     },
-    beforeDestroy () {
+    beforeDestroy() {
         off(window, 'resize', this.handleResize);
         this.observer.removeListener(this.$el, this.handleResize);
     },
     watch: {
         data: {
-            handler () {
+            handler() {
                 const oldDataLen = this.rebuildData.length;
                 this.objData = this.makeObjData();
                 this.rebuildData = this.makeDataWithSortAndFilter();
@@ -783,20 +778,20 @@ export default {
                     this.cloneData = deepCopy(this.data);
                 }, 0);
             },
-            deep: true
+            deep: true,
         },
         columns: {
-            handler () {
+            handler() {
                 // todo 这里有性能问题，可能是左右固定计算属性影响的
                 this.cloneColumns = this.makeColumns();
                 this.rebuildData = this.makeDataWithSortAndFilter();
                 this.handleResize();
             },
-            deep: true
+            deep: true,
         },
-        height () {
+        height() {
             this.fixedHeader();
-        }
-    }
+        },
+    },
 };
 </script>

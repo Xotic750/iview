@@ -16,44 +16,44 @@ export default {
     components: { Icon },
     props: {
         shape: {
-            validator (value) {
+            validator(value) {
                 return oneOf(value, ['circle', 'square']);
             },
-            default: 'circle'
+            default: 'circle',
         },
         size: {
-            validator (value) {
+            validator(value) {
                 return oneOf(value, ['small', 'large', 'default']);
             },
-            default: 'default'
+            default: 'default',
         },
         src: {
-            type: String
+            type: String,
         },
         icon: {
-            type: String
-        }
+            type: String,
+        },
     },
-    data () {
+    data() {
         return {
-            prefixCls: prefixCls,
+            prefixCls,
             scale: 1,
-            isSlotShow: false
+            isSlotShow: false,
         };
     },
     computed: {
-        classes () {
+        classes() {
             return [
                 `${prefixCls}`,
                 `${prefixCls}-${this.shape}`,
                 `${prefixCls}-${this.size}`,
                 {
                     [`${prefixCls}-image`]: !!this.src,
-                    [`${prefixCls}-icon`]: !!this.icon
-                }
+                    [`${prefixCls}-icon`]: !!this.icon,
+                },
             ];
         },
-        childrenStyle () {
+        childrenStyle() {
             let style = {};
             if (this.isSlotShow) {
                 style = {
@@ -62,14 +62,14 @@ export default {
                     transform: `scale(${this.scale})`,
                     position: 'absolute',
                     display: 'inline-block',
-                    left: `calc(50% - ${Math.round(this.$refs.children.offsetWidth / 2)}px)`
+                    left: `calc(50% - ${Math.round(this.$refs.children.offsetWidth / 2)}px)`,
                 };
             }
             return style;
-        }
+        },
     },
     methods: {
-        setScale () {
+        setScale() {
             this.isSlotShow = !this.src && !this.icon;
             if (this.$refs.children) {
                 const childrenWidth = this.$refs.children.offsetWidth;
@@ -81,13 +81,13 @@ export default {
                     this.scale = 1;
                 }
             }
-        }
+        },
     },
-    mounted () {
+    mounted() {
         this.setScale();
     },
-    updated () {
+    updated() {
         this.setScale();
-    }
+    },
 };
 </script>

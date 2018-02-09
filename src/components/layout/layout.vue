@@ -6,30 +6,28 @@ const prefixCls = 'ivu-layout';
 
 export default {
     name: 'Layout',
-    data () {
+    data() {
         return {
-            hasSider: false
+            hasSider: false,
         };
     },
     computed: {
-        wrapClasses () {
+        wrapClasses() {
             return [
                 `${prefixCls}`,
                 {
-                    [`${prefixCls}-has-sider`]: this.hasSider
-                }
+                    [`${prefixCls}-has-sider`]: this.hasSider,
+                },
             ];
-        }
+        },
     },
     methods: {
-        findSider () {
-            return this.$children.some(child => {
-                return child.$options.name === 'Sider'; 
-            });
-        }
+        findSider() {
+            return this.$children.some(child => child.$options.name === 'Sider');
+        },
     },
-    mounted () {
+    mounted() {
         this.hasSider = this.findSider();
-    }
+    },
 };
 </script>

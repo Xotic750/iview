@@ -60,82 +60,81 @@ import { initTimeDate, formatDateLabels } from '../../util';
 const prefixCls = 'ivu-picker-panel';
 const timePrefixCls = 'ivu-time-picker';
 
-const capitalize = (str) => str[0].toUpperCase() + str.slice(1);
+const capitalize = str => str[0].toUpperCase() + str.slice(1);
 
 export default {
     name: 'RangeTimePickerPanel',
-    mixins: [ Mixin, Locale, Options ],
+    mixins: [Mixin, Locale, Options],
     components: { TimeSpinner, Confirm },
     props: {
         steps: {
             type: Array,
-            default: () => []
+            default: () => [],
         },
         format: {
             type: String,
-            default: 'HH:mm:ss'
+            default: 'HH:mm:ss',
         },
         value: {
             type: Array,
-            required: true
+            required: true,
         },
     },
-    data () {
+    data() {
         const [dateStart, dateEnd] = this.value.slice();
         return {
-            prefixCls: prefixCls,
-            timePrefixCls: timePrefixCls,
+            prefixCls,
+            timePrefixCls,
             showDate: false,
             dateStart: dateStart || initTimeDate(),
-            dateEnd: dateEnd || initTimeDate()
+            dateEnd: dateEnd || initTimeDate(),
         };
     },
     computed: {
-        classes () {
+        classes() {
             return [
                 `${prefixCls}-body-wrapper`,
                 `${timePrefixCls}-with-range`,
                 {
-                    [`${timePrefixCls}-with-seconds`]: this.showSeconds
-                }
+                    [`${timePrefixCls}-with-seconds`]: this.showSeconds,
+                },
             ];
         },
-        showSeconds () {
+        showSeconds() {
             return !(this.format || '').match(/mm$/);
         },
-        leftDatePanelLabel () {
+        leftDatePanelLabel() {
             return this.panelLabelConfig(this.date);
         },
-        rightDatePanelLabel () {
+        rightDatePanelLabel() {
             return this.panelLabelConfig(this.dateEnd);
-        }
+        },
     },
     watch: {
-        value (dates) {
+        value(dates) {
             const [dateStart, dateEnd] = dates.slice();
             this.dateStart = dateStart || initTimeDate();
             this.dateEnd = dateEnd || initTimeDate();
-        }
+        },
     },
     methods: {
-        panelLabelConfig (date) {
+        panelLabelConfig(date) {
             const locale = this.t('i.locale');
             const datePanelLabel = this.t('i.datepicker.datePanelLabel');
             const { labels, separator } = formatDateLabels(locale, datePanelLabel, date || initTimeDate());
             return [labels[0].label, separator, labels[1].label].join('');
         },
-        handleChange (start, end, emit = true) {
-
+        handleChange(start, end, emit = true) {
             const dateStart = new Date(this.dateStart);
             let dateEnd = new Date(this.dateEnd);
 
             // set dateStart
-            Object.keys(start).forEach(type => {
+            Object.keys(start).forEach((type) => {
                 dateStart[`set${capitalize(type)}`](start[type]);
             });
 
             // set dateEnd
-            Object.keys(end).forEach(type => {
+            Object.keys(end).forEach((type) => {
                 dateEnd[`set${capitalize(type)}`](end[type]);
             });
 
@@ -144,19 +143,19 @@ export default {
 
             if (emit) this.$emit('on-pick', [dateStart, dateEnd], true);
         },
-        handleStartChange (date) {
+        handleStartChange(date) {
             this.handleChange(date, {});
         },
-        handleEndChange (date) {
+        handleEndChange(date) {
             this.handleChange({}, date);
         },
-        updateScroll () {
+        updateScroll() {
             this.$refs.timeSpinner.updateScroll();
             this.$refs.timeSpinnerEnd.updateScroll();
-        }
+        },
     },
-    mounted () {
+    mounted() {
         if (this.$parent && this.$parent.$options.name === 'DatePicker') this.showDate = true;
-    }
+    },
 };
 </script>

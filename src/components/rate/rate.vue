@@ -21,61 +21,61 @@ const prefixCls = 'ivu-rate';
 
 export default {
     name: 'Rate',
-    mixins: [ Locale, Emitter ],
+    mixins: [Locale, Emitter],
     props: {
         count: {
             type: Number,
-            default: 5
+            default: 5,
         },
         value: {
             type: Number,
-            default: 0
+            default: 0,
         },
         allowHalf: {
             type: Boolean,
-            default: false
+            default: false,
         },
         disabled: {
             type: Boolean,
-            default: false
+            default: false,
         },
         showText: {
             type: Boolean,
-            default: false
+            default: false,
         },
         name: {
-            type: String
-        }
+            type: String,
+        },
     },
-    data () {
+    data() {
         return {
-            prefixCls: prefixCls,
+            prefixCls,
             hoverIndex: -1,
             isHover: false,
             isHalf: this.allowHalf && this.value.toString().indexOf('.') >= 0,
-            currentValue: this.value
+            currentValue: this.value,
         };
     },
     computed: {
-        classes () {
+        classes() {
             return [
                 `${prefixCls}`,
                 {
-                    [`${prefixCls}-disabled`]: this.disabled
-                }
+                    [`${prefixCls}-disabled`]: this.disabled,
+                },
             ];
-        }
+        },
     },
     watch: {
-        value (val) {
+        value(val) {
             this.currentValue = val;
         },
-        currentValue (val) {
+        currentValue(val) {
             this.setHalf(val);
-        }
+        },
     },
     methods: {
-        starCls (value) {
+        starCls(value) {
             const hoverIndex = this.hoverIndex;
             const currentIndex = this.isHover ? hoverIndex : this.currentValue;
 
@@ -95,8 +95,8 @@ export default {
                 {
                     [`${prefixCls}-star-full`]: (!isLast && full) || (isLast && !this.isHalf),
                     [`${prefixCls}-star-half`]: isLast && this.isHalf,
-                    [`${prefixCls}-star-zero`]: !full
-                }
+                    [`${prefixCls}-star-zero`]: !full,
+                },
             ];
         },
         handleMousemove(value, event) {
@@ -111,17 +111,17 @@ export default {
             }
             this.hoverIndex = value;
         },
-        handleMouseleave () {
+        handleMouseleave() {
             if (this.disabled) return;
 
             this.isHover = false;
             this.setHalf(this.currentValue);
             this.hoverIndex = -1;
         },
-        setHalf (val) {
+        setHalf(val) {
             this.isHalf = this.allowHalf && val.toString().indexOf('.') >= 0;
         },
-        handleClick (value) {
+        handleClick(value) {
             if (this.disabled) return;
             //                 value++;
             if (this.isHalf) value -= 0.5;
@@ -129,7 +129,7 @@ export default {
             this.$emit('input', value);
             this.$emit('on-change', value);
             this.dispatch('FormItem', 'on-form-change', value);
-        }
-    }
+        },
+    },
 };
 </script>

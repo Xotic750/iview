@@ -73,167 +73,167 @@ const prefixCls = 'ivu-page';
 
 export default {
     name: 'Page',
-    mixins: [ Locale ],
+    mixins: [Locale],
     components: { Options },
     props: {
         current: {
             type: Number,
-            default: 1
+            default: 1,
         },
         total: {
             type: Number,
-            default: 0
+            default: 0,
         },
         pageSize: {
             type: Number,
-            default: 10
+            default: 10,
         },
         pageSizeOpts: {
             type: Array,
-            default () {
+            default() {
                 return [10, 20, 30, 40];
-            }
+            },
         },
         placement: {
-            validator (value) {
+            validator(value) {
                 return oneOf(value, ['top', 'bottom']);
             },
-            default: 'bottom'
+            default: 'bottom',
         },
         size: {
-            validator (value) {
+            validator(value) {
                 return oneOf(value, ['small']);
-            }
+            },
         },
         simple: {
             type: Boolean,
-            default: false
+            default: false,
         },
         showTotal: {
             type: Boolean,
-            default: false
+            default: false,
         },
         showElevator: {
             type: Boolean,
-            default: false
+            default: false,
         },
         showSizer: {
             type: Boolean,
-            default: false
+            default: false,
         },
         className: {
-            type: String
+            type: String,
         },
         styles: {
-            type: Object
-        }
+            type: Object,
+        },
     },
-    data () {
+    data() {
         return {
-            prefixCls: prefixCls,
+            prefixCls,
             currentPage: this.current,
-            currentPageSize: this.pageSize
+            currentPageSize: this.pageSize,
         };
     },
     watch: {
-        total (val) {
-            let maxPage = Math.ceil(val / this.currentPageSize);
+        total(val) {
+            const maxPage = Math.ceil(val / this.currentPageSize);
             if (maxPage < this.currentPage && maxPage > 0) {
                 this.currentPage = maxPage;
             }
         },
-        current (val) {
+        current(val) {
             this.currentPage = val;
         },
-        pageSize (val) {
+        pageSize(val) {
             this.currentPageSize = val;
-        }
+        },
     },
     computed: {
-        isSmall () {
+        isSmall() {
             return !!this.size;
         },
-        allPages () {
+        allPages() {
             const allPage = Math.ceil(this.total / this.currentPageSize);
             return (allPage === 0) ? 1 : allPage;
         },
-        simpleWrapClasses () {
+        simpleWrapClasses() {
             return [
                 `${prefixCls}`,
                 `${prefixCls}-simple`,
                 {
-                    [`${this.className}`]: !!this.className
-                }
+                    [`${this.className}`]: !!this.className,
+                },
             ];
         },
-        simplePagerClasses () {
+        simplePagerClasses() {
             return `${prefixCls}-simple-pager`;
         },
-        wrapClasses () {
+        wrapClasses() {
             return [
                 `${prefixCls}`,
                 {
                     [`${this.className}`]: !!this.className,
-                    'mini': !!this.size
-                }
+                    mini: !!this.size,
+                },
             ];
         },
-        prevClasses () {
+        prevClasses() {
             return [
                 `${prefixCls}-prev`,
                 {
-                    [`${prefixCls}-disabled`]: this.currentPage === 1
-                }
+                    [`${prefixCls}-disabled`]: this.currentPage === 1,
+                },
             ];
         },
-        nextClasses () {
+        nextClasses() {
             return [
                 `${prefixCls}-next`,
                 {
-                    [`${prefixCls}-disabled`]: this.currentPage === this.allPages
-                }
+                    [`${prefixCls}-disabled`]: this.currentPage === this.allPages,
+                },
             ];
         },
-        firstPageClasses () {
+        firstPageClasses() {
             return [
                 `${prefixCls}-item`,
                 {
-                    [`${prefixCls}-item-active`]: this.currentPage === 1
-                }
+                    [`${prefixCls}-item-active`]: this.currentPage === 1,
+                },
             ];
         },
-        lastPageClasses () {
+        lastPageClasses() {
             return [
                 `${prefixCls}-item`,
                 {
-                    [`${prefixCls}-item-active`]: this.currentPage === this.allPages
-                }
+                    [`${prefixCls}-item-active`]: this.currentPage === this.allPages,
+                },
             ];
-        }
+        },
     },
     methods: {
-        changePage (page) {
+        changePage(page) {
             if (this.currentPage != page) {
                 this.currentPage = page;
                 this.$emit('update:current', page);
                 this.$emit('on-change', page);
             }
         },
-        prev () {
+        prev() {
             const current = this.currentPage;
             if (current <= 1) {
                 return false;
             }
             this.changePage(current - 1);
         },
-        next () {
+        next() {
             const current = this.currentPage;
             if (current >= this.allPages) {
                 return false;
             }
             this.changePage(current + 1);
         },
-        fastPrev () {
+        fastPrev() {
             const page = this.currentPage - 5;
             if (page > 0) {
                 this.changePage(page);
@@ -241,7 +241,7 @@ export default {
                 this.changePage(1);
             }
         },
-        fastNext () {
+        fastNext() {
             const page = this.currentPage + 5;
             if (page > this.allPages) {
                 this.changePage(this.allPages);
@@ -249,15 +249,15 @@ export default {
                 this.changePage(page);
             }
         },
-        onSize (pageSize) {
+        onSize(pageSize) {
             this.currentPageSize = pageSize;
             this.$emit('on-page-size-change', pageSize);
             this.changePage(1);
         },
-        onPage (page) {
+        onPage(page) {
             this.changePage(page);
         },
-        keyDown (e) {
+        keyDown(e) {
             const key = e.keyCode;
             const condition = (key >= 48 && key <= 57) || (key >= 96 && key <= 105) || key === 8 || key === 37 || key === 39;
 
@@ -265,7 +265,7 @@ export default {
                 e.preventDefault();
             }
         },
-        keyUp (e) {
+        keyUp(e) {
             const key = e.keyCode;
             const val = parseInt(e.target.value);
 
@@ -287,7 +287,7 @@ export default {
                 e.target.value = page;
                 this.changePage(page);
             }
-        }
-    }
+        },
+    },
 };
 </script>

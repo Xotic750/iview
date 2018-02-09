@@ -6,14 +6,14 @@ const lang = {
         select: {
             placeholder: 'Обрати',
             noMatch: 'Немає відповідних даних',
-            loading: 'Завантаження'
+            loading: 'Завантаження',
         },
         table: {
             noDataText: 'Немає даних',
             noFilteredDataText: 'Немає даних по фільтру',
             confirmFilter: 'Підтвердити',
             resetFilter: 'Скинути',
-            clearFilter: 'Усе'
+            clearFilter: 'Усе',
         },
         datepicker: {
             selectDate: 'Обрати дату',
@@ -45,7 +45,7 @@ const lang = {
                 wed: 'Ср',
                 thu: 'Чт',
                 fri: 'Пт',
-                sat: 'Сб'
+                sat: 'Сб',
             },
             months: {
                 m1: 'Січ',
@@ -59,24 +59,24 @@ const lang = {
                 m9: 'Вер',
                 m10: 'Жов',
                 m11: 'Лис',
-                m12: 'Гру'
-            }
+                m12: 'Гру',
+            },
         },
         transfer: {
             titles: {
                 source: 'Джерело',
-                target: 'Ціль'
+                target: 'Ціль',
             },
             filterPlaceholder: 'Шукати тут',
-            notFoundText: 'Не знайдено'
+            notFoundText: 'Не знайдено',
         },
         modal: {
             okText: 'OK',
-            cancelText: 'Скасувати'
+            cancelText: 'Скасувати',
         },
         poptip: {
             okText: 'OK',
-            cancelText: 'Скасувати'
+            cancelText: 'Скасувати',
         },
         page: {
             prev: 'Попер. сторінка',
@@ -88,16 +88,16 @@ const lang = {
             next5: 'Наст. 5 сторінок',
             page: '/page',
             goto: 'Йти до',
-            p: ''
+            p: '',
         },
         rate: {
             star: 'Зірка',
-            stars: 'Зірки'
+            stars: 'Зірки',
         },
         tree: {
-            emptyText: 'Немає даних'
-        }
-    }
+            emptyText: 'Немає даних',
+        },
+    },
 };
 
 setLang(lang);

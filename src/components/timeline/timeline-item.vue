@@ -15,52 +15,52 @@ export default {
     props: {
         color: {
             type: String,
-            default: 'blue'
-        }
+            default: 'blue',
+        },
     },
-    data () {
+    data() {
         return {
-            dot: false
+            dot: false,
         };
     },
-    mounted () {
-        this.dot = this.$refs.dot.innerHTML.length ? true : false;
+    mounted() {
+        this.dot = !!this.$refs.dot.innerHTML.length;
     },
     computed: {
-        itemClasses () {
+        itemClasses() {
             return `${prefixCls}-item`;
         },
-        tailClasses () {
+        tailClasses() {
             return `${prefixCls}-item-tail`;
         },
-        headClasses () {
+        headClasses() {
             return [
                 `${prefixCls}-item-head`,
                 {
                     [`${prefixCls}-item-head-custom`]: this.dot,
-                    [`${prefixCls}-item-head-${this.color}`]: this.headColorShow
-                }
+                    [`${prefixCls}-item-head-${this.color}`]: this.headColorShow,
+                },
             ];
         },
-        headColorShow () {
+        headColorShow() {
             return this.color == 'blue' || this.color == 'red' || this.color == 'green';
         },
-        customColor () {
+        customColor() {
             let style = {};
             if (this.color) {
                 if (!this.headColorShow) {
                     style = {
-                        'color': this.color,
-                        'border-color': this.color
+                        color: this.color,
+                        'border-color': this.color,
                     };
                 }
             }
 
             return style;
         },
-        contentClasses () {
+        contentClasses() {
             return `${prefixCls}-item-content`;
-        }
-    }
+        },
+    },
 };
 </script>

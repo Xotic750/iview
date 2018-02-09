@@ -16,69 +16,68 @@ const prefixCls = 'ivu-spin';
 
 export default {
     name: 'Spin',
-    mixins: [ ScrollbarMixins ],
+    mixins: [ScrollbarMixins],
     props: {
         size: {
-            validator (value) {
+            validator(value) {
                 return oneOf(value, ['small', 'large']);
-            }
+            },
         },
         fix: {
             type: Boolean,
-            default: false
+            default: false,
         },
         fullscreen: {
             type: Boolean,
-            default: false
-        }
+            default: false,
+        },
     },
-    data () {
+    data() {
         return {
             showText: false,
             // used for $Spin
-            visible: false
+            visible: false,
         };
     },
     computed: {
-        classes () {
+        classes() {
             return [
                 `${prefixCls}`,
                 {
                     [`${prefixCls}-${this.size}`]: !!this.size,
                     [`${prefixCls}-fix`]: this.fix,
                     [`${prefixCls}-show-text`]: this.showText,
-                    [`${prefixCls}-fullscreen`]: this.fullscreen
-                }
+                    [`${prefixCls}-fullscreen`]: this.fullscreen,
+                },
             ];
         },
-        mainClasses () {
+        mainClasses() {
             return `${prefixCls}-main`;
         },
-        dotClasses () {
+        dotClasses() {
             return `${prefixCls}-dot`;
         },
-        textClasses () {
+        textClasses() {
             return `${prefixCls}-text`;
         },
-        fullscreenVisible () {
+        fullscreenVisible() {
             if (this.fullscreen) {
                 return this.visible;
-            } else {
-                return true;
             }
-        }
+            return true;
+        },
     },
     watch: {
-        visible (val) {
+        visible(val) {
             if (val) {
                 this.addScrollEffect();
             } else {
                 this.removeScrollEffect();
             }
-        }
+        },
     },
-    mounted () {
+    mounted() {
         this.showText = this.$slots.default !== undefined;
-    }
+    },
 };
 </script>

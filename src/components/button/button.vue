@@ -20,41 +20,41 @@ export default {
     components: { Icon },
     props: {
         type: {
-            validator (value) {
+            validator(value) {
                 return oneOf(value, ['primary', 'ghost', 'dashed', 'text', 'info', 'success', 'warning', 'error', 'default']);
-            }
+            },
         },
         shape: {
-            validator (value) {
+            validator(value) {
                 return oneOf(value, ['circle', 'circle-outline']);
-            }
+            },
         },
         size: {
-            validator (value) {
+            validator(value) {
                 return oneOf(value, ['small', 'large', 'default']);
-            }
+            },
         },
         loading: Boolean,
         disabled: Boolean,
         htmlType: {
             default: 'button',
-            validator (value) {
+            validator(value) {
                 return oneOf(value, ['button', 'submit', 'reset']);
-            }
+            },
         },
         icon: String,
         long: {
             type: Boolean,
-            default: false
-        }
+            default: false,
+        },
     },
-    data () {
+    data() {
         return {
-            showSlot: true
+            showSlot: true,
         };
     },
     computed: {
-        classes () {
+        classes() {
             return [
                 `${prefixCls}`,
                 {
@@ -63,18 +63,18 @@ export default {
                     [`${prefixCls}-${this.shape}`]: !!this.shape,
                     [`${prefixCls}-${this.size}`]: !!this.size,
                     [`${prefixCls}-loading`]: this.loading != null && this.loading,
-                    [`${prefixCls}-icon-only`]: !this.showSlot && (!!this.icon || this.loading)
-                }
+                    [`${prefixCls}-icon-only`]: !this.showSlot && (!!this.icon || this.loading),
+                },
             ];
-        }
+        },
     },
     methods: {
-        handleClick (event) {
+        handleClick(event) {
             this.$emit('click', event);
-        }
+        },
     },
-    mounted () {
+    mounted() {
         this.showSlot = this.$slots.default !== undefined;
-    }
+    },
 };
 </script>

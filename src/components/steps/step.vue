@@ -24,87 +24,85 @@ const iconPrefixCls = 'ivu-icon';
 
 export default {
     name: 'Step',
-    mixins: [ Emitter ],
+    mixins: [Emitter],
     props: {
         status: {
-            validator (value) {
+            validator(value) {
                 return oneOf(value, ['wait', 'process', 'finish', 'error']);
-            }
+            },
         },
         title: {
             type: String,
-            default: ''
+            default: '',
         },
         content: {
-            type: String
+            type: String,
         },
         icon: {
-            type: String
-        }
+            type: String,
+        },
     },
-    data () {
+    data() {
         return {
-            prefixCls: prefixCls,
+            prefixCls,
             stepNumber: '',
             nextError: false,
             total: 1,
-            currentStatus: ''
+            currentStatus: '',
         };
     },
     computed: {
-        wrapClasses () {
+        wrapClasses() {
             return [
                 `${prefixCls}-item`,
                 `${prefixCls}-status-${this.currentStatus}`,
                 {
                     [`${prefixCls}-custom`]: !!this.icon,
-                    [`${prefixCls}-next-error`]: this.nextError
-                }
+                    [`${prefixCls}-next-error`]: this.nextError,
+                },
             ];
         },
-        iconClasses () {
+        iconClasses() {
             let icon = '';
 
             if (this.icon) {
                 icon = this.icon;
-            } else {
-                if (this.currentStatus == 'finish') {
-                    icon = 'ios-checkmark-empty';
-                } else if (this.currentStatus == 'error') {
-                    icon = 'ios-close-empty';
-                }
+            } else if (this.currentStatus == 'finish') {
+                icon = 'ios-checkmark-empty';
+            } else if (this.currentStatus == 'error') {
+                icon = 'ios-close-empty';
             }
 
             return [
                 `${prefixCls}-icon`,
                 `${iconPrefixCls}`,
                 {
-                    [`${iconPrefixCls}-${icon}`]: icon != ''
-                }
+                    [`${iconPrefixCls}-${icon}`]: icon != '',
+                },
             ];
         },
-        styles () {
+        styles() {
             return {
-                width: `${1/this.total*100}%`
+                width: `${1 / this.total * 100}%`,
             };
-        }
+        },
     },
     watch: {
-        status (val) {
+        status(val) {
             this.currentStatus = val;
             if (this.currentStatus == 'error') {
                 this.$parent.setNextError();
             }
-        }
+        },
     },
-    created () {
+    created() {
         this.currentStatus = this.status;
     },
-    mounted () {
+    mounted() {
         this.dispatch('Steps', 'append');
     },
-    beforeDestroy () {
+    beforeDestroy() {
         this.dispatch('Steps', 'remove');
-    }
+    },
 };
 </script>

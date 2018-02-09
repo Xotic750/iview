@@ -6,14 +6,14 @@ const lang = {
         select: {
             placeholder: 'Välj',
             noMatch: 'Ingen träff',
-            loading: 'Ladar'
+            loading: 'Ladar',
         },
         table: {
             noDataText: 'Ingen data',
             noFilteredDataText: 'Ingen filter data',
             confirmFilter: 'Bekräfta',
             resetFilter: 'Återställ filter',
-            clearFilter: 'Rensa filter'
+            clearFilter: 'Rensa filter',
         },
         datepicker: {
             selectDate: 'Välj datum',
@@ -45,7 +45,7 @@ const lang = {
                 wed: 'Ons',
                 thu: 'Tor',
                 fri: 'Fre',
-                sat: 'Lör'
+                sat: 'Lör',
             },
             months: {
                 m1: 'Jan',
@@ -59,24 +59,24 @@ const lang = {
                 m9: 'Sep',
                 m10: 'Okt',
                 m11: 'Nov',
-                m12: 'Dec'
-            }
+                m12: 'Dec',
+            },
         },
         transfer: {
             titles: {
                 source: 'Källa',
-                target: 'Mål'
+                target: 'Mål',
             },
             filterPlaceholder: 'Sök här',
-            notFoundText: 'Hittade inte'
+            notFoundText: 'Hittade inte',
         },
         modal: {
             okText: 'Ok',
-            cancelText: 'Avbryt'
+            cancelText: 'Avbryt',
         },
         poptip: {
             okText: 'Ok',
-            cancelText: 'Avbryt'
+            cancelText: 'Avbryt',
         },
         page: {
             prev: 'Föregående sida',
@@ -88,16 +88,16 @@ const lang = {
             next5: 'Nästa 5 sidor',
             page: '/page',
             goto: 'Gå till',
-            p: ''
+            p: '',
         },
         rate: {
             star: 'Stjärna',
-            stars: 'Stjärnor'
+            stars: 'Stjärnor',
         },
         tree: {
-            emptyText: 'Ingen data'
-        }
-    }
+            emptyText: 'Ingen data',
+        },
+    },
 };
 
 setLang(lang);

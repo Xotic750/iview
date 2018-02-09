@@ -38,96 +38,96 @@ const prefixCls = 'ivu-modal';
 
 export default {
     name: 'Modal',
-    mixins: [ Locale, Emitter, ScrollbarMixins ],
+    mixins: [Locale, Emitter, ScrollbarMixins],
     components: { Icon, iButton },
     directives: { TransferDom },
     props: {
         value: {
             type: Boolean,
-            default: false
+            default: false,
         },
         closable: {
             type: Boolean,
-            default: true
+            default: true,
         },
         maskClosable: {
             type: Boolean,
-            default: true
+            default: true,
         },
         title: {
-            type: String
+            type: String,
         },
         width: {
             type: [Number, String],
-            default: 520
+            default: 520,
         },
         okText: {
-            type: String
+            type: String,
         },
         cancelText: {
-            type: String
+            type: String,
         },
         loading: {
             type: Boolean,
-            default: false
+            default: false,
         },
         styles: {
-            type: Object
+            type: Object,
         },
         className: {
-            type: String
+            type: String,
         },
         // for instance
         footerHide: {
             type: Boolean,
-            default: false
+            default: false,
         },
         scrollable: {
             type: Boolean,
-            default: false
+            default: false,
         },
         transitionNames: {
             type: Array,
-            default () {
+            default() {
                 return ['ease', 'fade'];
-            }
+            },
         },
         transfer: {
             type: Boolean,
-            default: true
-        }
+            default: true,
+        },
     },
-    data () {
+    data() {
         return {
-            prefixCls: prefixCls,
+            prefixCls,
             wrapShow: false,
             showHead: true,
             buttonLoading: false,
-            visible: this.value
+            visible: this.value,
         };
     },
     computed: {
-        wrapClasses () {
+        wrapClasses() {
             return [
                 `${prefixCls}-wrap`,
                 {
                     [`${prefixCls}-hidden`]: !this.wrapShow,
-                    [`${this.className}`]: !!this.className
-                }
+                    [`${this.className}`]: !!this.className,
+                },
             ];
         },
-        maskClasses () {
+        maskClasses() {
             return `${prefixCls}-mask`;
         },
-        classes () {
+        classes() {
             return `${prefixCls}`;
         },
-        mainStyles () {
-            let style = {};
+        mainStyles() {
+            const style = {};
 
             const width = parseInt(this.width);
             const styleWidth = {
-                width: width <= 100 ? `${width}%` : `${width}px`
+                width: width <= 100 ? `${width}%` : `${width}px`,
             };
 
             const customStyle = this.styles ? this.styles : {};
@@ -136,41 +136,39 @@ export default {
 
             return style;
         },
-        localeOkText () {
+        localeOkText() {
             if (this.okText === undefined) {
                 return this.t('i.modal.okText');
-            } else {
-                return this.okText;
             }
+            return this.okText;
         },
-        localeCancelText () {
+        localeCancelText() {
             if (this.cancelText === undefined) {
                 return this.t('i.modal.cancelText');
-            } else {
-                return this.cancelText;
             }
-        }
+            return this.cancelText;
+        },
     },
     methods: {
-        close () {
+        close() {
             this.visible = false;
             this.$emit('input', false);
             this.$emit('on-cancel');
         },
-        mask () {
+        mask() {
             if (this.maskClosable) {
                 this.close();
             }
         },
-        handleWrapClick (event) {
+        handleWrapClick(event) {
             // use indexOf,do not use === ,because ivu-modal-wrap can have other custom className
             const className = event.target.getAttribute('class');
             if (className && className.indexOf(`${prefixCls}-wrap`) > -1) this.mask();
         },
-        cancel () {
+        cancel() {
             this.close();
         },
-        ok () {
+        ok() {
             if (this.loading) {
                 this.buttonLoading = true;
             } else {
@@ -179,7 +177,7 @@ export default {
             }
             this.$emit('on-ok');
         },
-        EscClose (e) {
+        EscClose(e) {
             if (this.visible && this.closable) {
                 if (e.keyCode === 27) {
                     this.close();
@@ -188,9 +186,9 @@ export default {
         },
         animationFinish() {
             this.$emit('on-hidden');
-        }
+        },
     },
-    mounted () {
+    mounted() {
         if (this.visible) {
             this.wrapShow = true;
         }
@@ -206,15 +204,15 @@ export default {
         // ESC close
         document.addEventListener('keydown', this.EscClose);
     },
-    beforeDestroy () {
+    beforeDestroy() {
         document.removeEventListener('keydown', this.EscClose);
         this.removeScrollEffect();
     },
     watch: {
-        value (val) {
+        value(val) {
             this.visible = val;
         },
-        visible (val) {
+        visible(val) {
             if (val === false) {
                 this.buttonLoading = false;
                 this.timer = setTimeout(() => {
@@ -229,26 +227,26 @@ export default {
                 }
             }
             this.broadcast('Table', 'on-visible-change', val);
-            this.broadcast('Slider', 'on-visible-change', val);  // #2852
+            this.broadcast('Slider', 'on-visible-change', val); // #2852
             this.$emit('on-visible-change', val);
         },
-        loading (val) {
+        loading(val) {
             if (!val) {
                 this.buttonLoading = false;
             }
         },
-        scrollable (val) {
+        scrollable(val) {
             if (!val) {
                 this.addScrollEffect();
             } else {
                 this.removeScrollEffect();
             }
         },
-        title (val) {
+        title(val) {
             if (this.$slots.header === undefined) {
                 this.showHead = !!val;
             }
-        }
-    }
+        },
+    },
 };
 </script>

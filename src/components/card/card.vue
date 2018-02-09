@@ -15,60 +15,59 @@ export default {
     props: {
         bordered: {
             type: Boolean,
-            default: true
+            default: true,
         },
         disHover: {
             type: Boolean,
-            default: false
+            default: false,
         },
         shadow: {
             type: Boolean,
-            default: false
+            default: false,
         },
         padding: {
             type: Number,
-            default: defaultPadding
-        }
+            default: defaultPadding,
+        },
     },
-    data () {
+    data() {
         return {
             showHead: true,
-            showExtra: true
+            showExtra: true,
         };
     },
     computed: {
-        classes () {
+        classes() {
             return [
                 `${prefixCls}`,
                 {
                     [`${prefixCls}-bordered`]: this.bordered && !this.shadow,
                     [`${prefixCls}-dis-hover`]: this.disHover || this.shadow,
-                    [`${prefixCls}-shadow`]: this.shadow
-                }
+                    [`${prefixCls}-shadow`]: this.shadow,
+                },
             ];
         },
-        headClasses () {
+        headClasses() {
             return `${prefixCls}-head`;
         },
-        extraClasses () {
+        extraClasses() {
             return `${prefixCls}-extra`;
         },
-        bodyClasses () {
+        bodyClasses() {
             return `${prefixCls}-body`;
         },
-        bodyStyles () {
+        bodyStyles() {
             if (this.padding !== defaultPadding) {
                 return {
-                    padding: `${this.padding}px`
+                    padding: `${this.padding}px`,
                 };
-            } else {
-                return '';
             }
-        }
+            return '';
+        },
     },
-    mounted () {
+    mounted() {
         this.showHead = this.$slots.title !== undefined;
         this.showExtra = this.$slots.extra !== undefined;
-    }
+    },
 };
 </script>

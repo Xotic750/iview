@@ -6,14 +6,14 @@ const lang = {
         select: {
             placeholder: 'ตัวเลือก',
             noMatch: 'ข้อมูลไม่ตรงกัน',
-            loading: 'ดาวน์โหลด'
+            loading: 'ดาวน์โหลด',
         },
         table: {
             noDataText: 'ไม่พบข้อมูล',
             noFilteredDataText: 'ไม่พบตัวกรองข้อมูล',
             confirmFilter: 'ยืนยัน',
             resetFilter: 'รีเซ็ต',
-            clearFilter: 'ทั้งหมด'
+            clearFilter: 'ทั้งหมด',
         },
         datepicker: {
             selectDate: 'เลือกวัน',
@@ -45,7 +45,7 @@ const lang = {
                 wed: 'พุธ',
                 thu: 'พฤหัสบดี',
                 fri: 'ศุกร์',
-                sat: 'เสาร์'
+                sat: 'เสาร์',
             },
             months: {
                 m1: 'ม.ค.',
@@ -59,24 +59,24 @@ const lang = {
                 m9: 'ก.ย.',
                 m10: 'ต.ค.',
                 m11: 'พ.ย.',
-                m12: 'ธ.ค.'
-            }
+                m12: 'ธ.ค.',
+            },
         },
         transfer: {
             titles: {
                 source: 'แหล่งข้อมูล',
-                target: 'เป้าหมาย'
+                target: 'เป้าหมาย',
             },
             filterPlaceholder: 'ค้นหาที่นี้',
-            notFoundText: 'ค้นหาไม่พบ'
+            notFoundText: 'ค้นหาไม่พบ',
         },
         modal: {
             okText: 'ตกลง',
-            cancelText: 'ยกเลิก'
+            cancelText: 'ยกเลิก',
         },
         poptip: {
             okText: 'ตกลง',
-            cancelText: 'ยกเลิก'
+            cancelText: 'ยกเลิก',
         },
         page: {
             prev: 'หน้าก่อน',
@@ -88,16 +88,16 @@ const lang = {
             next5: 'ถัดไป 5 หน้า',
             page: '/หน้า',
             goto: 'ไปยัง',
-            p: 'หน้า'
+            p: 'หน้า',
         },
         rate: {
             star: 'ดวง',
-            stars: 'ดวง'
+            stars: 'ดวง',
         },
         tree: {
-            emptyText: 'ไม่พบข้อมูล'
-        }
-    }
+            emptyText: 'ไม่พบข้อมูล',
+        },
+    },
 };
 
 setLang(lang);

@@ -6,14 +6,14 @@ const lang = {
         select: {
             placeholder: 'कृपया चुने|',
             noMatch: 'कोई आकड़ा उपलब्ध नहीं है|',
-            loading: 'लोड हो रहा है'
+            loading: 'लोड हो रहा है',
         },
         table: {
             noDataText: 'कोई आकड़ा उपलब्ध नहीं है',
             noFilteredDataText: 'कोई आकड़ा उपलब्ध नहीं है',
             confirmFilter: 'पुष्टि करें',
             resetFilter: 'पुनः तैयार करना',
-            clearFilter: 'सब कुछ'
+            clearFilter: 'सब कुछ',
         },
         datepicker: {
             selectDate: 'दिनांक चुनें',
@@ -45,7 +45,7 @@ const lang = {
                 wed: 'बुधवार',
                 thu: 'गुरुवार',
                 fri: 'शुक्रवार',
-                sat: 'शनिवार'
+                sat: 'शनिवार',
             },
             months: {
                 m1: 'जनवरी',
@@ -59,24 +59,24 @@ const lang = {
                 m9: 'सितंबर',
                 m10: 'अक्टूबर',
                 m11: 'नवंबर',
-                m12: 'दिसंबर'
-            }
+                m12: 'दिसंबर',
+            },
         },
         transfer: {
             titles: {
                 source: 'स्रोत',
-                target: 'लक्ष्य'
+                target: 'लक्ष्य',
             },
             filterPlaceholder: 'यहां खोजें',
-            notFoundText: 'कोई आकड़ा उपलब्ध नहीं है'
+            notFoundText: 'कोई आकड़ा उपलब्ध नहीं है',
         },
         modal: {
             okText: 'ठीक',
-            cancelText: 'निरस्त करना'
+            cancelText: 'निरस्त करना',
         },
         poptip: {
             okText: 'ठीक',
-            cancelText: 'निरस्त करना'
+            cancelText: 'निरस्त करना',
         },
         page: {
             prev: 'पिछला पेज',
@@ -88,16 +88,16 @@ const lang = {
             next5: 'अगला 5 पेज',
             page: '/page',
             goto: 'जाओ',
-            p: ''
+            p: '',
         },
         rate: {
             star: 'प्रसिद्ध',
-            stars: 'प्रसिद्ध'
+            stars: 'प्रसिद्ध',
         },
         tree: {
-            emptyText: 'कोई आकड़ा उपलब्ध नहीं है'
-        }
-    }
+            emptyText: 'कोई आकड़ा उपलब्ध नहीं है',
+        },
+    },
 };
 
 setLang(lang);

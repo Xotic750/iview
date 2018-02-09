@@ -68,91 +68,93 @@ const selectPrefixCls = 'ivu-select';
 
 export default {
     name: 'Cascader',
-    mixins: [ Emitter, Locale ],
-    components: { iInput, Drop, Icon, Caspanel },
+    mixins: [Emitter, Locale],
+    components: {
+        iInput, Drop, Icon, Caspanel,
+    },
     directives: { clickoutside, TransferDom },
     props: {
         data: {
             type: Array,
-            default () {
+            default() {
                 return [];
-            }
+            },
         },
         value: {
             type: Array,
-            default () {
+            default() {
                 return [];
-            }
+            },
         },
         disabled: {
             type: Boolean,
-            default: false
+            default: false,
         },
         clearable: {
             type: Boolean,
-            default: true
+            default: true,
         },
         placeholder: {
-            type: String
+            type: String,
         },
         size: {
-            validator (value) {
+            validator(value) {
                 return oneOf(value, ['small', 'large']);
-            }
+            },
         },
         trigger: {
-            validator (value) {
+            validator(value) {
                 return oneOf(value, ['click', 'hover']);
             },
-            default: 'click'
+            default: 'click',
         },
         changeOnSelect: {
             type: Boolean,
-            default: false
+            default: false,
         },
         renderFormat: {
             type: Function,
-            default (label) {
+            default(label) {
                 return label.join(' / ');
-            }
+            },
         },
         loadData: {
-            type: Function
+            type: Function,
         },
         filterable: {
             type: Boolean,
-            default: false
+            default: false,
         },
         notFoundText: {
-            type: String
+            type: String,
         },
         transfer: {
             type: Boolean,
-            default: false
+            default: false,
         },
         name: {
-            type: String
+            type: String,
         },
         elementId: {
-            type: String
-        }
+            type: String,
+        },
     },
-    data () {
+    data() {
         return {
-            prefixCls: prefixCls,
-            selectPrefixCls: selectPrefixCls,
+            prefixCls,
+            selectPrefixCls,
             visible: false,
             selected: [],
             tmpSelected: [],
-            updatingValue: false,    // to fix set value in changeOnSelect type
+            updatingValue: false, // to fix set value in changeOnSelect type
             currentValue: this.value,
             query: '',
             validDataStr: '',
-            isLoadedChildren: false    // #950
+            isLoadedChildren: false, // #950
         };
     },
     computed: {
-        classes () {
+        classes() {
             return [
                 `${prefixCls}`,
                 {
@@ -160,48 +162,46 @@ export default {
                     [`${prefixCls}-size-${this.size}`]: !!this.size,
                     [`${prefixCls}-visible`]: this.visible,
                     [`${prefixCls}-disabled`]: this.disabled,
-                    [`${prefixCls}-not-found`]: this.filterable && this.query !== '' && !this.querySelections.length
-                }
+                    [`${prefixCls}-not-found`]: this.filterable && this.query !== '' && !this.querySelections.length,
+                },
             ];
         },
-        showCloseIcon () {
+        showCloseIcon() {
             return this.currentValue && this.currentValue.length && this.clearable && !this.disabled;
         },
-        displayRender () {
-            let label = [];
+        displayRender() {
+            const label = [];
             for (let i = 0; i < this.selected.length; i++) {
                 label.push(this.selected[i].label);
             }
 
             return this.renderFormat(label, this.selected);
         },
-        displayInputRender () {
+        displayInputRender() {
             return this.filterable ? '' : this.displayRender;
         },
-        localePlaceholder () {
+        localePlaceholder() {
             if (this.placeholder === undefined) {
                 return this.t('i.select.placeholder');
-            } else {
-                return this.placeholder;
             }
+            return this.placeholder;
         },
-        inputPlaceholder () {
+        inputPlaceholder() {
             return this.filterable && this.currentValue.length ? null : this.localePlaceholder;
         },
-        localeNotFoundText () {
+        localeNotFoundText() {
             if (this.notFoundText === undefined) {
                 return this.t('i.select.noMatch');
-            } else {
-                return this.notFoundText;
             }
+            return this.notFoundText;
         },
-        querySelections () {
+        querySelections() {
             let selections = [];
-            function getSelections (arr, label, value) {
+            function getSelections(arr, label, value) {
                 for (let i = 0; i < arr.length; i++) {
-                    let item = arr[i];
-                    item.__label = label ? label + ' / ' + item.label : item.label;
-                    item.__value = value ? value + ',' + item.value : item.value;
+                    const item = arr[i];
+                    item.__label = label ? `${label} / ${item.label}` : item.label;
+                    item.__value = value ? `${value},${item.value}` : item.value;
 
                     if (item.children && item.children.length) {
                         getSelections(item.children, item.__label, item.__value);
@@ -212,24 +212,22 @@ export default {
                             label: item.__label,
                             value: item.__value,
                             display: item.__label,
-                            item: item,
-                            disabled: !!item.disabled
+                            item,
+                            disabled: !!item.disabled,
                         });
                     }
                 }
             }
             getSelections(this.data);
-            selections = selections.filter(item => {
-                return item.label ? item.label.indexOf(this.query) > -1 : false;
-            }).map(item => {
+            selections = selections.filter(item => (item.label ? item.label.indexOf(this.query) > -1 : false)).map((item) => {
                 item.display = item.display.replace(new RegExp(this.query, 'g'), `<span>${this.query}</span>`);
                 return item;
             });
             return selections;
-        }
+        },
     },
     methods: {
-        clearSelect () {
+        clearSelect() {
             if (this.disabled) return false;
             const oldVal = JSON.stringify(this.currentValue);
             this.currentValue = this.selected = this.tmpSelected = [];
@@ -238,10 +236,10 @@ export default {
             //                this.$broadcast('on-clear');
             this.broadcast('Caspanel', 'on-clear');
         },
-        handleClose () {
+        handleClose() {
             this.visible = false;
         },
-        toggleOpen () {
+        toggleOpen() {
             if (this.disabled) return false;
             if (this.visible) {
                 if (!this.filterable) this.handleClose();
@@ -249,38 +247,38 @@ export default {
                 this.onFocus();
             }
         },
-        onFocus () {
+        onFocus() {
             this.visible = true;
             if (!this.currentValue.length) {
                 this.broadcast('Caspanel', 'on-clear');
             }
         },
-        updateResult (result) {
+        updateResult(result) {
             this.tmpSelected = result;
         },
-        updateSelected (init = false, changeOnSelectDataChange = false) {
+        updateSelected(init = false, changeOnSelectDataChange = false) {
             // #2793 changeOnSelectDataChange used for changeOnSelect when data changed and set value
             if (!this.changeOnSelect || init || changeOnSelectDataChange) {
                 this.broadcast('Caspanel', 'on-find-selected', {
-                    value: this.currentValue
+                    value: this.currentValue,
                 });
             }
         },
-        emitValue (val, oldVal) {
+        emitValue(val, oldVal) {
             if (JSON.stringify(val) !== oldVal) {
                 this.$emit('on-change', this.currentValue, JSON.parse(JSON.stringify(this.selected)));
                 this.$nextTick(() => {
                     this.dispatch('FormItem', 'on-form-change', {
                         value: this.currentValue,
-                        selected: JSON.parse(JSON.stringify(this.selected))
+                        selected: JSON.parse(JSON.stringify(this.selected)),
                     });
                 });
             }
         },
-        handleInput (event) {
+        handleInput(event) {
             this.query = event.target.value;
         },
-        handleSelectItem (index) {
+        handleSelectItem(index) {
             const item = this.querySelections[index];
 
             if (item.item.disabled) return false;
@@ -291,12 +289,12 @@ export default {
             this.emitValue(this.currentValue, oldVal);
             this.handleClose();
         },
-        handleFocus () {
+        handleFocus() {
             this.$refs.input.focus();
         },
         // 排除 loading 后的 data，避免重复触发 updateSelect
-        getValidData (data) {
-            function deleteData (item) {
+        getValidData(data) {
+            function deleteData(item) {
                 const new_item = Object.assign({}, item);
                 if ('loading' in new_item) {
                     delete new_item.loading;
@@ -314,9 +312,9 @@ export default {
             }
 
             return data.map(item => deleteData(item));
-        }
+        },
     },
-    created () {
+    created() {
         this.validDataStr = JSON.stringify(this.getValidData(this.data));
         this.$on('on-result-change', (params) => {
             // lastValue: is click the final val
@@ -329,7 +327,7 @@ export default {
                 const oldVal = JSON.stringify(this.currentValue);
                 this.selected = this.tmpSelected;
 
-                let newVal = [];
+                const newVal = [];
                 this.selected.forEach((item) => {
                     newVal.push(item.value);
                 });
@@ -345,11 +343,11 @@ export default {
             }
         });
     },
-    mounted () {
+    mounted() {
         this.updateSelected(true);
     },
     watch: {
-        visible (val) {
+        visible(val) {
             if (val) {
                 if (this.currentValue.length) {
                     this.updateSelected();
@@ -368,11 +366,11 @@ export default {
             }
             this.$emit('on-visible-change', val);
         },
-        value (val) {
+        value(val) {
             this.currentValue = val;
             if (!val.length) this.selected = [];
         },
-        currentValue () {
+        currentValue() {
             this.$emit('input', this.currentValue);
             if (this.updatingValue) {
                 this.updatingValue = false;
@@ -382,7 +380,7 @@ export default {
         },
         data: {
             deep: true,
-            handler () {
+            handler() {
                 const validDataStr = JSON.stringify(this.getValidData(this.data));
                 if (validDataStr !== this.validDataStr) {
                     this.validDataStr = validDataStr;
@@ -391,8 +389,8 @@ export default {
                     }
                     this.isLoadedChildren = false;
                 }
-            }
-        }
-    }
+            },
+        },
+    },
 };
 </script>

@@ -12,31 +12,31 @@ export default {
     name: 'ButtonGroup',
     props: {
         size: {
-            validator (value) {
+            validator(value) {
                 return oneOf(value, ['small', 'large', 'default']);
-            }
+            },
         },
         shape: {
-            validator (value) {
+            validator(value) {
                 return oneOf(value, ['circle', 'circle-outline']);
-            }
+            },
         },
         vertical: {
             type: Boolean,
-            default: false
-        }
+            default: false,
+        },
     },
     computed: {
-        classes () {
+        classes() {
             return [
                 `${prefixCls}`,
                 {
                     [`${prefixCls}-${this.size}`]: !!this.size,
                     [`${prefixCls}-${this.shape}`]: !!this.shape,
-                    [`${prefixCls}-vertical`]: this.vertical
-                }
+                    [`${prefixCls}-vertical`]: this.vertical,
+                },
             ];
-        }
-    }
+        },
+    },
 };
 </script>

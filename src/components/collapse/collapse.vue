@@ -11,27 +11,27 @@ export default {
     props: {
         accordion: {
             type: Boolean,
-            default: false
+            default: false,
         },
         value: {
-            type: [Array, String]
-        }
+            type: [Array, String],
+        },
     },
-    data () {
+    data() {
         return {
-            currentValue: this.value
+            currentValue: this.value,
         };
     },
     computed: {
-        classes () {
+        classes() {
             return `${prefixCls}`;
-        }
+        },
     },
-    mounted () {
+    mounted() {
         this.setActive();
     },
     methods: {
-        setActive () {
+        setActive() {
             const activeKey = this.getActiveKey();
 
             this.$children.forEach((child, index) => {
@@ -48,7 +48,7 @@ export default {
                 child.index = index;
             });
         },
-        getActiveKey () {
+        getActiveKey() {
             let activeKey = this.currentValue || [];
             const accordion = this.accordion;
 
@@ -66,7 +66,7 @@ export default {
 
             return activeKey;
         },
-        toggle (data) {
+        toggle(data) {
             const name = data.name.toString();
             let newActiveKey = [];
 
@@ -75,17 +75,15 @@ export default {
                     newActiveKey.push(name);
                 }
             } else {
-                let activeKey = this.getActiveKey();
+                const activeKey = this.getActiveKey();
                 const nameIndex = activeKey.indexOf(name);
 
                 if (data.isActive) {
                     if (nameIndex > -1) {
                         activeKey.splice(nameIndex, 1);
                     }
-                } else {
-                    if (nameIndex < 0) {
-                        activeKey.push(name);
-                    }
+                } else if (nameIndex < 0) {
+                    activeKey.push(name);
                 }
 
                 newActiveKey = activeKey;
@@ -94,15 +92,15 @@ export default {
             this.currentValue = newActiveKey;
             this.$emit('input', newActiveKey);
             this.$emit('on-change', newActiveKey);
-        }
+        },
     },
     watch: {
-        value (val) {
+        value(val) {
             this.currentValue = val;
         },
-        currentValue () {
+        currentValue() {
             this.setActive();
-        }
-    }
+        },
+    },
 };
 </script>

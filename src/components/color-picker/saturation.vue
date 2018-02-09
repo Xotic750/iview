@@ -19,32 +19,34 @@ import throttle from 'lodash.throttle';
 export default {
     name: 'Saturation',
     props: {
-        value: Object
+        value: Object,
     },
-    data () {
+    data() {
         return {};
     },
     computed: {
-        colors () {
+        colors() {
             return this.value;
         },
-        bgColor () {
+        bgColor() {
             return `hsl(${this.colors.hsv.h}, 100%, 50%)`;
         },
-        pointerTop () {
-            return (-(this.colors.hsv.v * 100) + 1) + 100 + '%';
+        pointerTop() {
+            return `${(-(this.colors.hsv.v * 100) + 1) + 100}%`;
         },
-        pointerLeft () {
-            return this.colors.hsv.s * 100 + '%';
-        }
+        pointerLeft() {
+            return `${this.colors.hsv.s * 100 }%`;
+        },
     },
     methods: {
-        throttle: throttle((fn, data) => {fn(data);}, 20,
+        throttle: throttle(
+            (fn, data) => { fn(data); }, 20,
             {
-                'leading': true,
-                'trailing': false
-            }),
-        handleChange (e, skip) {
+                leading: true,
+                trailing: false,
+            },
+        ),
+        handleChange(e, skip) {
             !skip && e.preventDefault();
             const container = this.$refs.container;
             const containerWidth = container.clientWidth;
@@ -73,26 +75,26 @@ export default {
                 s: saturation,
                 v: bright,
                 a: this.colors.hsv.a,
-                source: 'hsva'
+                source: 'hsva',
             });
         },
-        onChange (param) {
+        onChange(param) {
             this.$emit('change', param);
         },
-        handleMouseDown () {
+        handleMouseDown() {
             // this.handleChange(e, true)
             window.addEventListener('mousemove', this.handleChange);
             window.addEventListener('mouseup', this.handleChange);
             window.addEventListener('mouseup', this.handleMouseUp);
         },
-        handleMouseUp () {
+        handleMouseUp() {
             this.unbindEventListeners();
         },
-        unbindEventListeners () {
+        unbindEventListeners() {
             window.removeEventListener('mousemove', this.handleChange);
             window.removeEventListener('mouseup', this.handleChange);
             window.removeEventListener('mouseup', this.handleMouseUp);
-        }
-    }
+        },
+    },
 };
 </script>

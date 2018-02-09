@@ -26,44 +26,42 @@ import prefixCls from './prefixCls';
 
 
 export default {
-    mixins: [ Locale, mixin ],
+    mixins: [Locale, mixin],
 
     props: {
         /* more props in mixin */
         showWeekNumbers: {
             type: Boolean,
-            default: false
+            default: false,
         },
     },
-    data () {
+    data() {
         const weekStartDay = Number(this.t('i.datepicker.weekStartDay'));
         return {
-            prefixCls: prefixCls,
-            calendar: new jsCalendar.Generator({onlyDays: !this.showWeekNumbers, weekStart: weekStartDay})
+            prefixCls,
+            calendar: new jsCalendar.Generator({ onlyDays: !this.showWeekNumbers, weekStart: weekStartDay }),
         };
     },
     computed: {
-        classes () {
+        classes() {
             return [
                 `${prefixCls}`,
                 {
-                    [`${prefixCls}-show-week-numbers`]: this.showWeekNumbers
-                }
+                    [`${prefixCls}-show-week-numbers`]: this.showWeekNumbers,
+                },
             ];
         },
-        headerDays () {
+        headerDays() {
             const weekStartDay = Number(this.t('i.datepicker.weekStartDay'));
-            const translatedDays = ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat'].map(item => {
-                return this.t('i.datepicker.weeks.' + item);
-            });
+            const translatedDays = ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat'].map(item => this.t(`i.datepicker.weeks.${item}`));
             const weekDays = translatedDays.splice(weekStartDay, 7 - weekStartDay).concat(translatedDays.splice(0, weekStartDay));
             return this.showWeekNumbers ? [''].concat(weekDays) : weekDays;
         },
-        readCells () {
+        readCells() {
             const tableYear = this.tableDate.getFullYear();
             const tableMonth = this.tableDate.getMonth();
-            const today = clearHours(new Date());    // timestamp of today
-            const selectedDays = this.dates.filter(Boolean).map(clearHours);    // timestamp of selected days
+            const today = clearHours(new Date()); // timestamp of today
+            const selectedDays = this.dates.filter(Boolean).map(clearHours); // timestamp of selected days
             const [minDay, maxDay] = this.dates.map(clearHours);
             const rangeStart = this.rangeState.from && clearHours(this.rangeState.from);
             const rangeEnd = this.rangeState.to && clearHours(this.rangeState.to);
@@ -81,13 +79,13 @@ export default {
                     disabled: (cell.date && disabledTestFn) && disabledTestFn(new Date(time)),
                     range: dateIsInCurrentMonth && isRange && isInRange(time, rangeStart, rangeEnd),
                     start: dateIsInCurrentMonth && isRange && time === minDay,
-                    end: dateIsInCurrentMonth && isRange && time === maxDay
+                    end: dateIsInCurrentMonth && isRange && time === maxDay,
                 };
             }).cells.slice(this.showWeekNumbers ? 8 : 0);
-        }
+        },
     },
     methods: {
-        getCellCls (cell) {
+        getCellCls(cell) {
             return [
                 `${prefixCls}-cell`,
                 {
@@ -97,11 +95,11 @@ export default {
                     [`${prefixCls}-cell-prev-month`]: cell.type === 'prevMonth',
                     [`${prefixCls}-cell-next-month`]: cell.type === 'nextMonth',
                     [`${prefixCls}-cell-week-label`]: cell.type === 'weekLabel',
-                    [`${prefixCls}-cell-range`]: cell.range && !cell.start && !cell.end
-                }
+                    [`${prefixCls}-cell-range`]: cell.range && !cell.start && !cell.end,
+                },
             ];
         },
 
-    }
+    },
 };
 </script>

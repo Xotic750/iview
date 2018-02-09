@@ -28,37 +28,37 @@ export default {
     props: {
         percent: {
             type: Number,
-            default: 0
+            default: 0,
         },
         status: {
-            validator (value) {
+            validator(value) {
                 return oneOf(value, ['normal', 'active', 'wrong', 'success']);
             },
-            default: 'normal'
+            default: 'normal',
         },
         hideInfo: {
             type: Boolean,
-            default: false
+            default: false,
         },
         strokeWidth: {
             type: Number,
-            default: 10
+            default: 10,
         },
         vertical: {
             type: Boolean,
-            default: false
-        }
+            default: false,
+        },
     },
-    data () {
+    data() {
         return {
-            currentStatus: this.status
+            currentStatus: this.status,
         };
     },
     computed: {
-        isStatus () {
+        isStatus() {
             return this.currentStatus == 'wrong' || this.currentStatus == 'success';
         },
-        statusIcon () {
+        statusIcon() {
             let type = '';
             switch (this.currentStatus) {
                 case 'wrong':
@@ -71,69 +71,67 @@ export default {
 
             return type;
         },
-        bgStyle () {
+        bgStyle() {
             return this.vertical ? {
                 height: `${this.percent}%`,
-                width: `${this.strokeWidth}px`
+                width: `${this.strokeWidth}px`,
             } : {
                 width: `${this.percent}%`,
-                height: `${this.strokeWidth}px`
+                height: `${this.strokeWidth}px`,
             };
         },
-        wrapClasses () {
+        wrapClasses() {
             return [
                 `${prefixCls}`,
                 `${prefixCls}-${this.currentStatus}`,
                 {
                     [`${prefixCls}-show-info`]: !this.hideInfo,
-                    [`${prefixCls}-vertical`]: this.vertical
+                    [`${prefixCls}-vertical`]: this.vertical,
 
-                }
+                },
             ];
         },
-        textClasses () {
+        textClasses() {
             return `${prefixCls}-text`;
         },
-        textInnerClasses () {
+        textInnerClasses() {
             return `${prefixCls}-text-inner`;
         },
-        outerClasses () {
+        outerClasses() {
             return `${prefixCls}-outer`;
         },
-        innerClasses () {
+        innerClasses() {
             return `${prefixCls}-inner`;
         },
-        bgClasses () {
+        bgClasses() {
             return `${prefixCls}-bg`;
-        }
+        },
     },
-    created () {
+    created() {
         this.handleStatus();
     },
     methods: {
-        handleStatus (isDown) {
+        handleStatus(isDown) {
             if (isDown) {
                 this.currentStatus = 'normal';
                 this.$emit('on-status-change', 'normal');
-            } else {
-                if (parseInt(this.percent, 10) == 100) {
-                    this.currentStatus = 'success';
-                    this.$emit('on-status-change', 'success');
-                }
+            } else if (parseInt(this.percent, 10) == 100) {
+                this.currentStatus = 'success';
+                this.$emit('on-status-change', 'success');
             }
-        }
+        },
     },
     watch: {
-        percent (val, oldVal) {
+        percent(val, oldVal) {
             if (val < oldVal) {
                 this.handleStatus(true);
             } else {
                 this.handleStatus();
             }
         },
-        status (val) {
+        status(val) {
             this.currentStatus = val;
-        }
-    }
+        },
+    },
 };
 </script>

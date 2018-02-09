@@ -7,37 +7,37 @@ const prefixCls = 'ivu-carousel-item';
 export default {
     componentName: 'carousel-item',
     name: 'CarouselItem',
-    data () {
+    data() {
         return {
-            prefixCls: prefixCls,
+            prefixCls,
             width: 0,
             height: 'auto',
-            left: 0
+            left: 0,
         };
     },
     computed: {
-        styles () {
+        styles() {
             return {
                 width: `${this.width}px`,
                 height: `${this.height}`,
-                left: `${this.left}px`
+                left: `${this.left}px`,
             };
-        }
+        },
     },
-    mounted () {
+    mounted() {
         this.$parent.slotChange();
     },
     watch: {
-        width (val) {
+        width(val) {
             if (val && this.$parent.loop) {
                 this.$nextTick(() => {
                     this.$parent.initCopyTrackDom();
                 });
             }
-        }
+        },
     },
-    beforeDestroy () {
+    beforeDestroy() {
         this.$parent.slotChange();
-    }
+    },
 };
 </script>

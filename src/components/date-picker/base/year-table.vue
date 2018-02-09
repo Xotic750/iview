@@ -17,25 +17,25 @@ import mixin from './mixin';
 import prefixCls from './prefixCls';
 
 export default {
-    mixins: [ mixin ],
+    mixins: [mixin],
 
     props: {/* in mixin */},
     computed: {
         classes() {
             return [
                 `${prefixCls}`,
-                `${prefixCls}-year`
+                `${prefixCls}-year`,
             ];
         },
         startYear() {
             return Math.floor(this.tableDate.getFullYear() / 10) * 10;
         },
-        cells () {
-            let cells = [];
+        cells() {
+            const cells = [];
             const cell_tmpl = {
                 text: '',
                 selected: false,
-                disabled: false
+                disabled: false,
             };
 
             const selectedDays = this.dates.filter(Boolean).map(date => clearHours(new Date(date.getFullYear(), 0, 1)));
@@ -50,19 +50,19 @@ export default {
             }
 
             return cells;
-        }
+        },
     },
     methods: {
-        getCellCls (cell) {
+        getCellCls(cell) {
             return [
                 `${prefixCls}-cell`,
                 {
                     [`${prefixCls}-cell-selected`]: cell.selected,
                     [`${prefixCls}-cell-disabled`]: cell.disabled,
-                    [`${prefixCls}-cell-range`]: cell.range && !cell.start && !cell.end
-                }
+                    [`${prefixCls}-cell-range`]: cell.range && !cell.start && !cell.end,
+                },
             ];
         },
-    }
+    },
 };
 </script>

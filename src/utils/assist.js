@@ -1,7 +1,8 @@
 import Vue from 'vue';
+
 const isServer = Vue.prototype.$isServer;
 // 判断参数是否是其中之一
-export function oneOf (value, validList) {
+export function oneOf(value, validList) {
     for (let i = 0; i < validList.length; i++) {
         if (value === validList[i]) {
             return true;
@@ -10,13 +11,13 @@ export function oneOf (value, validList) {
     return false;
 }
 
-export function camelcaseToHyphen (str) {
+export function camelcaseToHyphen(str) {
     return str.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase();
 }
 
 // For Modal scrollBar hidden
 let cached;
-export function getScrollBarSize (fresh) {
+export function getScrollBarSize(fresh) {
     if (isServer) return 0;
     if (fresh || cached === undefined) {
         const inner = document.createElement('div');
@@ -61,12 +62,10 @@ const SPECIAL_CHARS_REGEXP = /([\:\-\_]+(.))/g;
 const MOZ_HACK_REGEXP = /^moz([A-Z])/;
 
 function camelCase(name) {
-    return name.replace(SPECIAL_CHARS_REGEXP, function(_, separator, letter, offset) {
-        return offset ? letter.toUpperCase() : letter;
-    }).replace(MOZ_HACK_REGEXP, 'Moz$1');
+    return name.replace(SPECIAL_CHARS_REGEXP, (_, separator, letter, offset) => (offset ? letter.toUpperCase() : letter)).replace(MOZ_HACK_REGEXP, 'Moz$1');
 }
 // getStyle
-export function getStyle (element, styleName) {
+export function getStyle(element, styleName) {
     if (!element || !styleName) return null;
     styleName = camelCase(styleName);
     if (styleName === 'float') {
@@ -75,7 +74,7 @@ export function getStyle (element, styleName) {
     try {
         const computed = document.defaultView.getComputedStyle(element, '');
         return element.style[styleName] || computed ? computed[styleName] : null;
-    } catch(e) {
+    } catch (e) {
         return element.style[styleName];
     }
 }
@@ -84,7 +83,7 @@ export function getStyle (element, styleName) {
 function firstUpperCase(str) {
     return str.toString()[0].toUpperCase() + str.toString().slice(1);
 }
-export {firstUpperCase};
+export { firstUpperCase };
 
 // Warn
 export function warnProp(component, prop, correctType, wrongType) {
@@ -96,16 +95,16 @@ export function warnProp(component, prop, correctType, wrongType) {
 function typeOf(obj) {
     const toString = Object.prototype.toString;
     const map = {
-        '[object Boolean]'  : 'boolean',
-        '[object Number]'   : 'number',
-        '[object String]'   : 'string',
-        '[object Function]' : 'function',
-        '[object Array]'    : 'array',
-        '[object Date]'     : 'date',
-        '[object RegExp]'   : 'regExp',
+        '[object Boolean]': 'boolean',
+        '[object Number]': 'number',
+        '[object String]': 'string',
+        '[object Function]': 'function',
+        '[object Array]': 'array',
+        '[object Date]': 'date',
+        '[object RegExp]': 'regExp',
         '[object Undefined]': 'undefined',
-        '[object Null]'     : 'null',
-        '[object Object]'   : 'object'
+        '[object Null]': 'null',
+        '[object Object]': 'object',
     };
     return map[toString.call(obj)];
 }
@@ -117,7 +116,7 @@ function deepCopy(data) {
 
     if (t === 'array') {
         o = [];
-    } else if ( t === 'object') {
+    } else if (t === 'object') {
         o = {};
     } else {
         return data;
@@ -127,15 +126,15 @@ function deepCopy(data) {
         for (let i = 0; i < data.length; i++) {
             o.push(deepCopy(data[i]));
         }
-    } else if ( t === 'object') {
-        for (let i in data) {
+    } else if (t === 'object') {
+        for (const i in data) {
             o[i] = deepCopy(data[i]);
         }
     }
     return o;
 }
 
-export {deepCopy};
+export { deepCopy };
 
 // scrollTop animation
 export function scrollTop(el, from = 0, to, duration = 500) {
@@ -145,7 +144,7 @@ export function scrollTop(el, from = 0, to, duration = 500) {
             window.mozRequestAnimationFrame ||
             window.msRequestAnimationFrame ||
             function (callback) {
-                return window.setTimeout(callback, 1000/60);
+                return window.setTimeout(callback, 1000 / 60);
             }
         );
     }
@@ -171,7 +170,7 @@ export function scrollTop(el, from = 0, to, duration = 500) {
 }
 
 // Find components upward
-function findComponentUpward (context, componentName, componentNames) {
+function findComponentUpward(context, componentName, componentNames) {
     if (typeof componentName === 'string') {
         componentNames = [componentName];
     } else {
@@ -186,10 +185,10 @@ function findComponentUpward (context, componentName, componentNames) {
     }
     return parent;
 }
-export {findComponentUpward};
+export { findComponentUpward };
 
 // Find component downward
-export function findComponentDownward (context, componentName) {
+export function findComponentDownward(context, componentName) {
     const childrens = context.$children;
     let children = null;
 
@@ -209,7 +208,7 @@ export function findComponentDownward (context, componentName) {
 }
 
 // Find components downward
-export function findComponentsDownward (context, componentName) {
+export function findComponentsDownward(context, componentName) {
     return context.$children.reduce((components, child) => {
         if (child.$options.name === componentName) components.push(child);
         const foundChilds = findComponentsDownward(child, componentName);
@@ -218,28 +217,25 @@ export function findComponentsDownward (context, componentName) {
 }
 
 // Find components upward
-export function findComponentsUpward (context, componentName) {
-    let parents = [];
+export function findComponentsUpward(context, componentName) {
+    const parents = [];
     if (context.$parent) {
         if (context.$parent.$options.name === componentName) parents.push(context.$parent);
         return parents.concat(findComponentsUpward(context.$parent, componentName));
-    } else {
-        return [];
     }
+    return [];
 }
 
 // Find brothers components
-export function findBrothersComponents (context, componentName) {
-    let res = context.$parent.$children.filter(item => {
-        return item.$options.name === componentName;
-    });
-    let index = res.indexOf(context);
+export function findBrothersComponents(context, componentName) {
+    const res = context.$parent.$children.filter(item => item.$options.name === componentName);
+    const index = res.indexOf(context);
     res.splice(index, 1);
     return res;
 }
 
 /* istanbul ignore next */
-const trim = function(string) {
+const trim = function (string) {
     return (string || '').replace(/^[\s\uFEFF]+|[\s\uFEFF]+$/g, '');
 };
 
@@ -249,9 +245,8 @@ export function hasClass(el, cls) {
     if (cls.indexOf(' ') !== -1) throw new Error('className should not contain space.');
     if (el.classList) {
         return el.classList.contains(cls);
-    } else {
-        return (' ' + el.className + ' ').indexOf(' ' + cls + ' ') > -1;
     }
+    return (` ${el.className} `).indexOf(` ${cls} `) > -1;
 }
 
 /* istanbul ignore next */
@@ -266,10 +261,8 @@ export function addClass(el, cls) {
 
         if (el.classList) {
             el.classList.add(clsName);
-        } else {
-            if (!hasClass(el, clsName)) {
-                curClass += ' ' + clsName;
-            }
+        } else if (!hasClass(el, clsName)) {
+            curClass += ` ${clsName}`;
         }
     }
     if (!el.classList) {
@@ -281,7 +274,7 @@ export function addClass(el, cls) {
 export function removeClass(el, cls) {
     if (!el || !cls) return;
     const classes = cls.split(' ');
-    let curClass = ' ' + el.className + ' ';
+    let curClass = ` ${el.className} `;
 
     for (let i = 0, j = classes.length; i < j; i++) {
         const clsName = classes[i];
@@ -289,10 +282,8 @@ export function removeClass(el, cls) {
 
         if (el.classList) {
             el.classList.remove(clsName);
-        } else {
-            if (hasClass(el, clsName)) {
-                curClass = curClass.replace(' ' + clsName + ' ', ' ');
-            }
+        } else if (hasClass(el, clsName)) {
+            curClass = curClass.replace(` ${clsName} `, ' ');
         }
     }
     if (!el.classList) {
@@ -308,16 +299,14 @@ export const dimensionMap = {
     xl: '1600px',
 };
 
-export function setMatchMedia () {
+export function setMatchMedia() {
     if (typeof window !== 'undefined') {
-        const matchMediaPolyfill = mediaQuery => {
-            return {
-                media: mediaQuery,
-                matches: false,
-                on() {},
-                off() {},
-            };
-        };
+        const matchMediaPolyfill = mediaQuery => ({
+            media: mediaQuery,
+            matches: false,
+            on() {},
+            off() {},
+        });
         window.matchMedia = window.matchMedia || matchMediaPolyfill;
     }
 }

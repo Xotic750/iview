@@ -27,55 +27,55 @@ export default {
     components: { Icon },
     props: {
         type: {
-            validator (value) {
+            validator(value) {
                 return oneOf(value, ['success', 'info', 'warning', 'error']);
             },
-            default: 'info'
+            default: 'info',
         },
         closable: {
             type: Boolean,
-            default: false
+            default: false,
         },
         showIcon: {
             type: Boolean,
-            default: false
+            default: false,
         },
         banner: {
             type: Boolean,
-            default: false
-        }
+            default: false,
+        },
     },
-    data () {
+    data() {
         return {
             closed: false,
-            desc: false
+            desc: false,
         };
     },
     computed: {
-        wrapClasses () {
+        wrapClasses() {
             return [
                 `${prefixCls}`,
                 `${prefixCls}-${this.type}`,
                 {
                     [`${prefixCls}-with-icon`]: this.showIcon,
                     [`${prefixCls}-with-desc`]: this.desc,
-                    [`${prefixCls}-with-banner`]: this.banner
-                }
+                    [`${prefixCls}-with-banner`]: this.banner,
+                },
             ];
         },
-        messageClasses () {
+        messageClasses() {
             return `${prefixCls}-message`;
         },
-        descClasses () {
+        descClasses() {
             return `${prefixCls}-desc`;
         },
-        closeClasses () {
+        closeClasses() {
             return `${prefixCls}-close`;
         },
-        iconClasses () {
+        iconClasses() {
             return `${prefixCls}-icon`;
         },
-        iconType () {
+        iconType() {
             let type = '';
 
             switch (this.type) {
@@ -94,16 +94,16 @@ export default {
             }
 
             return type;
-        }
+        },
     },
     methods: {
-        close (e) {
+        close(e) {
             this.closed = true;
             this.$emit('on-close', e);
-        }
+        },
     },
-    mounted () {
+    mounted() {
         this.desc = this.$slots.desc !== undefined;
-    }
+    },
 };
 </script>

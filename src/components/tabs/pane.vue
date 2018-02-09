@@ -8,56 +8,56 @@ export default {
     name: 'TabPane',
     props: {
         name: {
-            type: String
+            type: String,
         },
         label: {
             type: [String, Function],
-            default: ''
+            default: '',
         },
         icon: {
-            type: String
+            type: String,
         },
         disabled: {
             type: Boolean,
-            default: false
+            default: false,
         },
         closable: {
             type: Boolean,
-            default: null
-        }
+            default: null,
+        },
     },
-    data () {
+    data() {
         return {
-            prefixCls: prefixCls,
+            prefixCls,
             show: true,
-            currentName: this.name
+            currentName: this.name,
         };
     },
     methods: {
-        updateNav () {
+        updateNav() {
             this.$parent.updateNav();
-        }
+        },
     },
     watch: {
-        name (val) {
+        name(val) {
             this.currentName = val;
             this.updateNav();
         },
-        label () {
+        label() {
             this.updateNav();
         },
-        icon () {
+        icon() {
             this.updateNav();
         },
-        disabled () {
+        disabled() {
             this.updateNav();
-        }
+        },
     },
-    mounted () {
+    mounted() {
         this.updateNav();
     },
-    destroyed () {
+    destroyed() {
         this.updateNav();
-    }
+    },
 };
 </script>

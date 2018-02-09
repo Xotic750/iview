@@ -28,7 +28,7 @@ export default {
         },
     },
 
-    data(){
+    data() {
         return {
             prefixCls,
             hidden: false, // for search
@@ -36,9 +36,9 @@ export default {
     },
 
     methods: {
-        queryChange(){
+        queryChange() {
             this.$nextTick(() => {
-                const options = this.$refs.options.querySelectorAll('.ivu-select-item');
+                const options = [...this.$refs.options.querySelectorAll('.ivu-select-item')];
                 const hasVisibleOption = options.find(option => option.style.display !== 'none');
 
                 this.hidden = !hasVisibleOption;
@@ -46,7 +46,7 @@ export default {
         },
     },
 
-    mounted(){
+    mounted() {
         this.$on('on-query-change', () => {
             this.queryChange();
 

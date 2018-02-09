@@ -9,12 +9,12 @@
 <script>
 export default {
     props: {
-        list: Array
+        list: Array,
     },
     methods: {
-        handleClick (index) {
+        handleClick(index) {
             this.$emit('picker-color', this.list[index]);
-        }
-    }
+        },
+    },
 };
 </script>

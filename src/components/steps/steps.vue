@@ -10,12 +10,12 @@ const prefixCls = 'ivu-steps';
 
 function debounce(fn) {
     let waiting;
-    return function() {
+    return function () {
         if (waiting) return;
         waiting = true;
         const context = this,
             args = arguments;
-        const later = function() {
+        const later = function () {
             waiting = false;
             fn.apply(context, args);
         };
@@ -28,39 +28,39 @@ export default {
     props: {
         current: {
             type: Number,
-            default: 0
+            default: 0,
         },
         status: {
-            validator (value) {
+            validator(value) {
                 return oneOf(value, ['wait', 'process', 'finish', 'error']);
             },
-            default: 'process'
+            default: 'process',
         },
         size: {
-            validator (value) {
+            validator(value) {
                 return oneOf(value, ['small']);
-            }
+            },
         },
         direction: {
-            validator (value) {
+            validator(value) {
                 return oneOf(value, ['horizontal', 'vertical']);
             },
-            default: 'horizontal'
-        }
+            default: 'horizontal',
+        },
     },
     computed: {
-        classes () {
+        classes() {
             return [
                 `${prefixCls}`,
                 `${prefixCls}-${this.direction}`,
                 {
-                    [`${prefixCls}-${this.size}`]: !!this.size
-                }
+                    [`${prefixCls}-${this.size}`]: !!this.size,
+                },
             ];
-        }
+        },
     },
     methods: {
-        updateChildProps (isInit) {
+        updateChildProps(isInit) {
             const total = this.$children.length;
             this.$children.forEach((child, index) => {
                 child.stepNumber = index + 1;
@@ -88,16 +88,16 @@ export default {
                 }
             });
         },
-        setNextError () {
+        setNextError() {
             this.$children.forEach((child, index) => {
                 if (child.currentStatus == 'error' && index != 0) {
                     this.$children[index - 1].nextError = true;
                 }
             });
         },
-        updateCurrent (isInit) {
+        updateCurrent(isInit) {
             // 防止溢出边界
-            if (this.current < 0 || this.current >= this.$children.length ) {
+            if (this.current < 0 || this.current >= this.$children.length) {
                 return;
             }
             if (isInit) {
@@ -109,29 +109,29 @@ export default {
                 this.$children[this.current].currentStatus = this.status;
             }
         },
-        debouncedAppendRemove () {
+        debouncedAppendRemove() {
             return debounce(function () {
                 this.updateSteps();
             });
         },
-        updateSteps () {
+        updateSteps() {
             this.updateChildProps(true);
             this.setNextError();
             this.updateCurrent(true);
-        }
+        },
     },
-    mounted () {
+    mounted() {
         this.updateSteps();
         this.$on('append', this.debouncedAppendRemove());
         this.$on('remove', this.debouncedAppendRemove());
     },
     watch: {
-        current () {
+        current() {
             this.updateChildProps();
         },
-        status () {
+        status() {
             this.updateCurrent();
-        }
-    }
+        },
+    },
 };
 </script>

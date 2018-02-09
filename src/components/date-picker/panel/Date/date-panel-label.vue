@@ -19,7 +19,7 @@ export default {
     props: {
         datePanelLabel: Object,
         currentView: String,
-        datePrefixCls: String
-    }
+        datePrefixCls: String,
+    },
 };
 </script>

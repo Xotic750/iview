@@ -299,6 +299,57 @@
         <i-select v-model="model1" style="width:200px">
             <i-option v-for="item in cityList" :value="item.value" :key="item.value">{{ item.label }}</i-option>
         </i-select>
+        <br/>
+        <i-select v-model="model2" size="small" style="width:100px">
+            <i-option v-for="item in cityList" :value="item.value" :key="item.value">{{ item.label }}</i-option>
+        </i-select>
+        <i-select v-model="model3" style="width:100px">
+            <i-option v-for="item in cityList" :value="item.value" :key="item.value">{{ item.label }}</i-option>
+        </i-select>
+        <i-select v-model="model4" size="large" style="width:100px">
+            <i-option v-for="item in cityList" :value="item.value" :key="item.value">{{ item.label }}</i-option>
+        </i-select>
+        <br/>
+        <i-select v-model="model5" disabled style="width:200px">
+            <i-option v-for="item in cityList" :value="item.value" :key="item.value">{{ item.label }}</i-option>
+        </i-select>
+        <i-select v-model="model6" style="width:200px">
+            <i-option value="beijing">New York</i-option>
+            <i-option value="shanghai" disabled>London</i-option>
+            <i-option value="shenzhen">Sydney</i-option>
+        </i-select>
+        <br/>
+        <i-select v-model="model8" clearable style="width:200px">
+            <i-option v-for="item in cityList" :value="item.value" :key="item.value">{{ item.label }}</i-option>
+        </i-select>
+        <br/>
+        <i-select v-model="model7" style="width:200px">
+            <option-group label="Hot Cities">
+                <i-option v-for="item in cityList1" :value="item.value" :key="item.value">{{ item.label }}</i-option>
+            </option-group>
+            <option-group label="Other Cities">
+                <i-option v-for="item in cityList2" :value="item.value" :key="item.value">{{ item.label }}</i-option>
+            </option-group>
+        </i-select>
+        <br/>
+        <i-select v-model="model9" style="width:200px">
+            <i-option value="New York" label="New York">
+                <span>New York</span>
+                <span style="float:right;color:#ccc">America</span>
+            </i-option>
+            <i-option value="London" label="London">
+                <span>London</span>
+                <span style="float:right;color:#ccc">U.K.</span>
+            </i-option>
+            <i-option value="Sydney" label="Sydney">
+                <span>Sydney</span>
+                <span style="float:right;color:#ccc">Australian</span>
+            </i-option>
+        </i-select>
+        <br/>
+        <i-select v-model="model10" multiple style="width:260px">
+            <i-option v-for="item in cityList" :value="item.value" :key="item.value">{{ item.label }}</i-option>
+        </i-select>
     </div>
 </template>
 
@@ -307,32 +358,69 @@
         data () {
             return {
                 cityList: [
-                {
-                    value: 'New York',
-                    label: 'New York'
-                },
-                {
-                    value: 'London',
-                    label: 'London'
-                },
-                {
-                    value: 'Sydney',
-                    label: 'Sydney'
-                },
-                {
-                    value: 'Ottawa',
-                    label: 'Ottawa'
-                },
-                {
-                    value: 'Paris',
-                    label: 'Paris'
-                },
-                {
-                    value: 'Canberra',
-                    label: 'Canberra'
-                }
+                    {
+                        value: 'New York',
+                        label: 'New York',
+                    },
+                    {
+                        value: 'London',
+                        label: 'London',
+                    },
+                    {
+                        value: 'Sydney',
+                        label: 'Sydney',
+                    },
+                    {
+                        value: 'Ottawa',
+                        label: 'Ottawa',
+                    },
+                    {
+                        value: 'Paris',
+                        label: 'Paris',
+                    },
+                    {
+                        value: 'Canberra',
+                        label: 'Canberra',
+                    }
                 ],
-                model1: ''
+                cityList1: [
+                    {
+                        value: 'New York',
+                        label: 'New York',
+                    },
+                    {
+                        value: 'London',
+                        label: 'London',
+                    },
+                    {
+                        value: 'Sydney',
+                        label: 'Sydney',
+                    }
+                ],
+                cityList2: [
+                    {
+                        value: 'Ottawa',
+                        label: 'Ottawa',
+                    },
+                    {
+                        value: 'Paris',
+                        label: 'Paris',
+                    },
+                    {
+                        value: 'Canberra',
+                        label: 'Canberra',
+                    },
+                ],
+                model1: '',
+                model2: '',
+                model3: '',
+                model4: '',
+                model5: '',
+                model6: '',
+                model7: '',
+                model8: '',
+                model9: '',
+                model10: '',
             }
         }
     };

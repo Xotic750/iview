@@ -6,14 +6,14 @@ const lang = {
         select: {
             placeholder: '選んでください',
             noMatch: 'マッチするデータなし',
-            loading: 'ロード中'
+            loading: 'ロード中',
         },
         table: {
             noDataText: 'データなし',
             noFilteredDataText: 'スクリーニングしたデータなし',
             confirmFilter: 'スクリーニング',
             resetFilter: 'リセット',
-            clearFilter: '全部'
+            clearFilter: '全部',
         },
         datepicker: {
             selectDate: '日時を選んでください',
@@ -45,7 +45,7 @@ const lang = {
                 wed: '水',
                 thu: '木',
                 fri: '金',
-                sat: '土'
+                sat: '土',
             },
             months: {
                 m1: '1月',
@@ -59,24 +59,24 @@ const lang = {
                 m9: '9月',
                 m10: '10月',
                 m11: '11月',
-                m12: '12月'
-            }
+                m12: '12月',
+            },
         },
         transfer: {
             titles: {
                 source: 'ソースリスト',
-                target: 'ターゲットリスト'
+                target: 'ターゲットリスト',
             },
             filterPlaceholder: '検索内容を入力ください',
-            notFoundText: '内容が見つかってなかった'
+            notFoundText: '内容が見つかってなかった',
         },
         modal: {
             okText: '確定',
-            cancelText: 'キャンセル'
+            cancelText: 'キャンセル',
         },
         poptip: {
             okText: '確定',
-            cancelText: 'キャンセル'
+            cancelText: 'キャンセル',
         },
         page: {
             prev: '前へ',
@@ -88,16 +88,16 @@ const lang = {
             next5: '次の５ページへ',
             page: '件/ページ',
             goto: '',
-            p: 'ページ目へ'
+            p: 'ページ目へ',
         },
         rate: {
             star: '点',
-            stars: '点'
+            stars: '点',
         },
         tree: {
-            emptyText: 'データなし'
-        }
-    }
+            emptyText: 'データなし',
+        },
+    },
 };
 
 setLang(lang);

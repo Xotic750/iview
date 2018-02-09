@@ -58,97 +58,95 @@ const prefixCls = 'ivu-poptip';
 
 export default {
     name: 'Poptip',
-    mixins: [ Popper, Locale ],
+    mixins: [Popper, Locale],
     directives: { clickoutside, TransferDom },
     components: { iButton },
     props: {
         trigger: {
-            validator (value) {
+            validator(value) {
                 return oneOf(value, ['click', 'focus', 'hover']);
             },
-            default: 'click'
+            default: 'click',
         },
         placement: {
-            validator (value) {
+            validator(value) {
                 return oneOf(value, ['top', 'top-start', 'top-end', 'bottom', 'bottom-start', 'bottom-end', 'left', 'left-start', 'left-end', 'right', 'right-start', 'right-end']);
             },
-            default: 'top'
+            default: 'top',
         },
         title: {
-            type: [String, Number]
+            type: [String, Number],
         },
         content: {
             type: [String, Number],
-            default: ''
+            default: '',
         },
         width: {
-            type: [String, Number]
+            type: [String, Number],
         },
         confirm: {
             type: Boolean,
-            default: false
+            default: false,
         },
         okText: {
-            type: String
+            type: String,
         },
         cancelText: {
-            type: String
+            type: String,
         },
         transfer: {
             type: Boolean,
-            default: false
-        }
+            default: false,
+        },
     },
-    data () {
+    data() {
         return {
-            prefixCls: prefixCls,
+            prefixCls,
             showTitle: true,
             isInput: false,
-            disableCloseUnderTransfer: false,  // transfer 模式下，点击 slot 也会触发关闭
+            disableCloseUnderTransfer: false, // transfer 模式下，点击 slot 也会触发关闭
         };
     },
     computed: {
-        classes () {
+        classes() {
             return [
                 `${prefixCls}`,
                 {
-                    [`${prefixCls}-confirm`]: this.confirm
-                }
+                    [`${prefixCls}-confirm`]: this.confirm,
+                },
             ];
         },
-        popperClasses () {
+        popperClasses() {
             return [
                 `${prefixCls}-popper`,
                 {
-                    [`${prefixCls}-confirm`]: this.transfer && this.confirm
-                }
+                    [`${prefixCls}-confirm`]: this.transfer && this.confirm,
+                },
             ];
         },
-        styles () {
-            let style = {};
+        styles() {
+            const style = {};
 
             if (this.width) {
                 style.width = `${this.width}px`;
             }
             return style;
         },
-        localeOkText () {
+        localeOkText() {
             if (this.okText === undefined) {
                 return this.t('i.poptip.okText');
-            } else {
-                return this.okText;
             }
+            return this.okText;
         },
-        localeCancelText () {
+        localeCancelText() {
             if (this.cancelText === undefined) {
                 return this.t('i.poptip.cancelText');
-            } else {
-                return this.cancelText;
             }
-        }
+            return this.cancelText;
+        },
     },
     methods: {
-        handleClick () {
+        handleClick() {
             if (this.confirm) {
                 this.visible = !this.visible;
                 return true;
@@ -158,10 +156,10 @@ export default {
             }
             this.visible = !this.visible;
         },
-        handleTransferClick () {
+        handleTransferClick() {
             if (this.transfer) this.disableCloseUnderTransfer = true;
         },
-        handleClose () {
+        handleClose() {
             if (this.disableCloseUnderTransfer) {
                 this.disableCloseUnderTransfer = false;
                 return false;
@@ -175,19 +173,19 @@ export default {
             }
             this.visible = false;
         },
-        handleFocus (fromInput = true) {
+        handleFocus(fromInput = true) {
             if (this.trigger !== 'focus' || this.confirm || (this.isInput && !fromInput)) {
                 return false;
             }
             this.visible = true;
         },
-        handleBlur (fromInput = true) {
+        handleBlur(fromInput = true) {
             if (this.trigger !== 'focus' || this.confirm || (this.isInput && !fromInput)) {
                 return false;
             }
             this.visible = false;
         },
-        handleMouseenter () {
+        handleMouseenter() {
             if (this.trigger !== 'hover' || this.confirm) {
                 return false;
             }
@@ -196,7 +194,7 @@ export default {
                 this.visible = true;
             }, 100);
         },
-        handleMouseleave () {
+        handleMouseleave() {
             if (this.trigger !== 'hover' || this.confirm) {
                 return false;
             }
@@ -207,15 +205,15 @@ export default {
                 }, 100);
             }
         },
-        cancel () {
+        cancel() {
             this.visible = false;
             this.$emit('on-cancel');
         },
-        ok () {
+        ok() {
             this.visible = false;
             this.$emit('on-ok');
         },
-        getInputChildren () {
+        getInputChildren() {
             const $input = this.$refs.reference.querySelectorAll('input');
             const $textarea = this.$refs.reference.querySelectorAll('textarea');
             let $children = null;
@@ -227,9 +225,9 @@ export default {
             }
 
             return $children;
-        }
+        },
     },
-    mounted () {
+    mounted() {
         if (!this.confirm) {
             //                this.showTitle = this.$refs.title.innerHTML != `<div class="${prefixCls}-title-inner"></div>`;
             this.showTitle = (this.$slots.title !== undefined) || this.title;
@@ -246,12 +244,12 @@ export default {
             });
         }
     },
-    beforeDestroy () {
+    beforeDestroy() {
         const $children = this.getInputChildren();
         if ($children) {
             $children.removeEventListener('focus', this.handleFocus, false);
             $children.removeEventListener('blur', this.handleBlur, false);
         }
-    }
+    },
 };
 </script>

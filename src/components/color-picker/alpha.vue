@@ -19,20 +19,20 @@ export default {
     name: 'Alpha',
     props: {
         value: Object,
-        onChange: Function
+        onChange: Function,
     },
     computed: {
-        colors () {
+        colors() {
             return this.value;
         },
-        gradientColor () {
+        gradientColor() {
             const rgba = this.colors.rgba;
             const rgbStr = [rgba.r, rgba.g, rgba.b].join(',');
-            return 'linear-gradient(to right, rgba(' + rgbStr + ', 0) 0%, rgba(' + rgbStr + ', 1) 100%)';
-        }
+            return `linear-gradient(to right, rgba(${rgbStr}, 0) 0%, rgba(${rgbStr}, 1) 100%)`;
+        },
     },
     methods: {
-        handleChange (e, skip) {
+        handleChange(e, skip) {
             !skip && e.preventDefault();
             const container = this.$refs.container;
             const containerWidth = container.clientWidth;
@@ -55,23 +55,23 @@ export default {
                     h: this.colors.hsl.h,
                     s: this.colors.hsl.s,
                     l: this.colors.hsl.l,
-                    a: a,
-                    source: 'rgba'
+                    a,
+                    source: 'rgba',
                 });
             }
         },
-        handleMouseDown (e) {
+        handleMouseDown(e) {
             this.handleChange(e, true);
             window.addEventListener('mousemove', this.handleChange);
             window.addEventListener('mouseup', this.handleMouseUp);
         },
-        handleMouseUp () {
+        handleMouseUp() {
             this.unbindEventListeners();
         },
-        unbindEventListeners () {
+        unbindEventListeners() {
             window.removeEventListener('mousemove', this.handleChange);
             window.removeEventListener('mouseup', this.handleMouseUp);
-        }
-    }
+        },
+    },
 };
 </script>

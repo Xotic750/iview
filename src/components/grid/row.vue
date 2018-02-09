@@ -12,52 +12,52 @@ export default {
     name: 'Row',
     props: {
         type: {
-            validator (value) {
+            validator(value) {
                 return oneOf(value, ['flex']);
-            }
+            },
         },
         align: {
-            validator (value) {
+            validator(value) {
                 return oneOf(value, ['top', 'middle', 'bottom']);
-            }
+            },
         },
         justify: {
-            validator (value) {
+            validator(value) {
                 return oneOf(value, ['start', 'end', 'center', 'space-around', 'space-between']);
-            }
+            },
         },
         gutter: {
             type: Number,
-            default: 0
+            default: 0,
         },
-        className: String
+        className: String,
     },
     computed: {
-        classes () {
+        classes() {
             return [
                 {
                     [`${prefixCls}`]: !this.type,
                     [`${prefixCls}-${this.type}`]: !!this.type,
                     [`${prefixCls}-${this.type}-${this.align}`]: !!this.align,
                     [`${prefixCls}-${this.type}-${this.justify}`]: !!this.justify,
-                    [`${this.className}`]: !!this.className
-                }
+                    [`${this.className}`]: !!this.className,
+                },
             ];
         },
-        styles () {
+        styles() {
             let style = {};
             if (this.gutter !== 0) {
                 style = {
-                    marginLeft: this.gutter / -2 + 'px',
-                    marginRight: this.gutter / -2 + 'px'
+                    marginLeft: `${this.gutter / -2}px`,
+                    marginRight: `${this.gutter / -2}px`,
                 };
             }
 
             return style;
-        }
+        },
     },
     methods: {
-        updateGutter (val) {
+        updateGutter(val) {
             const Cols = findComponentsDownward(this, 'iCol');
             if (Cols.length) {
                 Cols.forEach((child) => {
@@ -66,12 +66,12 @@ export default {
                     }
                 });
             }
-        }
+        },
     },
     watch: {
-        gutter (val) {
+        gutter(val) {
             this.updateGutter(val);
-        }
-    }
+        },
+    },
 };
 </script>

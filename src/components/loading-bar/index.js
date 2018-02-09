@@ -6,18 +6,18 @@ let failedColor = 'error';
 let height = 2;
 let timer;
 
-function getLoadingBarInstance () {
+function getLoadingBarInstance() {
     loadingBarInstance = loadingBarInstance || LoadingBar.newInstance({
-        color: color,
-        failedColor: failedColor,
-        height: height
+        color,
+        failedColor,
+        height,
     });
 
     return loadingBarInstance;
 }
 
 function update(options) {
-    let instance  = getLoadingBarInstance();
+    const instance = getLoadingBarInstance();
 
     instance.update(options);
 }
@@ -25,11 +25,11 @@ function update(options) {
 function hide() {
     setTimeout(() => {
         update({
-            show: false
+            show: false,
         });
         setTimeout(() => {
             update({
-                percent: 0
+                percent: 0,
             });
         }, 200);
     }, 800);
@@ -43,56 +43,56 @@ function clearTimer() {
 }
 
 export default {
-    start () {
+    start() {
         if (timer) return;
 
         let percent = 0;
 
         update({
-            percent: percent,
+            percent,
             status: 'success',
-            show: true
+            show: true,
         });
 
         timer = setInterval(() => {
-            percent += Math.floor(Math.random () * 3 + 5);
+            percent += Math.floor(Math.random() * 3 + 5);
             if (percent > 95) {
                 clearTimer();
             }
             update({
-                percent: percent,
+                percent,
                 status: 'success',
-                show: true
+                show: true,
             });
         }, 200);
     },
-    update (percent) {
+    update(percent) {
         clearTimer();
         update({
-            percent: percent,
+            percent,
             status: 'success',
-            show: true
+            show: true,
         });
     },
-    finish () {
+    finish() {
         clearTimer();
         update({
             percent: 100,
             status: 'success',
-            show: true
+            show: true,
         });
         hide();
     },
-    error () {
+    error() {
         clearTimer();
         update({
             percent: 100,
             status: 'error',
-            show: true
+            show: true,
         });
         hide();
     },
-    config (options) {
+    config(options) {
         if (options.color) {
             color = options.color;
         }
@@ -103,10 +103,10 @@ export default {
             height = options.height;
         }
     },
-    destroy () {
+    destroy() {
         clearTimer();
-        let instance = getLoadingBarInstance();
+        const instance = getLoadingBarInstance();
         loadingBarInstance = null;
         instance.destroy();
-    }
+    },
 };

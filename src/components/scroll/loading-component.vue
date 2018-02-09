@@ -20,8 +20,8 @@ export default {
             return [
                 `${prefixCls}-loader-wrapper`,
                 {
-                    [`${prefixCls}-loader-wrapper-active`]: this.active
-                }
+                    [`${prefixCls}-loader-wrapper-active`]: this.active,
+                },
             ];
         },
         spinnerClasses() {
@@ -32,7 +32,7 @@ export default {
         },
         textClasses() {
             return `${prefixCls}-loader-text`;
-        }
-    }
+        },
+    },
 };
 </script>

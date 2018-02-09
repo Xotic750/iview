@@ -5,6 +5,7 @@
 </template>
 <script>
 import { findComponentUpward } from '../../utils/assist';
+
 const prefixCls = 'ivu-col';
 
 export default {
@@ -19,16 +20,16 @@ export default {
         xs: [Number, Object],
         sm: [Number, Object],
         md: [Number, Object],
-        lg: [Number, Object]
+        lg: [Number, Object],
     },
-    data () {
+    data() {
         return {
-            gutter: 0
+            gutter: 0,
         };
     },
     computed: {
-        classes () {
-            let classList = [
+        classes() {
+            const classList = [
                 `${prefixCls}`,
                 {
                     [`${prefixCls}-span-${this.span}`]: this.span,
@@ -36,20 +37,19 @@ export default {
                     [`${prefixCls}-offset-${this.offset}`]: this.offset,
                     [`${prefixCls}-push-${this.push}`]: this.push,
                     [`${prefixCls}-pull-${this.pull}`]: this.pull,
-                    [`${this.className}`]: !!this.className
-                }
+                    [`${this.className}`]: !!this.className,
+                },
             ];
 
-            ['xs', 'sm', 'md', 'lg'].forEach(size => {
+            ['xs', 'sm', 'md', 'lg'].forEach((size) => {
                 if (typeof this[size] === 'number') {
                     classList.push(`${prefixCls}-span-${size}-${this[size]}`);
                 } else if (typeof this[size] === 'object') {
-                    let props = this[size];
-                    Object.keys(props).forEach(prop => {
-                        classList.push(
-                            prop !== 'span'
+                    const props = this[size];
+                    Object.keys(props).forEach((prop) => {
+                        classList.push(prop !== 'span'
                                 ? `${prefixCls}-${size}-${prop}-${props[prop]}`
-                                : `${prefixCls}-span-${size}-${props[prop]}`
+                                : `${prefixCls}-span-${size}-${props[prop]}`,
                         );
                     });
                 }
@@ -57,31 +57,31 @@ export default {
 
             return classList;
         },
-        styles () {
+        styles() {
             let style = {};
             if (this.gutter !== 0) {
                 style = {
-                    paddingLeft: this.gutter / 2 + 'px',
-                    paddingRight: this.gutter / 2 + 'px'
+                    paddingLeft: `${this.gutter / 2  }px`,
+                    paddingRight: `${this.gutter / 2  }px`
                 };
             }
 
             return style;
-        }
+        },
     },
     methods: {
-        updateGutter () {
+        updateGutter() {
             const Row = findComponentUpward(this, 'Row');
             if (Row) {
                 Row.updateGutter(Row.gutter);
             }
-        }
+        },
     },
-    mounted () {
+    mounted() {
         this.updateGutter();
     },
-    beforeDestroy () {
+    beforeDestroy() {
         this.updateGutter();
-    }
+    },
 };
 </script>

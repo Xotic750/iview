@@ -134,57 +134,59 @@ const dateSorter = (a, b) => {
 
 export default {
     name: 'RangeDatePickerPanel',
-    mixins: [ Mixin, Locale, DateMixin ],
-    components: { Icon, DateTable, YearTable, MonthTable, TimePicker, Confirm, datePanelLabel },
+    mixins: [Mixin, Locale, DateMixin],
+    components: {
+        Icon, DateTable, YearTable, MonthTable, TimePicker, Confirm, datePanelLabel,
+    },
     props: {
         // more props in the mixin
         splitPanels: {
             type: Boolean,
-            default: false
+            default: false,
         },
     },
-    data(){
+    data() {
         const [minDate, maxDate] = this.value.map(date => date || initTimeDate());
         const leftPanelDate = this.startDate ? this.startDate : minDate;
 
         return {
-            prefixCls: prefixCls,
-            datePrefixCls: datePrefixCls,
+            prefixCls,
+            datePrefixCls,
             dates: this.value,
-            rangeState: {from: this.value[0], to: this.value[1], selecting: minDate && !maxDate},
+            rangeState: { from: this.value[0], to: this.value[1], selecting: minDate && !maxDate },
             currentView: this.selectionMode || 'range',
             leftPickerTable: `${this.selectionMode}-table`,
             rightPickerTable: `${this.selectionMode}-table`,
-            leftPanelDate: leftPanelDate,
-            rightPanelDate: new Date(leftPanelDate.getFullYear(), leftPanelDate.getMonth() + 1, leftPanelDate.getDate())
+            leftPanelDate,
+            rightPanelDate: new Date(leftPanelDate.getFullYear(), leftPanelDate.getMonth() + 1, leftPanelDate.getDate()),
         };
     },
     computed: {
-        classes(){
+        classes() {
             return [
                 `${prefixCls}-body-wrapper`,
                 `${datePrefixCls}-with-range`,
                 {
-                    [`${prefixCls}-with-sidebar`]: this.shortcuts.length
-                }
+                    [`${prefixCls}-with-sidebar`]: this.shortcuts.length,
+                },
             ];
         },
-        leftDatePanelLabel(){
+        leftDatePanelLabel() {
             return this.panelLabelConfig('left');
         },
-        rightDatePanelLabel(){
+        rightDatePanelLabel() {
             return this.panelLabelConfig('right');
         },
-        leftDatePanelView(){
+        leftDatePanelView() {
             return this.leftPickerTable.split('-').shift();
         },
-        rightDatePanelView(){
+        rightDatePanelView() {
             return this.rightPickerTable.split('-').shift();
         },
-        timeDisabled(){
+        timeDisabled() {
             return !(this.dates[0] && this.dates[1]);
         },
-        preSelecting(){
+        preSelecting() {
             const tableType = `${this.currentView}-table`;
 
             return {
@@ -192,12 +194,12 @@ export default {
                 right: this.rightPickerTable !== tableType,
             };
         },
-        panelPickerHandlers(){
+        panelPickerHandlers() {
             return {
                 left: this.preSelecting.left ? this.handlePreSelection.bind(this, 'left') : this.handleRangePick,
                 right: this.preSelecting.right ? this.handlePreSelection.bind(this, 'right') : this.handleRangePick,
             };
-        }
+        },
     },
     watch: {
         value(newVal) {
@@ -208,7 +210,7 @@ export default {
             this.rangeState = {
                 from: this.dates[0],
                 to: this.dates[1],
-                selecting: false
+                selecting: false,
             };
 
 
@@ -218,35 +220,35 @@ export default {
             const rightPanelDate = new Date(leftPanelDate.getFullYear(), leftPanelDate.getMonth() + 1, leftPanelDate.getDate());
             this.rightPanelDate = this.splitPanels ? new Date(Math.max(this.dates[1], rightPanelDate)) : rightPanelDate;
         },
-        currentView(currentView){
+        currentView(currentView) {
             const leftMonth = this.leftPanelDate.getMonth();
             const rightMonth = this.rightPanelDate.getMonth();
             const isSameYear = this.leftPanelDate.getFullYear() === this.rightPanelDate.getFullYear();
 
-            if (currentView === 'date' && isSameYear && leftMonth === rightMonth){
+            if (currentView === 'date' && isSameYear && leftMonth === rightMonth) {
                 this.changePanelDate('right', 'Month', 1);
             }
-            if (currentView === 'month' && isSameYear){
+            if (currentView === 'month' && isSameYear) {
                 this.changePanelDate('right', 'FullYear', 1);
             }
-            if (currentView === 'year' && isSameYear){
+            if (currentView === 'year' && isSameYear) {
                 this.changePanelDate('right', 'FullYear', 10);
             }
         },
-        selectionMode(type){
+        selectionMode(type) {
             this.currentView = type || 'range';
-        }
+        },
     },
     methods: {
-        reset(){
+        reset() {
             this.currentView = this.selectionMode;
             this.leftPickerTable = `${this.currentView}-table`;
             this.rightPickerTable = `${this.currentView}-table`;
         },
-        panelLabelConfig (direction) {
+        panelLabelConfig(direction) {
             const locale = this.t('i.locale');
             const datePanelLabel = this.t('i.datepicker.datePanelLabel');
-            const handler = type => {
+            const handler = (type) => {
                 const fn = type == 'month' ? this.showMonthPicker : this.showYearPicker;
                 return () => fn(direction);
             };
@@ -255,37 +257,37 @@ export default {
             const { labels, separator } = formatDateLabels(locale, datePanelLabel, date);
 
             return {
-                separator: separator,
-                labels: labels.map(obj => ((obj.handler = handler(obj.type)), obj))
+                separator,
+                labels: labels.map(obj => ((obj.handler = handler(obj.type)), obj)),
             };
         },
-        prevYear (panel) {
+        prevYear(panel) {
             const increment = this.currentView === 'year' ? -10 : -1;
             this.changePanelDate(panel, 'FullYear', increment);
         },
-        nextYear (panel) {
+        nextYear(panel) {
             const increment = this.currentView === 'year' ? 10 : 1;
             this.changePanelDate(panel, 'FullYear', increment);
         },
-        prevMonth(panel){
+        prevMonth(panel) {
             this.changePanelDate(panel, 'Month', -1);
         },
-        nextMonth(panel){
+        nextMonth(panel) {
             this.changePanelDate(panel, 'Month', 1);
         },
-        changePanelDate(panel, type, increment){
+        changePanelDate(panel, type, increment) {
             const current = new Date(this[`${panel}PanelDate`]);
             current[`set${type}`](current[`get${type}`]() + increment);
             this[`${panel}PanelDate`] = current;
 
 
-            if (this.splitPanels){
+            if (this.splitPanels) {
                 // change other panel if dates overlap
                 const otherPanel = panel === 'left' ? 'right' : 'left';
-                if (panel === 'left' && this.leftPanelDate >= this.rightPanelDate){
+                if (panel === 'left' && this.leftPanelDate >= this.rightPanelDate) {
                     this.changePanelDate(otherPanel, type, 1);
                 }
-                if (panel === 'right' && this.rightPanelDate <= this.leftPanelDate){
+                if (panel === 'right' && this.rightPanelDate <= this.leftPanelDate) {
                     this.changePanelDate(otherPanel, type, -1);
                 }
             } else {
@@ -293,33 +295,33 @@ export default {
                 const otherPanel = panel === 'left' ? 'right' : 'left';
                 const otherCurrent = new Date(this[`${otherPanel}PanelDate`]);
                 otherCurrent[`set${type}`](otherCurrent[`get${type}`]() + increment);
-                if (current[`get${type}`]() !== otherCurrent[`get${type}`]()){
+                if (current[`get${type}`]() !== otherCurrent[`get${type}`]()) {
                     this[`${otherPanel}PanelDate`] = otherCurrent;
                 }
             }
         },
-        showYearPicker (panel) {
+        showYearPicker(panel) {
             this[`${panel}PickerTable`] = 'year-table';
         },
-        showMonthPicker (panel) {
+        showMonthPicker(panel) {
             this[`${panel}PickerTable`] = 'month-table';
         },
-        handlePreSelection(panel, value){
+        handlePreSelection(panel, value) {
             this[`${panel}PanelDate`] = value;
             const currentViewType = this[`${panel}PickerTable`];
             if (currentViewType === 'year-table') this[`${panel}PickerTable`] = 'month-table';
             else this[`${panel}PickerTable`] = `${this.currentView}-table`;
 
-            if (!this.splitPanels){
+            if (!this.splitPanels) {
                 const otherPanel = panel === 'left' ? 'right' : 'left';
                 const type = currentViewType === 'year-table' ? 'FullYear' : 'Month';
                 this[`${otherPanel}PanelDate`] = value;
                 this.changePanelDate(otherPanel, type, 1);
             }
         },
-        handleRangePick (val) {
-            if (this.rangeState.selecting || this.currentView === 'time'){
-                if (this.currentView === 'time'){
+        handleRangePick(val) {
+            if (this.rangeState.selecting || this.currentView === 'time') {
+                if (this.currentView === 'time') {
                     this.dates = val;
                 } else {
                     const [minDate, maxDate] = [this.rangeState.from, val].sort(dateSorter);
@@ -327,7 +329,7 @@ export default {
                     this.rangeState = {
                         from: minDate,
                         to: maxDate,
-                        selecting: false
+                        selecting: false,
                     };
                 }
                 this.handleConfirm(false);
@@ -335,11 +337,11 @@ export default {
                 this.rangeState = {
                     from: val,
                     to: null,
-                    selecting: true
+                    selecting: true,
                 };
             }
         },
-        handleChangeRange (val) {
+        handleChangeRange(val) {
             this.rangeState.to = val;
         },
     },

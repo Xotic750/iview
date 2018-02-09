@@ -6,9 +6,9 @@ const prefixCls = 'ivu-layout';
 export default {
     name: 'Footer',
     computed: {
-        wrapClasses () {
+        wrapClasses() {
             return `${prefixCls}-footer`;
-        }
-    }
+        },
+    },
 };
 </script>

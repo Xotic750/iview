@@ -17,32 +17,32 @@ export default {
     props: {
         prefixCls: String,
         placeholder: String,
-        query: String
+        query: String,
     },
-    data () {
+    data() {
         return {
-            currentQuery: this.query
+            currentQuery: this.query,
         };
     },
     watch: {
-        query (val) {
+        query(val) {
             this.currentQuery = val;
         },
-        currentQuery (val) {
+        currentQuery(val) {
             this.$emit('on-query-change', val);
-        }
+        },
     },
     computed: {
-        icon () {
+        icon() {
             return this.query === '' ? 'ios-search' : 'ios-close';
-        }
+        },
     },
     methods: {
-        handleClick () {
+        handleClick() {
             if (this.currentQuery === '') return;
             this.currentQuery = '';
             this.$emit('on-query-clear');
-        }
-    }
+        },
+    },
 };
 </script>

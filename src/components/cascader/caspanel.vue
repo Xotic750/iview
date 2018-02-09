@@ -21,42 +21,42 @@ let key = 1;
 
 export default {
     name: 'Caspanel',
-    mixins: [ Emitter ],
+    mixins: [Emitter],
     components: { Casitem },
     props: {
         data: {
             type: Array,
-            default () {
+            default() {
                 return [];
-            }
+            },
         },
         disabled: Boolean,
         changeOnSelect: Boolean,
         trigger: String,
-        prefixCls: String
+        prefixCls: String,
     },
-    data () {
+    data() {
         return {
             tmpItem: {},
             result: [],
-            sublist: []
+            sublist: [],
         };
     },
     watch: {
-        data () {
+        data() {
             this.sublist = [];
-        }
+        },
     },
     methods: {
-        handleClickItem (item) {
-            if (this.trigger !== 'click' && item.children && item.children.length) return;  // #1922
+        handleClickItem(item) {
+            if (this.trigger !== 'click' && item.children && item.children.length) return; // #1922
             this.handleTriggerItem(item, false, true);
         },
-        handleHoverItem (item) {
-            if (this.trigger !== 'hover' || !item.children || !item.children.length) return;  // #1922
+        handleHoverItem(item) {
+            if (this.trigger !== 'hover' || !item.children || !item.children.length) return; // #1922
             this.handleTriggerItem(item, false, true);
         },
-        handleTriggerItem (item, fromInit = false, fromUser = false) {
+        handleTriggerItem(item, fromInit = false, fromUser = false) {
             if (item.disabled) return;
 
             if (item.loading !== undefined && !item.children.length) {
@@ -79,12 +79,12 @@ export default {
             const backItem = this.getBaseItem(item);
             this.tmpItem = backItem;
             this.emitUpdate([backItem]);
-            if (item.children && item.children.length){
+            if (item.children && item.children.length) {
                 this.sublist = item.children;
                 this.dispatch('Cascader', 'on-result-change', {
                     lastValue: false,
                     changeOnSelect: this.changeOnSelect,
-                    fromInit: fromInit
+                    fromInit,
                 });
 
                 // #1553
@@ -99,37 +99,37 @@ export default {
                 this.dispatch('Cascader', 'on-result-change', {
                     lastValue: true,
                     changeOnSelect: this.changeOnSelect,
-                    fromInit: fromInit
+                    fromInit,
                 });
             }
         },
-        updateResult (item) {
+        updateResult(item) {
             this.result = [this.tmpItem].concat(item);
             this.emitUpdate(this.result);
         },
-        getBaseItem (item) {
-            let backItem = Object.assign({}, item);
+        getBaseItem(item) {
+            const backItem = Object.assign({}, item);
             if (backItem.children) {
                 delete backItem.children;
             }
 
             return backItem;
         },
-        emitUpdate (result) {
+        emitUpdate(result) {
             if (this.$parent.$options.name === 'Caspanel') {
                 this.$parent.updateResult(result);
             } else {
                 this.$parent.$parent.updateResult(result);
             }
         },
-        getKey () {
+        getKey() {
             return key++;
-        }
+        },
     },
-    mounted () {
+    mounted() {
         this.$on('on-find-selected', (params) => {
             const val = params.value;
-            let value = [...val];
+            const value = [...val];
             for (let i = 0; i < value.length; i++) {
                 for (let j = 0; j < this.data.length; j++) {
                     if (value[i] === this.data[j].value) {
@@ -137,7 +137,7 @@ export default {
                         value.splice(0, 1);
                         this.$nextTick(() => {
                             this.broadcast('Caspanel', 'on-find-selected', {
-                                value: value
+                                value,
                             });
                         });
                         return false;
@@ -156,6 +156,6 @@ export default {
                 }
             }
         });
-    }
+    },
 };
 </script>

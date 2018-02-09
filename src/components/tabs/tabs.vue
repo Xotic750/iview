@@ -34,90 +34,90 @@ const prefixCls = 'ivu-tabs';
 
 export default {
     name: 'Tabs',
-    mixins: [ Emitter ],
+    mixins: [Emitter],
     components: { Icon, Render },
     props: {
         value: {
-            type: [String, Number]
+            type: [String, Number],
         },
         type: {
-            validator (value) {
+            validator(value) {
                 return oneOf(value, ['line', 'card']);
             },
-            default: 'line'
+            default: 'line',
         },
         size: {
-            validator (value) {
+            validator(value) {
                 return oneOf(value, ['small', 'default']);
             },
-            default: 'default'
+            default: 'default',
         },
         animated: {
             type: Boolean,
-            default: true
+            default: true,
         },
         closable: {
             type: Boolean,
-            default: false
-        }
+            default: false,
+        },
     },
-    data () {
+    data() {
         return {
-            prefixCls: prefixCls,
+            prefixCls,
             navList: [],
             barWidth: 0,
             barOffset: 0,
             activeKey: this.value,
             showSlot: false,
             navStyle: {
-                transform: ''
+                transform: '',
             },
-            scrollable: false
+            scrollable: false,
         };
     },
     computed: {
-        classes () {
+        classes() {
             return [
                 `${prefixCls}`,
                 {
                     [`${prefixCls}-card`]: this.type === 'card',
                     [`${prefixCls}-mini`]: this.size === 'small' && this.type === 'line',
-                    [`${prefixCls}-no-animation`]: !this.animated
-                }
+                    [`${prefixCls}-no-animation`]: !this.animated,
+                },
             ];
         },
-        contentClasses () {
+        contentClasses() {
             return [
                 `${prefixCls}-content`,
                 {
-                    [`${prefixCls}-content-animated`]: this.animated
-                }
+                    [`${prefixCls}-content-animated`]: this.animated,
+                },
             ];
         },
-        barClasses () {
+        barClasses() {
             return [
                 `${prefixCls}-ink-bar`,
                 {
-                    [`${prefixCls}-ink-bar-animated`]: this.animated
-                }
+                    [`${prefixCls}-ink-bar-animated`]: this.animated,
+                },
             ];
         },
-        contentStyle () {
-            const x = this.navList.findIndex((nav) => nav.name === this.activeKey);
+        contentStyle() {
+            const x = this.navList.findIndex(nav => nav.name === this.activeKey);
             const p = x === 0 ? '0%' : `-${x}00%`;
 
             let style = {};
             if (x > -1) {
                 style = {
-                    transform: `translateX(${p}) translateZ(0px)`
+                    transform: `translateX(${p}) translateZ(0px)`,
                 };
             }
             return style;
         },
-        barStyle () {
-            let style = {
+        barStyle() {
+            const style = {
                 display: 'none',
-                width: `${this.barWidth}px`
+                width: `${this.barWidth}px`,
             };
             if (this.type === 'line') style.display = 'block';
             if (this.animated) {
@@ -127,13 +127,13 @@ export default {
             }
 
             return style;
-        }
+        },
     },
     methods: {
-        getTabs () {
+        getTabs() {
             return this.$children.filter(item => item.$options.name === 'TabPane');
         },
-        updateNav () {
+        updateNav() {
             this.navList = [];
             this.getTabs().forEach((pane, index) => {
                 this.navList.push({
@@ -142,7 +142,7 @@ export default {
                     icon: pane.icon || '',
                     name: pane.currentName || index,
                     disabled: pane.disabled,
-                    closable: pane.closable
+                    closable: pane.closable,
                 });
                 if (!pane.currentName) pane.currentName = index;
                 if (index === 0) {
@@ -152,10 +152,10 @@ export default {
             this.updateStatus();
             this.updateBar();
         },
-        updateBar () {
+        updateBar() {
             this.$nextTick(() => {
-                const index = this.navList.findIndex((nav) => nav.name === this.activeKey);
-                if (!this.$refs.nav) return;  // 页面销毁时，这里会报错，为了解决 #2100
+                const index = this.navList.findIndex(nav => nav.name === this.activeKey);
+                if (!this.$refs.nav) return; // 页面销毁时，这里会报错，为了解决 #2100
                 const prevTabs = this.$refs.nav.querySelectorAll(`.${prefixCls}-tab`);
                 const tab = prevTabs[index];
                 this.barWidth = tab ? parseFloat(tab.offsetWidth) : 0;
@@ -174,27 +174,27 @@ export default {
                 this.updateNavScroll();
             });
         },
-        updateStatus () {
+        updateStatus() {
             const tabs = this.getTabs();
             tabs.forEach(tab => tab.show = (tab.currentName === this.activeKey) || this.animated);
         },
-        tabCls (item) {
+        tabCls(item) {
             return [
                 `${prefixCls}-tab`,
                 {
                     [`${prefixCls}-tab-disabled`]: item.disabled,
-                    [`${prefixCls}-tab-active`]: item.name === this.activeKey
-                }
+                    [`${prefixCls}-tab-active`]: item.name === this.activeKey,
+                },
             ];
         },
-        handleChange (index) {
+        handleChange(index) {
             const nav = this.navList[index];
             if (nav.disabled) return;
             this.activeKey = nav.name;
             this.$emit('input', nav.name);
             this.$emit('on-click', nav.name);
         },
-        handleRemove (index) {
+        handleRemove(index) {
             const tabs = this.getTabs();
             const tab = tabs[index];
             tab.$destroy();
@@ -221,16 +221,14 @@ export default {
             this.$emit('on-tab-remove', tab.currentName);
             this.updateNav();
         },
-        showClose (item) {
+        showClose(item) {
             if (this.type === 'card') {
                 if (item.closable !== null) {
                     return item.closable;
-                } else {
-                    return this.closable;
                 }
-            } else {
-                return false;
+                return this.closable;
             }
+            return false;
         },
         scrollPrev() {
             const containerWidth = this.$refs.navScroll.offsetWidth;
@@ -238,7 +236,7 @@ export default {
 
             if (!currentOffset) return;
 
-            let newOffset = currentOffset > containerWidth
+            const newOffset = currentOffset > containerWidth
                 ? currentOffset - containerWidth
                 : 0;
 
@@ -250,7 +248,7 @@ export default {
             const currentOffset = this.getCurrentScrollOffset();
             if (navWidth - currentOffset <= containerWidth) return;
 
-            let newOffset = navWidth - currentOffset > containerWidth * 2
+            const newOffset = navWidth - currentOffset > containerWidth * 2
                 ? currentOffset + containerWidth
                 : (navWidth - containerWidth);
 
@@ -269,7 +267,7 @@ export default {
             if (!this.scrollable) return;
             const nav = this.$refs.nav;
             const activeTab = this.$el.querySelector(`.${prefixCls}-tab-active`);
-            if(!activeTab) return;
+            if (!activeTab) return;
 
             const navScroll = this.$refs.navScroll;
             const activeTabBounding = activeTab.getBoundingClientRect();
@@ -284,15 +282,15 @@ export default {
 
             if (activeTabBounding.left < navScrollBounding.left) {
                 newOffset = currentOffset - (navScrollBounding.left - activeTabBounding.left);
-            }else if (activeTabBounding.right > navScrollBounding.right) {
+            } else if (activeTabBounding.right > navScrollBounding.right) {
                 newOffset = currentOffset + activeTabBounding.right - navScrollBounding.right;
             }
 
-            if(currentOffset !== newOffset){
+            if (currentOffset !== newOffset) {
                 this.setOffset(Math.max(newOffset, 0));
             }
         },
-        updateNavScroll(){
+        updateNavScroll() {
             const navWidth = this.$refs.nav.offsetWidth;
             const containerWidth = this.$refs.navScroll.offsetWidth;
             const currentOffset = this.getCurrentScrollOffset();
@@ -308,34 +306,34 @@ export default {
                 }
             }
         },
-        handleResize(){
+        handleResize() {
             this.updateNavScroll();
         },
-        isInsideHiddenElement () {
+        isInsideHiddenElement() {
             let parentNode = this.$el.parentNode;
-            while(parentNode && parentNode !== document.body) {
+            while (parentNode && parentNode !== document.body) {
                 if (parentNode.style && parentNode.style.display === 'none') {
                     return parentNode;
                 }
                 parentNode = parentNode.parentNode;
             }
             return false;
-        }
+        },
     },
     watch: {
-        value (val) {
+        value(val) {
             this.activeKey = val;
         },
-        activeKey () {
+        activeKey() {
             this.updateBar();
             this.updateStatus();
             this.broadcast('Table', 'on-visible-change', true);
             this.$nextTick(() => {
                 this.scrollToActiveTab();
             });
-        }
+        },
     },
-    mounted () {
+    mounted() {
         this.showSlot = this.$slots.extra !== undefined;
         this.observer = elementResizeDetectorMaker();
         this.observer.listenTo(this.$refs.navWrap, this.handleResize);
@@ -349,12 +347,14 @@ export default {
                 }
             });
 
-            this.mutationObserver.observe(hiddenParentNode, { attributes: true, childList: true, characterData: true, attributeFilter: ['style'] });
+            this.mutationObserver.observe(hiddenParentNode, {
+                attributes: true, childList: true, characterData: true, attributeFilter: ['style'],
+            });
         }
     },
     beforeDestroy() {
         this.observer.removeListener(this.$refs.navWrap, this.handleResize);
         if (this.mutationObserver) this.mutationObserver.disconnect();
-    }
+    },
 };
 </script>

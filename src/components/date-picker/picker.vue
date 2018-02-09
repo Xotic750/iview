@@ -78,146 +78,146 @@ const isEmptyArray = val => val.reduce((isEmpty, str) => isEmpty && !str || (typ
 
 export default {
     name: 'CalendarPicker',
-    mixins: [ Emitter ],
+    mixins: [Emitter],
     components: { iInput, Drop },
     directives: { clickoutside, TransferDom },
     props: {
         format: {
-            type: String
+            type: String,
         },
         readonly: {
             type: Boolean,
-            default: false
+            default: false,
         },
         disabled: {
             type: Boolean,
-            default: false
+            default: false,
         },
         editable: {
             type: Boolean,
-            default: true
+            default: true,
         },
         clearable: {
             type: Boolean,
-            default: true
+            default: true,
         },
         confirm: {
             type: Boolean,
-            default: false
+            default: false,
         },
         open: {
             type: Boolean,
-            default: null
+            default: null,
         },
         multiple: {
             type: Boolean,
-            default: false
+            default: false,
         },
         splitPanels: {
             type: Boolean,
-            default: false
+            default: false,
         },
         showWeekNumbers: {
             type: Boolean,
-            default: false
+            default: false,
         },
         startDate: {
-            type: Date
+            type: Date,
         },
         size: {
-            validator (value) {
+            validator(value) {
                 return oneOf(value, ['small', 'large', 'default']);
-            }
+            },
         },
         placeholder: {
             type: String,
-            default: ''
+            default: '',
         },
         placement: {
-            validator (value) {
+            validator(value) {
                 return oneOf(value, ['top', 'top-start', 'top-end', 'bottom', 'bottom-start', 'bottom-end', 'left', 'left-start', 'left-end', 'right', 'right-start', 'right-end']);
             },
-            default: 'bottom-start'
+            default: 'bottom-start',
         },
         transfer: {
             type: Boolean,
-            default: false
+            default: false,
         },
         name: {
-            type: String
+            type: String,
         },
         elementId: {
-            type: String
+            type: String,
         },
         steps: {
             type: Array,
-            default: () => []
+            default: () => [],
         },
         value: {
-            type: [Date, String, Array]
+            type: [Date, String, Array],
         },
         options: {
             type: Object,
-            default: () => ({})
-        }
+            default: () => ({}),
+        },
     },
-    data(){
+    data() {
         const isRange = this.type.includes('range');
         const emptyArray = isRange ? [null, null] : [null];
         const initialValue = isEmptyArray((isRange ? this.value : [this.value]) || []) ? emptyArray : this.parseDate(this.value);
 
         return {
-            prefixCls: prefixCls,
+            prefixCls,
             showClose: false,
             visible: false,
             internalValue: initialValue,
-            disableClickOutSide: false,    // fixed when click a date,trigger clickoutside to close picker
-            disableCloseUnderTransfer: false,  // transfer 模式下，点击Drop也会触发关闭,
+            disableClickOutSide: false, // fixed when click a date,trigger clickoutside to close picker
+            disableCloseUnderTransfer: false, // transfer 模式下，点击Drop也会触发关闭,
             selectionMode: this.onSelectionModeChange(this.type),
-            forceInputRerender: 1
+            forceInputRerender: 1,
         };
     },
     computed: {
         publicValue(){
             if (this.multiple){
                 return this.internalValue.slice();
-            } else {
+            } 
                 const isRange = this.type.includes('range');
                 const val = this.internalValue.map(date => date instanceof Date ? new Date(date) : (date || ''));
                 return (isRange || this.multiple) ? val : val[0];
-            }
+            
         },
-        opened () {
+        opened() {
             return this.open === null ? this.visible : this.open;
         },
-        iconType () {
+        iconType() {
             let icon = 'ios-calendar-outline';
             if (this.type === 'time' || this.type === 'timerange') icon = 'ios-clock-outline';
             if (this.showClose) icon = 'ios-close';
             return icon;
         },
-        transition () {
+        transition() {
             const bottomPlaced = this.placement.match(/^bottom/);
             return bottomPlaced ? 'slide-up' : 'slide-down';
         },
         visualValue() {
             return this.formatDate(this.internalValue);
         },
-        isConfirm(){
+        isConfirm() {
             return this.confirm || this.type === 'datetime' || this.type === 'datetimerange' || this.multiple;
-        }
+        },
     },
     methods: {
-        onSelectionModeChange(type){
+        onSelectionModeChange(type) {
             if (type.match(/^date/)) type = 'date';
             this.selectionMode = oneOf(type, ['year', 'month', 'date', 'time']) && type;
             return this.selectionMode;
         },
         // 开启 transfer 时，点击 Drop 即会关闭，这里不让其关闭
-        handleTransferClick () {
+        handleTransferClick() {
             if (this.transfer) this.disableCloseUnderTransfer = true;
         },
-        handleClose () {
+        handleClose() {
             if (this.disableCloseUnderTransfer) {
                 this.disableCloseUnderTransfer = false;
                 return false;
@@ -227,23 +227,22 @@ export default {
             this.visible = false;
             this.disableClickOutSide = false;
         },
-        handleFocus () {
+        handleFocus() {
             if (this.readonly) return;
             this.visible = true;
             this.$refs.pickerPanel.onToggleVisibility(true);
         },
-        handleBlur () {
+        handleBlur() {
             this.visible = false;
             this.onSelectionModeChange(this.type);
             this.internalValue = this.internalValue.slice(); // trigger panel watchers to reset views
             this.reset();
             this.$refs.pickerPanel.onToggleVisibility(false);
-
         },
-        reset(){
+        reset() {
             this.$refs.pickerPanel.reset && this.$refs.pickerPanel.reset();
         },
-        handleInputChange (event) {
+        handleInputChange(event) {
             const isArrayValue = this.type.includes('range') || this.multiple;
             const oldValue = this.visualValue;
             const newValue = event.target.value;
@@ -263,23 +262,23 @@ export default {
                 this.forceInputRerender++;
             }
         },
-        handleInputMouseenter () {
+        handleInputMouseenter() {
             if (this.readonly || this.disabled) return;
             if (this.visualValue && this.clearable) {
                 this.showClose = true;
             }
         },
-        handleInputMouseleave () {
+        handleInputMouseleave() {
             this.showClose = false;
         },
-        handleIconClick () {
+        handleIconClick() {
             if (this.showClose) {
                 this.handleClear();
             } else if (!this.disabled) {
                 this.handleFocus();
             }
         },
-        handleClear () {
+        handleClear() {
             this.visible = false;
             this.internalValue = this.internalValue.map(() => null);
             this.$emit('on-clear');
@@ -289,10 +288,10 @@ export default {
 
             setTimeout(
                 () => this.onSelectionModeChange(this.type),
-                500 // delay to improve dropdown close visual effect
+                500, // delay to improve dropdown close visual effect
             );
         },
-        emitChange () {
+        emitChange() {
             this.$emit('on-change', this.visualValue, this.publicValue);
             this.$nextTick(() => {
                 this.dispatch('FormItem', 'on-form-change', this.publicValue);
@@ -303,20 +302,19 @@ export default {
             const type = this.type;
             const parser = (
                 TYPE_VALUE_RESOLVER_MAP[type] ||
-                    TYPE_VALUE_RESOLVER_MAP['default']
+                    TYPE_VALUE_RESOLVER_MAP.default
             ).parser;
             const format = this.format || DEFAULT_FORMATS[type];
-            const multipleParser = TYPE_VALUE_RESOLVER_MAP['multiple'].parser;
+            const multipleParser = TYPE_VALUE_RESOLVER_MAP.multiple.parser;
 
             if (val && type === 'time' && !(val instanceof Date)) {
                 val = parser(val, format);
             } else if (this.multiple && val) {
                 val = multipleParser(val, format);
             } else if (isRange) {
-                if (!val){
+                if (!val) {
                     val = [null, null];
-                } else {
-                    if (typeof val === 'string') {
+                } else if (typeof val === 'string') {
                         val = parser(val, format);
                     } else if (type === 'timerange') {
                         val = parser(val, format);
@@ -324,8 +322,7 @@ export default {
                         val = val.map(date => new Date(date)); // try to parse
                         val = val.map(date => isNaN(date.getTime()) ? null : date); // check if parse passed
                     }
-                }
-            } else if (typeof val === 'string' && type.indexOf('time') !== 0){
+            } else if (typeof val === 'string' && type.indexOf('time') !== 0) {
                 val = parser(val, format) || null;
             }
 
@@ -337,16 +334,16 @@ export default {
             if (this.multiple) {
                 const formatter = TYPE_VALUE_RESOLVER_MAP.multiple.formatter;
                 return formatter(value, this.format || format);
-            } else {
+            } 
                 const {formatter} = (
                     TYPE_VALUE_RESOLVER_MAP[this.type] ||
                         TYPE_VALUE_RESOLVER_MAP['default']
                 );
                 return formatter(value, this.format || format);
-            }
+            
         },
         onPick(dates, visible = false) {
-            if (this.multiple){
+            if (this.multiple) {
                 const pickedTimeStamp = dates.getTime();
                 const indexOfPickedDate = this.internalValue.findIndex(date => date && date.getTime() === pickedTimeStamp);
                 const allDates = [...this.internalValue, dates].filter(Boolean);
@@ -360,15 +357,15 @@ export default {
             if (!this.isConfirm) this.visible = visible;
             this.emitChange();
         },
-        onPickSuccess(){
+        onPickSuccess() {
             this.visible = false;
             this.$emit('on-ok');
             this.reset();
         },
     },
     watch: {
-        visible (state) {
-            if (state === false){
+        visible(state) {
+            if (state === false) {
                 this.$refs.drop.destroy();
                 const input = this.$el.querySelector('input');
                 if (input) input.blur();
@@ -378,28 +375,27 @@ export default {
         },
         value(val) {
             this.internalValue = this.parseDate(val);
-
         },
-        open (val) {
+        open(val) {
             this.visible = val === true;
         },
-        type(type){
+        type(type) {
             this.onSelectionModeChange(type);
         },
-        publicValue(now, before){
+        publicValue(now, before) {
             const newValue = JSON.stringify(now);
             const oldValue = JSON.stringify(before);
             const shouldEmitInput = newValue !== oldValue || typeof now !== typeof before;
             if (shouldEmitInput) this.$emit('input', now); // to update v-model
         },
     },
-    mounted () {
+    mounted() {
         const initialValue = this.value;
         const parsedValue = this.publicValue;
-        if (typeof initialValue !== typeof parsedValue || JSON.stringify(initialValue) !== JSON.stringify(parsedValue)){
+        if (typeof initialValue !== typeof parsedValue || JSON.stringify(initialValue) !== JSON.stringify(parsedValue)) {
             this.$emit('input', this.publicValue); // to update v-model
         }
         if (this.open !== null) this.visible = this.open;
-    }
+    },
 };
 </script>

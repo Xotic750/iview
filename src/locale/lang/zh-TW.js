@@ -6,14 +6,14 @@ const lang = {
         select: {
             placeholder: '請選擇',
             noMatch: '無匹配資料',
-            loading: '加載中'
+            loading: '加載中',
         },
         table: {
             noDataText: '暫無資料',
             noFilteredDataText: '暫無篩選結果',
             confirmFilter: '篩選',
             resetFilter: '重置',
-            clearFilter: '全部'
+            clearFilter: '全部',
         },
         datepicker: {
             selectDate: '選擇日期',
@@ -45,7 +45,7 @@ const lang = {
                 wed: '三',
                 thu: '四',
                 fri: '五',
-                sat: '六'
+                sat: '六',
             },
             months: {
                 m1: '1月',
@@ -59,24 +59,24 @@ const lang = {
                 m9: '9月',
                 m10: '10月',
                 m11: '11月',
-                m12: '12月'
-            }
+                m12: '12月',
+            },
         },
         transfer: {
             titles: {
                 source: '來源列表',
-                target: '目標列表'
+                target: '目標列表',
             },
             filterPlaceholder: '請輸入搜尋內容',
-            notFoundText: '列表爲空'
+            notFoundText: '列表爲空',
         },
         modal: {
             okText: '確定',
-            cancelText: '取消'
+            cancelText: '取消',
         },
         poptip: {
             okText: '確定',
-            cancelText: '取消'
+            cancelText: '取消',
         },
         page: {
             prev: '上一頁',
@@ -88,16 +88,16 @@ const lang = {
             next5: '向後 5 頁',
             page: '條/頁',
             goto: '跳至',
-            p: '頁'
+            p: '頁',
         },
         rate: {
             star: '星',
-            stars: '星'
+            stars: '星',
         },
         tree: {
-            emptyText: '暫無資料'
-        }
-    }
+            emptyText: '暫無資料',
+        },
+    },
 };
 
 setLang(lang);

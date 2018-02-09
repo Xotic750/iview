@@ -6,14 +6,14 @@ const lang = {
         select: {
             placeholder: 'Auswählen',
             noMatch: 'Keine Übereinstimmungen',
-            loading: 'Lädt'
+            loading: 'Lädt',
         },
         table: {
             noDataText: 'Keine Daten',
             noFilteredDataText: 'Keine gefilterten Daten',
             confirmFilter: 'Bestätigen',
             resetFilter: 'Zurücksetzen',
-            clearFilter: 'Alle'
+            clearFilter: 'Alle',
         },
         datepicker: {
             selectDate: 'Datum auswählen',
@@ -45,7 +45,7 @@ const lang = {
                 wed: 'Mi',
                 thu: 'Do',
                 fri: 'Fr',
-                sat: 'Sa'
+                sat: 'Sa',
             },
             months: {
                 m1: 'Jan',
@@ -59,24 +59,24 @@ const lang = {
                 m9: 'Sep',
                 m10: 'Okt',
                 m11: 'Nov',
-                m12: 'Dez'
-            }
+                m12: 'Dez',
+            },
         },
         transfer: {
             titles: {
                 source: 'Quelle',
-                target: 'Ziel'
+                target: 'Ziel',
             },
             filterPlaceholder: 'Suchen',
-            notFoundText: 'Nicht gefunden'
+            notFoundText: 'Nicht gefunden',
         },
         modal: {
             okText: 'OK',
-            cancelText: 'Abbrechen'
+            cancelText: 'Abbrechen',
         },
         poptip: {
             okText: 'OK',
-            cancelText: 'Abbrechen'
+            cancelText: 'Abbrechen',
         },
         page: {
             prev: 'Vorherige Seite',
@@ -88,16 +88,16 @@ const lang = {
             next5: 'nächste fünf Seiten',
             page: '/seite',
             goto: 'Gehe zu',
-            p: ''
+            p: '',
         },
         rate: {
             star: 'Stern',
-            stars: 'Sterne'
+            stars: 'Sterne',
         },
         tree: {
-            emptyText: 'Keine Daten'
-        }
-    }
+            emptyText: 'Keine Daten',
+        },
+    },
 };
 
 setLang(lang);

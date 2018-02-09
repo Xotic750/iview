@@ -11,7 +11,7 @@
 
 <script>
 import Emitter from '../../mixins/emitter';
-import {findComponentUpward} from '../../utils/assist';
+import { findComponentUpward } from '../../utils/assist';
 
 const prefixCls = 'ivu-select-item';
 
@@ -28,7 +28,7 @@ export default {
             type: [String, Number],
         },
         label: {
-            default: '',
+            default: undefined,
             type: [String, Number],
         },
         disabled: {
@@ -37,7 +37,7 @@ export default {
         },
     },
 
-    data(){
+    data() {
         return {
             selected: false,
             index: 0, // for up and down to focus
@@ -49,7 +49,7 @@ export default {
     },
 
     computed: {
-        classes(){
+        classes() {
             return [
                 `${prefixCls}`,
                 {
@@ -60,13 +60,13 @@ export default {
             ];
         },
 
-        showLabel(){
+        showLabel() {
             return this.label || this.value;
         },
     },
 
     methods: {
-        select(){
+        select() {
             if (this.disabled) {
                 return false;
             }
@@ -74,31 +74,31 @@ export default {
             this.dispatch('iSelect', 'on-select-selected', this.value);
         },
 
-        blur(){
+        blur() {
             this.isFocus = false;
         },
 
-        queryChange(val){
+        queryChange(val) {
             const parsedQuery = val.replace(/(\^|\(|\)|\[|\]|\$|\*|\+|\.|\?|\\|\{|\}|\|)/g, '\\$1');
 
             this.hidden = !new RegExp(parsedQuery, 'i').test(this.searchLabel);
         },
 
         // 在使用函数防抖后，设置 key 后，不更新组件了，导致SearchLabel 不更新 #1865
-        updateSearchLabel(){
+        updateSearchLabel() {
             this.searchLabel = this.$el.textContent;
         },
 
-        onSelectClose(){
+        onSelectClose() {
             this.isFocus = false;
         },
 
-        onQueryChange(val){
+        onQueryChange(val) {
             this.queryChange(val);
         },
     },
 
-    mounted(){
+    mounted() {
         this.updateSearchLabel();
         this.dispatch('iSelect', 'append');
         this.$on('on-select-close', this.onSelectClose);
@@ -110,7 +110,7 @@ export default {
         }
     },
 
-    beforeDestroy(){
+    beforeDestroy() {
         this.dispatch('iSelect', 'remove');
         this.$off('on-select-close', this.onSelectClose);
         this.$off('on-query-change', this.onQueryChange);

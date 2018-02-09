@@ -8,20 +8,20 @@ export default {
     mixins: [Picker],
     props: {
         type: {
-            validator (value) {
+            validator(value) {
                 return oneOf(value, ['year', 'month', 'date', 'daterange', 'datetime', 'datetimerange']);
             },
-            default: 'date'
+            default: 'date',
         },
     },
     components: { DatePickerPanel, RangeDatePickerPanel },
     computed: {
-        panel(){
-            const isRange =  this.type === 'daterange' || this.type === 'datetimerange';
+        panel() {
+            const isRange = this.type === 'daterange' || this.type === 'datetimerange';
             return isRange ? 'RangeDatePickerPanel' : 'DatePickerPanel';
         },
-        ownPickerProps(){
+        ownPickerProps() {
             return this.options;
-        }
+        },
     },
 };

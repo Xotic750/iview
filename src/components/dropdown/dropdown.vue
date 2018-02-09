@@ -32,64 +32,64 @@ export default {
     components: { Drop },
     props: {
         trigger: {
-            validator (value) {
+            validator(value) {
                 return oneOf(value, ['click', 'hover', 'custom']);
             },
-            default: 'hover'
+            default: 'hover',
         },
         placement: {
-            validator (value) {
+            validator(value) {
                 return oneOf(value, ['top', 'top-start', 'top-end', 'bottom', 'bottom-start', 'bottom-end', 'left', 'left-start', 'left-end', 'right', 'right-start', 'right-end']);
             },
-            default: 'bottom'
+            default: 'bottom',
         },
         visible: {
             type: Boolean,
-            default: false
+            default: false,
         },
         transfer: {
             type: Boolean,
-            default: false
-        }
+            default: false,
+        },
     },
     computed: {
-        transition () {
+        transition() {
             return ['bottom-start', 'bottom', 'bottom-end'].indexOf(this.placement) > -1 ? 'slide-up' : 'fade';
         },
-        dropdownCls () {
+        dropdownCls() {
             return {
-                [prefixCls + '-transfer']: this.transfer
+                [`${prefixCls}-transfer`]: this.transfer,
             };
-        }
+        },
     },
-    data () {
+    data() {
         return {
-            prefixCls: prefixCls,
-            currentVisible: this.visible
+            prefixCls,
+            currentVisible: this.visible,
         };
     },
     watch: {
-        visible (val) {
+        visible(val) {
             this.currentVisible = val;
         },
-        currentVisible (val) {
+        currentVisible(val) {
             if (val) {
                 this.$refs.drop.update();
             } else {
                 this.$refs.drop.destroy();
             }
             this.$emit('on-visible-change', val);
-        }
+        },
     },
     methods: {
-        handleClick () {
+        handleClick() {
             if (this.trigger === 'custom') return false;
             if (this.trigger !== 'click') {
                 return false;
             }
             this.currentVisible = !this.currentVisible;
         },
-        handleMouseenter () {
+        handleMouseenter() {
             if (this.trigger === 'custom') return false;
             if (this.trigger !== 'hover') {
                 return false;
@@ -99,7 +99,7 @@ export default {
                 this.currentVisible = true;
             }, 250);
         },
-        handleMouseleave () {
+        handleMouseleave() {
             if (this.trigger === 'custom') return false;
             if (this.trigger !== 'hover') {
                 return false;
@@ -111,28 +111,27 @@ export default {
                 }, 150);
             }
         },
-        onClickoutside (e) {
+        onClickoutside(e) {
             this.handleClose();
             if (this.currentVisible) this.$emit('on-clickoutside', e);
         },
-        handleClose () {
+        handleClose() {
             if (this.trigger === 'custom') return false;
             if (this.trigger !== 'click') {
                 return false;
             }
             this.currentVisible = false;
         },
-        hasParent () {
+        hasParent() {
             //                const $parent = this.$parent.$parent.$parent;
             const $parent = findComponentUpward(this, 'Dropdown');
             if ($parent) {
                 return $parent;
-            } else {
-                return false;
             }
-        }
+            return false;
+        },
     },
-    mounted () {
+    mounted() {
         this.$on('on-click', (key) => {
             const $parent = this.hasParent();
             if ($parent) $parent.$emit('on-click', key);
@@ -160,6 +159,6 @@ export default {
             const $parent = this.hasParent();
             if ($parent) $parent.$emit('on-haschild-click');
         });
-    }
+    },
 };
 </script>

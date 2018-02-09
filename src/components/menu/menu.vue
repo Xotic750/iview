@@ -9,45 +9,45 @@ const prefixCls = 'ivu-menu';
 
 export default {
     name: 'Menu',
-    mixins: [ Emitter ],
+    mixins: [Emitter],
     props: {
         mode: {
-            validator (value) {
+            validator(value) {
                 return oneOf(value, ['horizontal', 'vertical']);
             },
-            default: 'vertical'
+            default: 'vertical',
         },
         theme: {
-            validator (value) {
+            validator(value) {
                 return oneOf(value, ['light', 'dark', 'primary']);
             },
-            default: 'light'
+            default: 'light',
         },
         activeName: {
-            type: [String, Number]
+            type: [String, Number],
         },
         openNames: {
             type: Array,
-            default () {
+            default() {
                 return [];
-            }
+            },
         },
         accordion: {
             type: Boolean,
-            default: false
+            default: false,
         },
         width: {
             type: String,
-            default: '240px'
-        }
+            default: '240px',
+        },
     },
-    data () {
+    data() {
         return {
-            currentActiveName: this.activeName
+            currentActiveName: this.activeName,
         };
     },
     computed: {
-        classes () {
+        classes() {
             let theme = this.theme;
             if (this.mode === 'vertical' && this.theme === 'primary') theme = 'light';
 
@@ -55,27 +55,27 @@ export default {
                 `${prefixCls}`,
                 `${prefixCls}-${theme}`,
                 {
-                    [`${prefixCls}-${this.mode}`]: this.mode
-                }
+                    [`${prefixCls}-${this.mode}`]: this.mode,
+                },
             ];
         },
-        styles () {
-            let style = {};
+        styles() {
+            const style = {};
 
             if (this.mode === 'vertical') style.width = this.width;
 
             return style;
-        }
+        },
     },
     methods: {
-        updateActiveName () {
+        updateActiveName() {
             if (this.currentActiveName === undefined) {
                 this.currentActiveName = -1;
             }
             this.broadcast('Submenu', 'on-update-active-name', false);
             this.broadcast('MenuItem', 'on-update-active-name', this.currentActiveName);
         },
-        updateOpenKeys (name) {
+        updateOpenKeys(name) {
             const index = this.openNames.indexOf(name);
             if (index > -1) {
                 this.openNames.splice(index, 1);
@@ -83,28 +83,28 @@ export default {
                 this.openNames.push(name);
                 if (this.accordion) {
                     let currentSubmenu = {};
-                    findComponentsDownward(this, 'Submenu').forEach(item => {
+                    findComponentsDownward(this, 'Submenu').forEach((item) => {
                         if (item.name === name) currentSubmenu = item;
                     });
-                    findBrothersComponents(currentSubmenu, 'Submenu').forEach(item => {
-                        let index = this.openNames.indexOf(item.name);
+                    findBrothersComponents(currentSubmenu, 'Submenu').forEach((item) => {
+                        const index = this.openNames.indexOf(item.name);
                         this.openNames.splice(index, index >= 0 ? 1 : 0);
                     });
                     this.openNames.push(name);
                 }
             }
         },
-        updateOpened () {
+        updateOpened() {
             const items = findComponentsDownward(this, 'Submenu');
 
             if (items.length) {
-                items.forEach(item => {
+                items.forEach((item) => {
                     if (this.openNames.indexOf(item.name) > -1) item.opened = true;
                 });
             }
-        }
+        },
     },
-    mounted () {
+    mounted() {
         this.updateActiveName();
         this.updateOpened();
         this.$on('on-menu-item-select', (name) => {
@@ -113,15 +113,15 @@ export default {
         });
     },
     watch: {
-        openNames () {
+        openNames() {
             this.$emit('on-open-change', this.openNames);
         },
-        activeName (val) {
+        activeName(val) {
             this.currentActiveName = val;
         },
-        currentActiveName () {
+        currentActiveName() {
             this.updateActiveName();
-        }
-    }
+        },
+    },
 };
 </script>

@@ -1,15 +1,15 @@
 import Notification from './notification.vue';
 import Vue from 'vue';
 
-Notification.newInstance = properties => {
+Notification.newInstance = (properties) => {
     const _props = properties || {};
 
     const Instance = new Vue({
-        render (h) {
+        render(h) {
             return h(Notification, {
-                props: _props
+                props: _props,
             });
-        }
+        },
     });
 
     const component = Instance.$mount();
@@ -17,19 +17,19 @@ Notification.newInstance = properties => {
     const notification = Instance.$children[0];
 
     return {
-        notice (noticeProps) {
+        notice(noticeProps) {
             notification.add(noticeProps);
         },
-        remove (name) {
+        remove(name) {
             notification.close(name);
         },
         component: notification,
-        destroy (element) {
+        destroy(element) {
             notification.closeAll();
-            setTimeout(function() {
+            setTimeout(() => {
                 document.body.removeChild(document.getElementsByClassName(element)[0]);
             }, 500);
-        }
+        },
     };
 };
 

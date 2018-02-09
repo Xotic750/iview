@@ -5,11 +5,11 @@ import Locale from '../../mixins/locale';
 
 const prefixCls = 'ivu-modal-confirm';
 
-Modal.newInstance = properties => {
+Modal.newInstance = (properties) => {
     const _props = properties || {};
 
     const Instance = new Vue({
-        mixins: [ Locale ],
+        mixins: [Locale],
         data: Object.assign({}, _props, {
             visible: false,
             width: 416,
@@ -23,30 +23,30 @@ Modal.newInstance = properties => {
             loading: false,
             buttonLoading: false,
             scrollable: false,
-            closable: false
+            closable: false,
         }),
-        render (h) {
-            let footerVNodes = [];
+        render(h) {
+            const footerVNodes = [];
             if (this.showCancel) {
                 footerVNodes.push(h(Button, {
                     props: {
                         type: 'text',
-                        size: 'large'
+                        size: 'large',
                     },
                     on: {
-                        click: this.cancel
-                    }
+                        click: this.cancel,
+                    },
                 }, this.localeCancelText));
             }
             footerVNodes.push(h(Button, {
                 props: {
                     type: 'primary',
                     size: 'large',
-                    loading: this.buttonLoading
+                    loading: this.buttonLoading,
                 },
                 on: {
-                    click: this.ok
-                }
+                    click: this.ok,
+                },
             }, this.localeOkText));
 
             // render content
@@ -54,27 +54,27 @@ Modal.newInstance = properties => {
             if (this.render) {
                 body_render = h('div', {
                     attrs: {
-                        class: `${prefixCls}-body ${prefixCls}-body-render`
-                    }
+                        class: `${prefixCls}-body ${prefixCls}-body-render`,
+                    },
                 }, [this.render(h)]);
             } else {
                 body_render = h('div', {
                     attrs: {
-                        class: `${prefixCls}-body`
-                    }
+                        class: `${prefixCls}-body`,
+                    },
                 }, [
                     h('div', {
-                        class: this.iconTypeCls
+                        class: this.iconTypeCls,
                     }, [
                         h('i', {
-                            class: this.iconNameCls
-                        })
+                            class: this.iconNameCls,
+                        }),
                     ]),
                     h('div', {
                         domProps: {
-                            innerHTML: this.body
-                        }
-                    })
+                            innerHTML: this.body,
+                        },
+                    }),
                 ]);
             }
 
@@ -82,81 +82,79 @@ Modal.newInstance = properties => {
                 props: Object.assign({}, _props, {
                     width: this.width,
                     scrollable: this.scrollable,
-                    closable: this.closable
+                    closable: this.closable,
                 }),
                 domProps: {
-                    value: this.visible
+                    value: this.visible,
                 },
                 on: {
                     input: (status) => {
                         this.visible = status;
-                    }
-                }
+                    },
+                },
             }, [
                 h('div', {
                     attrs: {
-                        class: prefixCls
-                    }
+                        class: prefixCls,
+                    },
                 }, [
                     h('div', {
                         attrs: {
-                            class: `${prefixCls}-head`
-                        }
+                            class: `${prefixCls}-head`,
+                        },
                     }, [
                         h('div', {
                             attrs: {
-                                class: `${prefixCls}-head-title`
+                                class: `${prefixCls}-head-title`,
                             },
                             domProps: {
-                                innerHTML: this.title
-                            }
-                        })
+                                innerHTML: this.title,
+                            },
+                        }),
                     ]),
                     body_render,
                     h('div', {
                         attrs: {
-                            class: `${prefixCls}-footer`
-                        }
-                    }, footerVNodes)
-                ])
+                            class: `${prefixCls}-footer`,
+                        },
+                    }, footerVNodes),
+                ]),
             ]);
         },
         computed: {
-            iconTypeCls () {
+            iconTypeCls() {
                 return [
                     `${prefixCls}-body-icon`,
-                    `${prefixCls}-body-icon-${this.iconType}`
+                    `${prefixCls}-body-icon-${this.iconType}`,
                 ];
             },
-            iconNameCls () {
+            iconNameCls() {
                 return [
                     'ivu-icon',
-                    `ivu-icon-${this.iconName}`
+                    `ivu-icon-${this.iconName}`,
                 ];
             },
-            localeOkText () {
+            localeOkText() {
                 if (this.okText) {
                     return this.okText;
-                } else {
-                    return this.t('i.modal.okText');
                 }
+                return this.t('i.modal.okText');
             },
-            localeCancelText () {
+            localeCancelText() {
                 if (this.cancelText) {
                     return this.cancelText;
-                } else {
-                    return this.t('i.modal.cancelText');
                 }
-            }
+                return this.t('i.modal.cancelText');
+            },
         },
         methods: {
-            cancel () {
+            cancel() {
                 this.$children[0].visible = false;
                 this.buttonLoading = false;
                 this.onCancel();
                 this.remove();
             },
-            ok () {
+            ok() {
                 if (this.loading) {
                     this.buttonLoading = true;
                 } else {
@@ -165,20 +163,20 @@ Modal.newInstance = properties => {
                 }
                 this.onOk();
             },
-            remove () {
+            remove() {
                 setTimeout(() => {
                     this.destroy();
                 }, 300);
             },
-            destroy () {
+            destroy() {
                 this.$destroy();
                 document.body.removeChild(this.$el);
                 this.onRemove();
             },
-            onOk () {},
-            onCancel () {},
-            onRemove () {}
-        }
+            onOk() {},
+            onCancel() {},
+            onRemove() {},
+        },
     });
 
     const component = Instance.$mount();
@@ -186,7 +184,7 @@ Modal.newInstance = properties => {
     const modal = Instance.$children[0];
 
     return {
-        show (props) {
+        show(props) {
             modal.$parent.showCancel = props.showCancel;
             modal.$parent.iconType = props.icon;
 
@@ -254,12 +252,12 @@ Modal.newInstance = properties => {
 
             modal.visible = true;
         },
-        remove () {
+        remove() {
             modal.visible = false;
             modal.$parent.buttonLoading = false;
             modal.$parent.remove();
         },
-        component: modal
+        component: modal,
     };
 };
 

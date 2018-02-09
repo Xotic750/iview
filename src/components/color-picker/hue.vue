@@ -14,16 +14,16 @@
 export default {
     name: 'Hue',
     props: {
-        value: Object
+        value: Object,
     },
-    data () {
+    data() {
         return {
             oldHue: 0,
-            pullDirection: ''
+            pullDirection: '',
         };
     },
     computed: {
-        colors () {
+        colors() {
             const h = this.value.hsl.h;
             if (h !== 0 && h - this.oldHue > 0) this.pullDirection = 'right';
             if (h !== 0 && h - this.oldHue < 0) this.pullDirection = 'left';
@@ -31,13 +31,13 @@ export default {
 
             return this.value;
         },
-        pointerLeft () {
+        pointerLeft() {
             if (this.colors.hsl.h === 0 && this.pullDirection === 'right') return '100%';
-            return (this.colors.hsl.h * 100) / 360 + '%';
-        }
+            return `${(this.colors.hsl.h * 100) / 360}%`;
+        },
     },
     methods: {
-        handleChange (e, skip) {
+        handleChange(e, skip) {
             !skip && e.preventDefault();
 
             const container = this.$refs.container;
@@ -61,26 +61,26 @@ export default {
 
             if (this.colors.hsl.h !== h) {
                 this.$emit('change', {
-                    h: h,
+                    h,
                     s: this.colors.hsl.s,
                     l: this.colors.hsl.l,
                     a: this.colors.hsl.a,
-                    source: 'hsl'
+                    source: 'hsl',
                 });
             }
         },
-        handleMouseDown (e) {
+        handleMouseDown(e) {
             this.handleChange(e, true);
             window.addEventListener('mousemove', this.handleChange);
             window.addEventListener('mouseup', this.handleMouseUp);
         },
-        handleMouseUp () {
+        handleMouseUp() {
             this.unbindEventListeners();
         },
-        unbindEventListeners () {
+        unbindEventListeners() {
             window.removeEventListener('mousemove', this.handleChange);
             window.removeEventListener('mouseup', this.handleMouseUp);
-        }
-    }
+        },
+    },
 };
 </script>

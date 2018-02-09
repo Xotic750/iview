@@ -15,36 +15,36 @@ import Locale from '../../../mixins/locale';
 const prefixCls = 'ivu-picker';
 
 export default {
-    mixins: [ Locale ],
+    mixins: [Locale],
     components: { iButton },
     props: {
         showTime: false,
         isTime: false,
-        timeDisabled: false
+        timeDisabled: false,
     },
-    data () {
+    data() {
         return {
-            prefixCls: prefixCls
+            prefixCls,
         };
     },
     computed: {
-        timeClasses () {
+        timeClasses() {
             return {
-                [`${prefixCls}-confirm-time-disabled`]: this.timeDisabled
+                [`${prefixCls}-confirm-time-disabled`]: this.timeDisabled,
             };
-        }
+        },
     },
     methods: {
-        handleClear () {
+        handleClear() {
             this.$emit('on-pick-clear');
         },
-        handleSuccess () {
+        handleSuccess() {
             this.$emit('on-pick-success');
         },
-        handleToggleTime () {
+        handleToggleTime() {
             if (this.timeDisabled) return;
             this.$emit('on-pick-toggle-time');
-        }
-    }
+        },
+    },
 };
 </script>

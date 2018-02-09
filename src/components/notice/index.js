@@ -10,25 +10,25 @@ let noticeInstance;
 let name = 1;
 
 const iconTypes = {
-    'info': 'information-circled',
-    'success': 'checkmark-circled',
-    'warning': 'android-alert',
-    'error': 'close-circled'
+    info: 'information-circled',
+    success: 'checkmark-circled',
+    warning: 'android-alert',
+    error: 'close-circled',
 };
 
-function getNoticeInstance () {
+function getNoticeInstance() {
     noticeInstance = noticeInstance || Notification.newInstance({
-        prefixCls: prefixCls,
+        prefixCls,
         styles: {
             top: `${top}px`,
-            right: 0
-        }
+            right: 0,
+        },
     });
 
     return noticeInstance;
 }
 
-function notice (type, options) {
+function notice(type, options) {
     const title = options.title || '';
     const desc = options.desc || '';
     const noticeKey = options.name || `${prefixKey}${name}`;
@@ -39,7 +39,7 @@ function notice (type, options) {
 
     name++;
 
-    let instance = getNoticeInstance();
+    const instance = getNoticeInstance();
 
     let content;
 
@@ -70,36 +70,36 @@ function notice (type, options) {
     }
     instance.notice({
         name: noticeKey.toString(),
-        duration: duration,
+        duration,
         styles: {},
         transitionName: 'move-notice',
-        content: content,
-        withIcon: withIcon,
-        render: render,
+        content,
+        withIcon,
+        render,
         hasTitle: !!title,
-        onClose: onClose,
+        onClose,
         closable: true,
-        type: 'notice'
+        type: 'notice',
     });
 }
 
 export default {
-    open (options) {
+    open(options) {
         return notice('normal', options);
     },
-    info (options) {
+    info(options) {
         return notice('info', options);
     },
-    success (options) {
+    success(options) {
         return notice('success', options);
     },
-    warning (options) {
+    warning(options) {
         return notice('warning', options);
     },
-    error (options) {
+    error(options) {
         return notice('error', options);
     },
-    config (options) {
+    config(options) {
         if (options.top) {
             top = options.top;
         }
@@ -107,7 +107,7 @@ export default {
             defaultDuration = options.duration;
         }
     },
-    close (name) {
+    close(name) {
         if (name) {
             name = name.toString();
             if (noticeInstance) {
@@ -117,9 +117,9 @@ export default {
             return false;
         }
     },
-    destroy () {
-        let instance = getNoticeInstance();
+    destroy() {
+        const instance = getNoticeInstance();
         noticeInstance = null;
         instance.destroy('ivu-notice');
-    }
+    },
 };

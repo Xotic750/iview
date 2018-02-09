@@ -8,35 +8,35 @@ export default {
     name: 'DropdownItem',
     props: {
         name: {
-            type: [String, Number]
+            type: [String, Number],
         },
         disabled: {
             type: Boolean,
-            default: false
+            default: false,
         },
         selected: {
             type: Boolean,
-            default: false
+            default: false,
         },
         divided: {
             type: Boolean,
-            default: false
-        }
+            default: false,
+        },
     },
     computed: {
-        classes () {
+        classes() {
             return [
                 `${prefixCls}`,
                 {
                     [`${prefixCls}-disabled`]: this.disabled,
                     [`${prefixCls}-selected`]: this.selected,
-                    [`${prefixCls}-divided`]: this.divided
-                }
+                    [`${prefixCls}-divided`]: this.divided,
+                },
             ];
-        }
+        },
     },
     methods: {
-        handleClick () {
+        handleClick() {
             const $parent = this.$parent.$parent.$parent;
             const hasChildren = this.$parent && this.$parent.$options.name === 'Dropdown';
 
@@ -46,13 +46,11 @@ export default {
                 });
             } else if (hasChildren) {
                 this.$parent.$emit('on-haschild-click');
-            } else {
-                if ($parent && $parent.$options.name === 'Dropdown') {
-                    $parent.$emit('on-hover-click');
-                }
+            } else if ($parent && $parent.$options.name === 'Dropdown') {
+                $parent.$emit('on-hover-click');
             }
             $parent.$emit('on-click', this.name);
-        }
-    }
+        },
+    },
 };
 </script>

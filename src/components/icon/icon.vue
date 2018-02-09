@@ -9,14 +9,14 @@ export default {
     props: {
         type: String,
         size: [Number, String],
-        color: String
+        color: String,
     },
     computed: {
-        classes () {
+        classes() {
             return `${prefixCls} ${prefixCls}-${this.type}`;
         },
-        styles () {
-            let style = {};
+        styles() {
+            const style = {};
 
             if (this.size) {
                 style['font-size'] = `${this.size}px`;
@@ -27,7 +27,7 @@ export default {
             }
 
             return style;
-        }
-    }
+        },
+    },
 };
 </script>

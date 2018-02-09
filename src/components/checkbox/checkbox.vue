@@ -35,85 +35,85 @@ const prefixCls = 'ivu-checkbox';
 
 export default {
     name: 'Checkbox',
-    mixins: [ Emitter ],
+    mixins: [Emitter],
     props: {
         disabled: {
             type: Boolean,
-            default: false
+            default: false,
         },
         value: {
             type: [String, Number, Boolean],
-            default: false
+            default: false,
         },
         trueValue: {
             type: [String, Number, Boolean],
-            default: true
+            default: true,
         },
         falseValue: {
             type: [String, Number, Boolean],
-            default: false
+            default: false,
         },
         label: {
-            type: [String, Number, Boolean]
+            type: [String, Number, Boolean],
         },
         indeterminate: {
             type: Boolean,
-            default: false
+            default: false,
         },
         size: {
-            validator (value) {
+            validator(value) {
                 return oneOf(value, ['small', 'large', 'default']);
-            }
+            },
         },
         name: {
-            type: String
-        }
+            type: String,
+        },
     },
-    data () {
+    data() {
         return {
             model: [],
             currentValue: this.value,
             group: false,
             showSlot: true,
             parent: findComponentUpward(this, 'CheckboxGroup'),
-            focusInner: false
+            focusInner: false,
         };
     },
     computed: {
-        wrapClasses () {
+        wrapClasses() {
             return [
                 `${prefixCls}-wrapper`,
                 {
                     [`${prefixCls}-group-item`]: this.group,
                     [`${prefixCls}-wrapper-checked`]: this.currentValue,
                     [`${prefixCls}-wrapper-disabled`]: this.disabled,
-                    [`${prefixCls}-${this.size}`]: !!this.size
-                }
+                    [`${prefixCls}-${this.size}`]: !!this.size,
+                },
             ];
         },
-        checkboxClasses () {
+        checkboxClasses() {
             return [
                 `${prefixCls}`,
                 {
                     [`${prefixCls}-checked`]: this.currentValue,
                     [`${prefixCls}-disabled`]: this.disabled,
-                    [`${prefixCls}-indeterminate`]: this.indeterminate
-                }
+                    [`${prefixCls}-indeterminate`]: this.indeterminate,
+                },
             ];
         },
-        innerClasses () {
+        innerClasses() {
             return [
                 `${prefixCls}-inner`,
                 {
-                    [`${prefixCls}-focus`]: this.focusInner
-                }
+                    [`${prefixCls}-focus`]: this.focusInner,
+                },
             ];
         },
-        inputClasses () {
+        inputClasses() {
             return `${prefixCls}-input`;
-        }
+        },
     },
-    mounted () {
+    mounted() {
         this.parent = findComponentUpward(this, 'CheckboxGroup');
         if (this.parent) {
             this.group = true;
@@ -127,7 +127,7 @@ export default {
         }
     },
     methods: {
-        change (event) {
+        change(event) {
             if (this.disabled) {
                 return false;
             }
@@ -145,24 +145,24 @@ export default {
                 this.dispatch('FormItem', 'on-form-change', value);
             }
         },
-        updateModel () {
+        updateModel() {
             this.currentValue = this.value === this.trueValue;
         },
-        onBlur () {
+        onBlur() {
             this.focusInner = false;
         },
-        onFocus () {
+        onFocus() {
             this.focusInner = true;
-        }
+        },
     },
     watch: {
-        value (val) {
+        value(val) {
             if (val === this.trueValue || val === this.falseValue) {
                 this.updateModel();
             } else {
                 throw 'Value should be trueValue or falseValue.';
             }
-        }
-    }
+        },
+    },
 };
 </script>

@@ -4,58 +4,59 @@
 <script>
 import Emitter from '../../mixins/emitter';
 import { findComponentUpward } from '../../utils/assist';
+
 const prefixCls = 'ivu-menu';
 import mixin from './mixin';
 
 export default {
     name: 'MenuItem',
-    mixins: [ Emitter, mixin ],
+    mixins: [Emitter, mixin],
     props: {
         name: {
             type: [String, Number],
-            required: true
+            required: true,
         },
         disabled: {
             type: Boolean,
-            default: false
-        }
+            default: false,
+        },
     },
-    data () {
+    data() {
         return {
-            active: false
+            active: false,
         };
     },
     computed: {
-        classes () {
+        classes() {
             return [
                 `${prefixCls}-item`,
                 {
                     [`${prefixCls}-item-active`]: this.active,
                     [`${prefixCls}-item-selected`]: this.active,
-                    [`${prefixCls}-item-disabled`]: this.disabled
-                }
+                    [`${prefixCls}-item-disabled`]: this.disabled,
+                },
             ];
         },
-        itemStyle () {
+        itemStyle() {
             return this.hasParentSubmenu && this.mode !== 'horizontal' ? {
-                paddingLeft: 43 + (this.parentSubmenuNum - 1) * 24 + 'px'
+                paddingLeft: `${43 + (this.parentSubmenuNum - 1) * 24}px`,
             } : {};
-        }
+        },
     },
     methods: {
-        handleClick () {
+        handleClick() {
             if (this.disabled) return;
 
-            let parent = findComponentUpward(this, 'Submenu');
+            const parent = findComponentUpward(this, 'Submenu');
 
             if (parent) {
                 this.dispatch('Submenu', 'on-menu-item-select', this.name);
             } else {
                 this.dispatch('Menu', 'on-menu-item-select', this.name);
             }
-        }
+        },
     },
-    mounted () {
+    mounted() {
         this.$on('on-update-active-name', (name) => {
             if (this.name === name) {
                 this.active = true;
@@ -64,6 +65,6 @@ export default {
                 this.active = false;
             }
         });
-    }
+    },
 };
 </script>

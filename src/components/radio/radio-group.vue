@@ -15,76 +15,76 @@ const getUuid = () => `ivuRadioGroup_${now}_${seed++}`;
 
 export default {
     name: 'RadioGroup',
-    mixins: [ Emitter ],
+    mixins: [Emitter],
     props: {
         value: {
             type: [String, Number],
-            default: ''
+            default: '',
         },
         size: {
-            validator (value) {
+            validator(value) {
                 return oneOf(value, ['small', 'large', 'default']);
-            }
+            },
         },
         type: {
-            validator (value) {
+            validator(value) {
                 return oneOf(value, ['button']);
-            }
+            },
         },
         vertical: {
             type: Boolean,
-            default: false
+            default: false,
         },
         name: {
             type: String,
-            default: getUuid
-        }
+            default: getUuid,
+        },
     },
-    data () {
+    data() {
         return {
             currentValue: this.value,
-            childrens: []
+            childrens: [],
         };
     },
     computed: {
-        classes () {
+        classes() {
             return [
                 `${prefixCls}`,
                 {
                     [`${prefixCls}-${this.size}`]: !!this.size,
                     [`ivu-radio-${this.size}`]: !!this.size,
                     [`${prefixCls}-${this.type}`]: !!this.type,
-                    [`${prefixCls}-vertical`]: this.vertical
-                }
+                    [`${prefixCls}-vertical`]: this.vertical,
+                },
             ];
-        }
+        },
     },
-    mounted () {
+    mounted() {
         this.updateValue();
     },
     methods: {
-        updateValue () {
+        updateValue() {
             this.childrens = findComponentsDownward(this, 'Radio');
             if (this.childrens) {
-                this.childrens.forEach(child => {
+                this.childrens.forEach((child) => {
                     child.currentValue = this.value === child.label;
                     child.group = true;
                 });
             }
         },
-        change (data) {
+        change(data) {
             this.currentValue = data.value;
             this.updateValue();
             this.$emit('input', data.value);
             this.$emit('on-change', data.value);
             this.dispatch('FormItem', 'on-form-change', data.value);
-        }
+        },
     },
     watch: {
-        value () {
+        value() {
             this.currentValue = this.value;
             this.updateValue();
-        }
-    }
+        },
+    },
 };
 </script>

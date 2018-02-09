@@ -43,69 +43,69 @@ import Emitter from '../../mixins/emitter';
 
 export default {
     name: 'AutoComplete',
-    mixins: [ Emitter ],
+    mixins: [Emitter],
     components: { iSelect, iOption, iInput },
     props: {
         value: {
             type: [String, Number],
-            default: ''
+            default: '',
         },
         label: {
             type: [String, Number],
-            default: ''
+            default: '',
         },
         data: {
             type: Array,
-            default: () => []
+            default: () => [],
         },
         disabled: {
             type: Boolean,
-            default: false
+            default: false,
         },
         clearable: {
             type: Boolean,
-            default: false
+            default: false,
         },
         placeholder: {
-            type: String
+            type: String,
         },
         size: {
-            validator (value) {
+            validator(value) {
                 return oneOf(value, ['small', 'large', 'default']);
-            }
+            },
         },
         icon: {
-            type: String
+            type: String,
         },
         filterMethod: {
             type: [Function, Boolean],
-            default: false
+            default: false,
         },
         placement: {
-            validator (value) {
+            validator(value) {
                 return oneOf(value, ['top', 'bottom']);
             },
-            default: 'bottom'
+            default: 'bottom',
         },
         transfer: {
             type: Boolean,
-            default: false
+            default: false,
         },
         name: {
-            type: String
+            type: String,
         },
         elementId: {
-            type: String
-        }
+            type: String,
+        },
     },
-    data () {
+    data() {
         return {
             currentValue: this.value,
-            disableEmitChange: false    // for Form reset
+            disableEmitChange: false, // for Form reset
         };
     },
     computed: {
-        inputIcon () {
+        inputIcon() {
             let icon = '';
             if (this.clearable && this.currentValue) {
                 icon = 'ios-close';
@@ -114,20 +114,19 @@ export default {
             }
             return icon;
         },
-        filteredData () {
+        filteredData() {
             if (this.filterMethod) {
                 return this.data.filter(item => this.filterMethod(this.currentValue, item));
-            } else {
-                return this.data;
             }
-        }
+            return this.data;
+        },
     },
     watch: {
-        value (val) {
+        value(val) {
             this.disableEmitChange = true;
             this.currentValue = val;
         },
-        currentValue (val) {
+        currentValue(val) {
             this.$refs.select.query = val;
             this.$emit('input', val);
             if (this.disableEmitChange) {
@@ -136,29 +135,29 @@ export default {
             }
             this.$emit('on-change', val);
             this.dispatch('FormItem', 'on-form-change', val);
-        }
+        },
     },
     methods: {
-        remoteMethod (query) {
+        remoteMethod(query) {
             this.$emit('on-search', query);
         },
-        handleChange (val) {
+        handleChange(val) {
             this.currentValue = val;
             this.$refs.select.model = val;
             this.$refs.input.blur();
             this.$emit('on-select', val);
         },
-        handleFocus () {
+        handleFocus() {
             this.$refs.select.visible = true;
         },
-        handleBlur () {
+        handleBlur() {
             this.$refs.select.visible = false;
         },
-        handleClear () {
+        handleClear() {
             if (!this.clearable) return;
             this.currentValue = '';
             this.$refs.select.model = '';
-        }
-    }
+        },
+    },
 };
 </script>

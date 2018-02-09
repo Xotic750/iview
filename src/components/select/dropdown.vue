@@ -10,7 +10,7 @@
 
 <script>
 import Vue from 'vue';
-import {getStyle} from '../../utils/assist';
+import { getStyle } from '../../utils/assist';
 
 const isServer = Vue.prototype.$isServer;
     const Popper = isServer ? () => {} : require('popper.js');  // eslint-disable-line
@@ -22,15 +22,14 @@ export default {
         placement: {
             default: 'bottom-start',
             type: String,
-
         },
         className: {
-            default: '',
+            default: undefined,
             type: String,
         },
     },
 
-    data(){
+    data() {
         return {
             popper: null,
             width: '',
@@ -38,7 +37,7 @@ export default {
     },
 
     computed: {
-        styles(){
+        styles() {
             const style = {};
 
             if (this.width) {
@@ -50,7 +49,7 @@ export default {
     },
 
     methods: {
-        update(){
+        update() {
             if (isServer) {
                 return;
             }
@@ -81,7 +80,7 @@ export default {
             }
         },
 
-        destroy(){
+        destroy() {
             if (this.popper) {
                 this.resetTransformOrigin(this.popper);
 
@@ -94,7 +93,7 @@ export default {
             }
         },
 
-        resetTransformOrigin(popper){
+        resetTransformOrigin(popper) {
             const placementMap = {
                 top: 'bottom',
                 bottom: 'top',
@@ -107,12 +106,12 @@ export default {
         },
     },
 
-    created(){
+    created() {
         this.$on('on-update-popper', this.update);
         this.$on('on-destroy-popper', this.destroy);
     },
 
-    beforeDestroy(){
+    beforeDestroy() {
         if (this.popper) {
             this.popper.destroy();
         }

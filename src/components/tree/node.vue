@@ -38,89 +38,89 @@ const prefixCls = 'ivu-tree';
 
 export default {
     name: 'TreeNode',
-    mixins: [ Emitter ],
-    components: { Checkbox, Icon, CollapseTransition, Render },
+    mixins: [Emitter],
+    components: {
+        Checkbox, Icon, CollapseTransition, Render,
+    },
     props: {
         data: {
             type: Object,
-            default () {
+            default() {
                 return {};
-            }
+            },
         },
         multiple: {
             type: Boolean,
-            default: false
+            default: false,
         },
         showCheckbox: {
             type: Boolean,
-            default: false
-        }
+            default: false,
+        },
     },
-    data () {
+    data() {
         return {
-            prefixCls: prefixCls
+            prefixCls,
         };
     },
     computed: {
-        classes () {
+        classes() {
             return [
-                `${prefixCls}-children`
+                `${prefixCls}-children`,
             ];
         },
-        selectedCls () {
+        selectedCls() {
             return [
                 {
-                    [`${prefixCls}-node-selected`]: this.data.selected
-                }
+                    [`${prefixCls}-node-selected`]: this.data.selected,
+                },
             ];
         },
-        arrowClasses () {
+        arrowClasses() {
             return [
                 `${prefixCls}-arrow`,
                 {
                     [`${prefixCls}-arrow-disabled`]: this.data.disabled,
-                    [`${prefixCls}-arrow-open`]: this.data.expand
-                }
+                    [`${prefixCls}-arrow-open`]: this.data.expand,
+                },
             ];
         },
-        titleClasses () {
+        titleClasses() {
             return [
                 `${prefixCls}-title`,
                 {
-                    [`${prefixCls}-title-selected`]: this.data.selected
-                }
+                    [`${prefixCls}-title-selected`]: this.data.selected,
+                },
             ];
         },
-        showArrow () {
+        showArrow() {
             return (this.data.children && this.data.children.length) || ('loading' in this.data && !this.data.loading);
         },
-        showLoading () {
+        showLoading() {
             return 'loading' in this.data && this.data.loading;
         },
-        isParentRender () {
+        isParentRender() {
             const Tree = findComponentUpward(this, 'Tree');
             return Tree && Tree.render;
         },
-        parentRender () {
+        parentRender() {
             const Tree = findComponentUpward(this, 'Tree');
             if (Tree && Tree.render) {
                 return Tree.render;
-            } else {
-                return null;
             }
+            return null;
         },
-        node () {
+        node() {
             const Tree = findComponentUpward(this, 'Tree');
             if (Tree) {
                 // 将所有的 node（即flatState）和当前 node 都传递
                 return [Tree.flatState, Tree.flatState.find(item => item.nodeKey === this.data.nodeKey)];
-            } else {
-                return [];
             }
-        }
+            return [];
+        },
     },
     methods: {
-        handleExpand () {
+        handleExpand() {
             const item = this.data;
             if (item.disabled) return;
 
@@ -129,7 +129,7 @@ export default {
                 const tree = findComponentUpward(this, 'Tree');
                 if (tree && tree.loadData) {
                     this.$set(this.data, 'loading', true);
-                    tree.loadData(item, children => {
+                    tree.loadData(item, (children) => {
                         this.$set(this.data, 'loading', false);
                         if (children.length) {
                             this.$set(this.data, 'children', children);
@@ -145,18 +145,18 @@ export default {
                 this.dispatch('Tree', 'toggle-expand', this.data);
             }
         },
-        handleSelect () {
+        handleSelect() {
             if (this.data.disabled) return;
             this.dispatch('Tree', 'on-selected', this.data.nodeKey);
         },
-        handleCheck () {
+        handleCheck() {
             if (this.data.disabled) return;
             const changes = {
                 checked: !this.data.checked && !this.data.indeterminate,
-                nodeKey: this.data.nodeKey
+                nodeKey: this.data.nodeKey,
             };
             this.dispatch('Tree', 'on-check', changes);
-        }
-    }
+        },
+    },
 };
 </script>

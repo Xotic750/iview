@@ -11,18 +11,18 @@ export default {
     props: {
         pending: {
             type: Boolean,
-            default: false
-        }
+            default: false,
+        },
     },
     computed: {
-        classes () {
+        classes() {
             return [
                 `${prefixCls}`,
                 {
-                    [`${prefixCls}-pending`]: this.pending
-                }
+                    [`${prefixCls}-pending`]: this.pending,
+                },
             ];
-        }
-    }
+        },
+    },
 };
 </script>

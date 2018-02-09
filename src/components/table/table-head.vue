@@ -68,31 +68,33 @@ import Locale from '../../mixins/locale';
 
 export default {
     name: 'TableHead',
-    mixins: [ Mixin, Locale ],
-    components: { CheckboxGroup, Checkbox, Poptip, iButton, renderHeader },
+    mixins: [Mixin, Locale],
+    components: {
+        CheckboxGroup, Checkbox, Poptip, iButton, renderHeader,
+    },
     props: {
         prefixCls: String,
         styleObject: Object,
         columns: Array,
         objData: Object,
-        data: Array,    // rebuildData
+        data: Array, // rebuildData
         columnsWidth: Object,
         fixed: {
             type: [Boolean, String],
-            default: false
-        }
+            default: false,
+        },
     },
     computed: {
-        styles () {
+        styles() {
             const style = Object.assign({}, this.styleObject);
             const width = this.$parent.bodyHeight === 0 ? parseInt(this.styleObject.width) : parseInt(this.styleObject.width) + this.$parent.scrollBarWidth;
             style.width = `${width}px`;
             return style;
         },
-        isSelectAll () {
+        isSelectAll() {
             let isSelectAll = true;
             if (!this.data.length) isSelectAll = false;
-            if (!this.data.find(item => !item._disabled)) isSelectAll = false;    // #1751
+            if (!this.data.find(item => !item._disabled)) isSelectAll = false; // #1751
             for (let i = 0; i < this.data.length; i++) {
                 if (!this.objData[this.data[i]._index]._isChecked && !this.objData[this.data[i]._index]._isDisabled) {
                     isSelectAll = false;
@@ -101,38 +103,38 @@ export default {
             }
 
             return isSelectAll;
-        }
+        },
     },
     methods: {
-        cellClasses (column) {
+        cellClasses(column) {
             return [
                 `${this.prefixCls}-cell`,
                 {
-                    [`${this.prefixCls}-hidden`]: !this.fixed && column.fixed && (column.fixed === 'left' || column.fixed === 'right')
-                }
+                    [`${this.prefixCls}-hidden`]: !this.fixed && column.fixed && (column.fixed === 'left' || column.fixed === 'right'),
+                },
             ];
         },
-        itemClasses (column, item) {
+        itemClasses(column, item) {
             return [
                 `${this.prefixCls}-filter-select-item`,
                 {
-                    [`${this.prefixCls}-filter-select-item-selected`]: column._filterChecked[0] === item.value
-                }
+                    [`${this.prefixCls}-filter-select-item-selected`]: column._filterChecked[0] === item.value,
+                },
             ];
         },
-        itemAllClasses (column) {
+        itemAllClasses(column) {
             return [
                 `${this.prefixCls}-filter-select-item`,
                 {
-                    [`${this.prefixCls}-filter-select-item-selected`]: !column._filterChecked.length
-                }
+                    [`${this.prefixCls}-filter-select-item-selected`]: !column._filterChecked.length,
+                },
             ];
         },
-        selectAll () {
+        selectAll() {
             const status = !this.isSelectAll;
             this.$parent.selectAll(status);
         },
-        handleSort (index, type) {
+        handleSort(index, type) {
             const column = this.columns[index];
             const _index = column._index;
 
@@ -141,7 +143,7 @@ export default {
             }
             this.$parent.handleSort(_index, type);
         },
-        handleSortByHead (index) {
+        handleSortByHead(index) {
             const column = this.columns[index];
             if (column.sortable) {
                 const type = column._sortType;
@@ -154,18 +156,18 @@ export default {
                 }
             }
         },
-        handleFilter (index) {
+        handleFilter(index) {
             this.$parent.handleFilter(index);
         },
-        handleSelect (index, value) {
+        handleSelect(index, value) {
             this.$parent.handleFilterSelect(index, value);
         },
-        handleReset (index) {
+        handleReset(index) {
             this.$parent.handleFilterReset(index);
         },
-        handleFilterHide (index) {
+        handleFilterHide(index) {
             this.$parent.handleFilterHide(index);
-        }
-    }
+        },
+    },
 };
 </script>

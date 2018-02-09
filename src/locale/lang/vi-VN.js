@@ -6,14 +6,14 @@ const lang = {
         select: {
             placeholder: 'Chọn',
             noMatch: 'Không tìm thấy',
-            loading: 'Đang tải'
+            loading: 'Đang tải',
         },
         table: {
             noDataText: 'Không có dữ liệu',
             noFilteredDataText: 'Không có dữ liệu lọc',
             confirmFilter: 'Xác nhận',
             resetFilter: 'Làm lại',
-            clearFilter: 'Xóa hết'
+            clearFilter: 'Xóa hết',
         },
         datepicker: {
             selectDate: 'Chọn ngày',
@@ -45,7 +45,7 @@ const lang = {
                 wed: 'T4',
                 thu: 'T5',
                 fri: 'T6',
-                sat: 'T7'
+                sat: 'T7',
             },
             months: {
                 m1: 'Th.1',
@@ -59,24 +59,24 @@ const lang = {
                 m9: 'Th.9',
                 m10: 'Th.10',
                 m11: 'Th.11',
-                m12: 'Th.12'
-            }
+                m12: 'Th.12',
+            },
         },
         transfer: {
             titles: {
                 source: 'Nguồn',
-                target: 'Đích'
+                target: 'Đích',
             },
             filterPlaceholder: 'Nhập từ khóa',
-            notFoundText: 'Không tìm thấy'
+            notFoundText: 'Không tìm thấy',
         },
         modal: {
             okText: 'Đồng ý',
-            cancelText: 'Hủy bỏ'
+            cancelText: 'Hủy bỏ',
         },
         poptip: {
             okText: 'Đồng ý',
-            cancelText: 'Hủy bỏ'
+            cancelText: 'Hủy bỏ',
         },
         page: {
             prev: 'Trang trước',
@@ -88,16 +88,16 @@ const lang = {
             next5: '5 trang kế',
             page: '/trang',
             goto: 'Tới trang',
-            p: ''
+            p: '',
         },
         rate: {
             star: 'Sao',
-            stars: 'Sao'
+            stars: 'Sao',
         },
         tree: {
-            emptyText: 'Không có dữ liệu'
-        }
-    }
+            emptyText: 'Không có dữ liệu',
+        },
+    },
 };
 
 setLang(lang);

@@ -33,45 +33,45 @@ export default {
     mixins: [Popper],
     props: {
         placement: {
-            validator (value) {
+            validator(value) {
                 return oneOf(value, ['top', 'top-start', 'top-end', 'bottom', 'bottom-start', 'bottom-end', 'left', 'left-start', 'left-end', 'right', 'right-start', 'right-end']);
             },
-            default: 'bottom'
+            default: 'bottom',
         },
         content: {
             type: [String, Number],
-            default: ''
+            default: '',
         },
         delay: {
             type: Number,
-            default: 100
+            default: 100,
         },
         disabled: {
             type: Boolean,
-            default: false
+            default: false,
         },
-        controlled: {    // under this prop,Tooltip will not close when mouseleave
+        controlled: { // under this prop,Tooltip will not close when mouseleave
             type: Boolean,
-            default: false
+            default: false,
         },
         always: {
             type: Boolean,
-            default: false
+            default: false,
         },
         transfer: {
             type: Boolean,
-            default: false
-        }
+            default: false,
+        },
     },
-    data () {
+    data() {
         return {
-            prefixCls: prefixCls
+            prefixCls,
         };
     },
     watch: {
-        content () {
+        content() {
             this.updatePopper();
-        }
+        },
     },
     methods: {
         handleShowPopper() {
@@ -89,12 +89,12 @@ export default {
                     }, 100);
                 }
             }
-        }
+        },
     },
-    mounted () {
+    mounted() {
         if (this.always) {
             this.updatePopper();
         }
-    }
+    },
 };
 </script>

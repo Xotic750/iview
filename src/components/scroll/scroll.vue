@@ -36,26 +36,26 @@ const noop = () => Promise.resolve();
 
 export default {
     name: 'Scroll',
-    mixins: [ Locale ],
-    components: {loader},
+    mixins: [Locale],
+    components: { loader },
     props: {
         height: {
             type: [Number, String],
-            default: 300
+            default: 300,
         },
         onReachTop: {
-            type: Function
+            type: Function,
         },
         onReachBottom: {
-            type: Function
+            type: Function,
         },
         onReachEdge: {
-            type: Function
+            type: Function,
         },
         loadingText: {
-            type: String
+            type: String,
         },
-        distanceToEdge: [Number, Array]
+        distanceToEdge: [Number, Array],
     },
     data() {
         const distanceToEdge = this.calculateProximityThreshold();
@@ -78,7 +78,7 @@ export default {
 
             // near to edge detectors
             topProximityThreshold: distanceToEdge[0],
-            bottomProximityThreshold: distanceToEdge[1]
+            bottomProximityThreshold: distanceToEdge[1],
         };
     },
     computed: {
@@ -92,8 +92,8 @@ export default {
             return [
                 `${prefixCls}-content`,
                 {
-                    [`${prefixCls}-content-loading`]: this.showBodyLoader
-                }
+                    [`${prefixCls}-content-loading`]: this.showBodyLoader,
+                },
             ];
         },
         loaderClasses() {
@@ -101,11 +101,11 @@ export default {
         },
         wrapperPadding() {
             return {
-                paddingTop: this.topRubberPadding + 'px',
-                paddingBottom: this.bottomRubberPadding + 'px'
+                paddingTop: `${this.topRubberPadding  }px`,
+                paddingBottom: `${this.bottomRubberPadding  }px`
             };
         },
-        localeLoadingText () {
+        localeLoadingText() {
             if (this.loadingText === undefined) {
                 return this.t('i.select.loading');
             } else {
@@ -116,14 +116,14 @@ export default {
     methods: {
         // just to improve feeling of loading and avoid scroll trailing events fired by the browser
         waitOneSecond() {
-            return new Promise(resolve => {
+            return new Promise((resolve) => {
                 setTimeout(resolve, 1000);
             });
         },
 
-        calculateProximityThreshold(){
+        calculateProximityThreshold() {
             const dte = this.distanceToEdge;
-            if (typeof dte == 'undefined') return [20, 20];
+            if (typeof dte === 'undefined') return [20, 20];
             return Array.isArray(dte) ? dte : [dte, dte];
         },
 
@@ -145,7 +145,7 @@ export default {
                     setTimeout(() => {
                         bottomLoaderHeight = Math.max(
                             bottomLoaderHeight,
-                            this.$refs.bottomLoader.getBoundingClientRect().height
+                            this.$refs.bottomLoader.getBoundingClientRect().height,
                         );
                         container.scrollTop = initialScrollTop + bottomLoaderHeight;
                     }, i * 50);
@@ -155,7 +155,7 @@ export default {
             const callbacks = [this.waitOneSecond(), this.onReachEdge ? this.onReachEdge(dir) : noop()];
             callbacks.push(dir > 0 ? this.onReachTop ? this.onReachTop() : noop() : this.onReachBottom ? this.onReachBottom() : noop());
 
-            let tooSlow = setTimeout(() => {
+            const tooSlow = setTimeout(() => {
                 this.reset();
             }, 5000);
 
@@ -172,7 +172,7 @@ export default {
                 'showBodyLoader',
                 'isLoading',
                 'reachedTopScrollLimit',
-                'reachedBottomScrollLimit'
+                'reachedBottomScrollLimit',
             ].forEach(prop => (this[prop] = false));
 
             this.lastScroll = 0;
@@ -205,9 +205,7 @@ export default {
             if (!this.onReachEdge) {
                 if (direction > 0) {
                     if (!this.onReachTop) return;
-                } else {
-                    if (!this.onReachBottom) return;
-                }
+                } else if (!this.onReachBottom) return;
             }
 
             // if the scroll is not strong enough, lets reset it
@@ -249,7 +247,7 @@ export default {
         getTouchCoordinates(e) {
             return {
                 x: e.touches[0].pageX,
-                y: e.touches[0].pageY
+                y: e.touches[0].pageY,
             };
         },
 
@@ -265,14 +263,14 @@ export default {
                 else if (this.reachedBottomScrollLimit) container.scrollTop -= 5;
             }
             if (e.type == 'touchstart' && this.$refs.scrollContainer.scrollTop == 0)
-                this.$refs.scrollContainer.scrollTop = 5;
+                {this.$refs.scrollContainer.scrollTop = 5;}
 
             this.pointerTouchDown = this.getTouchCoordinates(e);
             on(window, 'touchend', this.pointerUpHandler);
-            this.$refs.scrollContainer.parentElement.addEventListener('touchmove', e => {
+            this.$refs.scrollContainer.parentElement.addEventListener('touchmove', (e) => {
                 e.stopPropagation();
                 this.pointerMoveHandler(e);
-            }, {passive: false, useCapture: true});
+            }, { passive: false, useCapture: true });
         },
 
         onPointerMove(e) {
@@ -292,13 +290,13 @@ export default {
 
         onPointerUp() {
             this.pointerTouchDown = null;
-        }
+        },
     },
     created() {
-        this.handleScroll = throttle(this.onScroll, 150, {leading: false});
+        this.handleScroll = throttle(this.onScroll, 150, { leading: false });
         this.pointerUpHandler = this.onPointerUp.bind(this); // because we need the same function to add and remove event handlers
-        this.pointerMoveHandler = throttle(this.onPointerMove, 50, {leading: false});
-    }
+        this.pointerMoveHandler = throttle(this.onPointerMove, 50, { leading: false });
+    },
 };
 
 </script>

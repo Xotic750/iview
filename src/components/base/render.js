@@ -2,9 +2,7 @@ export default {
     name: 'RenderCell',
     functional: true,
     props: {
-        render: Function
+        render: Function,
     },
-    render: (h, ctx) => {
-        return ctx.props.render(h);
-    }
+    render: (h, ctx) => ctx.props.render(h),
 };

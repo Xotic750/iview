@@ -6,14 +6,14 @@ const lang = {
         select: {
             placeholder: 'Sélectionnez',
             noMatch: 'Aucun résultat',
-            loading: 'Chargement'
+            loading: 'Chargement',
         },
         table: {
             noDataText: 'Aucune donnée',
             noFilteredDataText: 'No filter data',
             confirmFilter: 'Confirmez',
             resetFilter: 'Reset',
-            clearFilter: 'Tout'
+            clearFilter: 'Tout',
         },
         datepicker: {
             selectDate: 'Sélectionnez une date',
@@ -45,7 +45,7 @@ const lang = {
                 wed: 'Mer',
                 thu: 'Jeu',
                 fri: 'Ven',
-                sat: 'Sam'
+                sat: 'Sam',
             },
             months: {
                 m1: 'Jan',
@@ -59,24 +59,24 @@ const lang = {
                 m9: 'Sep',
                 m10: 'Oct',
                 m11: 'Nov',
-                m12: 'Déc'
-            }
+                m12: 'Déc',
+            },
         },
         transfer: {
             titles: {
                 source: 'Source',
-                target: 'Cible'
+                target: 'Cible',
             },
             filterPlaceholder: 'Recherche',
-            notFoundText: 'Pas de résultat'
+            notFoundText: 'Pas de résultat',
         },
         modal: {
             okText: 'OK',
-            cancelText: 'Annuler'
+            cancelText: 'Annuler',
         },
         poptip: {
             okText: 'OK',
-            cancelText: 'Annuler'
+            cancelText: 'Annuler',
         },
         page: {
             prev: 'Page Précédente',
@@ -88,16 +88,16 @@ const lang = {
             next5: '5 Pages en Arrière',
             page: '/page',
             goto: 'Aller à',
-            p: ''
+            p: '',
         },
         rate: {
             star: 'Étoile',
-            stars: 'Étoiles'
+            stars: 'Étoiles',
         },
         tree: {
-            emptyText: 'Aucune donnée'
-        }
-    }
+            emptyText: 'Aucune donnée',
+        },
+    },
 };
 
 setLang(lang);

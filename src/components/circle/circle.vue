@@ -19,66 +19,66 @@ export default {
     props: {
         percent: {
             type: Number,
-            default: 0
+            default: 0,
         },
         size: {
             type: Number,
-            default: 120
+            default: 120,
         },
         strokeWidth: {
             type: Number,
-            default: 6
+            default: 6,
         },
         strokeColor: {
             type: String,
-            default: '#2db7f5'
+            default: '#2db7f5',
         },
         strokeLinecap: {
-            validator (value) {
+            validator(value) {
                 return oneOf(value, ['square', 'round']);
             },
-            default: 'round'
+            default: 'round',
         },
         trailWidth: {
             type: Number,
-            default: 5
+            default: 5,
         },
         trailColor: {
             type: String,
-            default: '#eaeef2'
-        }
+            default: '#eaeef2',
+        },
     },
     computed: {
-        circleSize () {
+        circleSize() {
             return {
                 width: `${this.size}px`,
-                height: `${this.size}px`
+                height: `${this.size}px`,
             };
         },
-        radius () {
+        radius() {
             return 50 - this.strokeWidth / 2;
         },
-        pathString () {
+        pathString() {
             return `M 50,50 m 0,-${this.radius}
                 a ${this.radius},${this.radius} 0 1 1 0,${2 * this.radius}
                 a ${this.radius},${this.radius} 0 1 1 0,-${2 * this.radius}`;
         },
-        len () {
+        len() {
             return Math.PI * 2 * this.radius;
         },
-        pathStyle () {
+        pathStyle() {
             return {
                 'stroke-dasharray': `${this.len}px ${this.len}px`,
                 'stroke-dashoffset': `${((100 - this.percent) / 100 * this.len)}px`,
-                'transition': 'stroke-dashoffset 0.6s ease 0s, stroke 0.6s ease'
+                transition: 'stroke-dashoffset 0.6s ease 0s, stroke 0.6s ease',
             };
         },
-        wrapClasses () {
+        wrapClasses() {
             return `${prefixCls}`;
         },
-        innerClasses () {
+        innerClasses() {
             return `${prefixCls}-inner`;
-        }
-    }
+        },
+    },
 };
 </script>

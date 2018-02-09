@@ -20,11 +20,11 @@ function getPropByPath(obj, path) {
     path = path.replace(/\[(\w+)\]/g, '.$1');
     path = path.replace(/^\./, '');
 
-    let keyArr = path.split('.');
+    const keyArr = path.split('.');
     let i = 0;
 
     for (let len = keyArr.length; i < len - 1; ++i) {
-        let key = keyArr[i];
+        const key = keyArr[i];
         if (key in tempObj) {
             tempObj = tempObj[key];
         } else {
@@ -34,73 +34,73 @@ function getPropByPath(obj, path) {
     return {
         o: tempObj,
         k: keyArr[i],
-        v: tempObj[keyArr[i]]
+        v: tempObj[keyArr[i]],
     };
 }
 
 export default {
     name: 'FormItem',
-    mixins: [ Emitter ],
+    mixins: [Emitter],
     props: {
         label: {
             type: String,
-            default: ''
+            default: '',
         },
         labelWidth: {
-            type: Number
+            type: Number,
         },
         prop: {
-            type: String
+            type: String,
         },
         required: {
             type: Boolean,
-            default: false
+            default: false,
         },
         rules: {
-            type: [Object, Array]
+            type: [Object, Array],
         },
         error: {
-            type: String
+            type: String,
         },
         validateStatus: {
-            type: Boolean
+            type: Boolean,
         },
         showMessage: {
             type: Boolean,
-            default: true
+            default: true,
         },
         labelFor: {
-            type: String
-        }
+            type: String,
+        },
     },
-    data () {
+    data() {
         return {
-            prefixCls: prefixCls,
+            prefixCls,
             isRequired: false,
             validateState: '',
             validateMessage: '',
             validateDisabled: false,
-            validator: {}
+            validator: {},
         };
     },
     watch: {
-        error (val) {
+        error(val) {
             this.validateMessage = val;
             this.validateState = val === '' ? '' : 'error';
         },
-        validateStatus (val) {
+        validateStatus(val) {
             this.validateState = val;
-        }
+        },
     },
     computed: {
-        classes () {
+        classes() {
             return [
                 `${prefixCls}`,
                 {
                     [`${prefixCls}-required`]: this.required || this.isRequired,
                     [`${prefixCls}-error`]: this.validateState === 'error',
-                    [`${prefixCls}-validating`]: this.validateState === 'validating'
-                }
+                    [`${prefixCls}-validating`]: this.validateState === 'validating',
+                },
             ];
         },
         form() {
@@ -122,27 +122,27 @@ export default {
                 }
 
                 return getPropByPath(model, path).v;
-            }
+            },
         },
-        labelStyles () {
-            let style = {};
+        labelStyles() {
+            const style = {};
             const labelWidth = this.labelWidth || this.form.labelWidth;
             if (labelWidth) {
                 style.width = `${labelWidth}px`;
             }
             return style;
         },
-        contentStyles () {
-            let style = {};
+        contentStyles() {
+            const style = {};
             const labelWidth = this.labelWidth || this.form.labelWidth;
             if (labelWidth) {
                 style.marginLeft = `${labelWidth}px`;
             }
             return style;
-        }
+        },
     },
     methods: {
-        getRules () {
+        getRules() {
             let formRules = this.form.rules;
             const selfRules = this.rules;
 
@@ -150,7 +150,7 @@ export default {
 
             return [].concat(selfRules || formRules || []);
         },
-        getFilteredRule (trigger) {
+        getFilteredRule(trigger) {
             const rules = this.getRules();
 
             return rules.filter(rule => !rule.trigger || rule.trigger.indexOf(trigger) !== -1);
@@ -164,15 +164,15 @@ export default {
 
             this.validateState = 'validating';
 
-            let descriptor = {};
+            const descriptor = {};
             descriptor[this.prop] = rules;
 
             const validator = new AsyncValidator(descriptor);
-            let model = {};
+            const model = {};
 
             model[this.prop] = this.fieldValue;
 
-            validator.validate(model, { firstFields: true }, errors => {
+            validator.validate(model, { firstFields: true }, (errors) => {
                 this.validateState = !errors ? 'success' : 'error';
                 this.validateMessage = errors ? errors[0].message : '';
 
@@ -180,18 +180,18 @@ export default {
             });
             this.validateDisabled = false;
         },
-        resetField () {
+        resetField() {
             this.validateState = '';
             this.validateMessage = '';
 
-            let model = this.form.model;
-            let value = this.fieldValue;
+            const model = this.form.model;
+            const value = this.fieldValue;
             let path = this.prop;
             if (path.indexOf(':') !== -1) {
                 path = path.replace(/:/, '.');
             }
 
-            let prop = getPropByPath(model, path);
+            const prop = getPropByPath(model, path);
 
             //                if (Array.isArray(value) && value.length > 0) {
             //                    this.validateDisabled = true;
@@ -218,20 +218,20 @@ export default {
             }
 
             this.validate('change');
-        }
+        },
     },
-    mounted () {
+    mounted() {
         if (this.prop) {
             this.dispatch('iForm', 'on-form-item-add', this);
 
             Object.defineProperty(this, 'initialValue', {
-                value: this.fieldValue
+                value: this.fieldValue,
             });
 
-            let rules = this.getRules();
+            const rules = this.getRules();
 
             if (rules.length) {
-                rules.every(rule => {
+                rules.every((rule) => {
                     if (rule.required) {
                         this.isRequired = true;
                         return false;
@@ -242,8 +242,8 @@ export default {
             }
         }
     },
-    beforeDestroy () {
+    beforeDestroy() {
         this.dispatch('iForm', 'on-form-item-remove', this);
-    }
+    },
 };
 </script>

@@ -6,9 +6,9 @@ const prefixCls = 'ivu-layout';
 export default {
     name: 'Header',
     computed: {
-        wrapClasses () {
+        wrapClasses() {
             return `${prefixCls}-header`;
-        }
-    }
+        },
+    },
 };
 </script>

@@ -4,13 +4,13 @@ export default {
     props: {
         render: Function,
         column: Object,
-        index: Number
+        index: Number,
     },
     render: (h, ctx) => {
         const params = {
             column: ctx.props.column,
-            index: ctx.props.index
+            index: ctx.props.index,
         };
         return ctx.props.render(h, params);
-    }
+    },
 };

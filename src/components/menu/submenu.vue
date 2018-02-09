@@ -29,28 +29,28 @@ const prefixCls = 'ivu-menu';
 
 export default {
     name: 'Submenu',
-    mixins: [ Emitter, mixin ],
+    mixins: [Emitter, mixin],
     components: { Icon, Drop, CollapseTransition },
     props: {
         name: {
             type: [String, Number],
-            required: true
+            required: true,
         },
         disabled: {
             type: Boolean,
-            default: false
-        }
+            default: false,
+        },
     },
-    data () {
+    data() {
         return {
-            prefixCls: prefixCls,
+            prefixCls,
             active: false,
             opened: false,
-            dropWidth: parseFloat(getStyle(this.$el, 'width'))
+            dropWidth: parseFloat(getStyle(this.$el, 'width')),
         };
     },
     computed: {
-        classes () {
+        classes() {
             return [
                 `${prefixCls}-submenu`,
                 {
@@ -58,27 +58,27 @@ export default {
                     [`${prefixCls}-opened`]: this.opened,
                     [`${prefixCls}-submenu-disabled`]: this.disabled,
                     [`${prefixCls}-submenu-has-parent-submenu`]: this.hasParentSubmenu,
-                    [`${prefixCls}-child-item-active`]: this.active
-                }
+                    [`${prefixCls}-child-item-active`]: this.active,
+                },
             ];
         },
-        accordion () {
+        accordion() {
             return this.menu.accordion;
         },
-        dropStyle () {
-            let style = {};
+        dropStyle() {
+            const style = {};
 
             if (this.dropWidth) style.minWidth = `${this.dropWidth}px`;
             return style;
         },
-        titleStyle () {
+        titleStyle() {
             return this.hasParentSubmenu && this.mode !== 'horizontal' ? {
-                paddingLeft: 43 + (this.parentSubmenuNum - 1) * 24 + 'px'
+                paddingLeft: `${43 + (this.parentSubmenuNum - 1) * 24}px`,
             } : {};
-        }
+        },
     },
     methods: {
-        handleMouseenter () {
+        handleMouseenter() {
             if (this.disabled) return;
             if (this.mode === 'vertical') return;
 
@@ -88,7 +88,7 @@ export default {
                 this.opened = true;
             }, 250);
         },
-        handleMouseleave () {
+        handleMouseleave() {
             if (this.disabled) return;
             if (this.mode === 'vertical') return;
 
@@ -98,26 +98,26 @@ export default {
                 this.opened = false;
             }, 150);
         },
-        handleClick () {
+        handleClick() {
             if (this.disabled) return;
             if (this.mode === 'horizontal') return;
             const opened = this.opened;
             if (this.accordion) {
-                this.$parent.$children.forEach(item => {
+                this.$parent.$children.forEach((item) => {
                     if (item.$options.name === 'Submenu') item.opened = false;
                 });
             }
             this.opened = !opened;
             this.menu.updateOpenKeys(this.name);
-        }
+        },
     },
     watch: {
-        mode (val) {
+        mode(val) {
             if (val === 'horizontal') {
                 this.$refs.drop.update();
             }
         },
-        opened (val) {
+        opened(val) {
             if (this.mode === 'vertical') return;
             if (val) {
                 // set drop a width to fixed when menu has fixed position
@@ -126,9 +126,9 @@ export default {
             } else {
                 this.$refs.drop.destroy();
             }
-        }
+        },
     },
-    mounted () {
+    mounted() {
         this.$on('on-menu-item-select', (name) => {
             if (this.mode === 'horizontal') this.opened = false;
             this.dispatch('Menu', 'on-menu-item-select', name);
@@ -136,11 +136,13 @@ export default {
         });
         this.$on('on-update-active-name', (status) => {
             if (findComponentUpward(this, 'Submenu')) this.dispatch('Submenu', 'on-update-active-name', status);
-            if (findComponentsDownward(this, 'Submenu')) findComponentsDownward(this, 'Submenu').forEach(item => {
-                item.active = false;
-            });
+            if (findComponentsDownward(this, 'Submenu')) {
+                findComponentsDownward(this, 'Submenu').forEach((item) => {
+                    item.active = false;
+                });
+            }
             this.active = status;
         });
-    }
+    },
 };
 </script>

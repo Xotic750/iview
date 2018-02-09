@@ -1,21 +1,19 @@
-function has (browser) {
+function has(browser) {
     const ua = navigator.userAgent;
     if (browser === 'ie') {
         const isIE = ua.indexOf('compatible') > -1 && ua.indexOf('MSIE') > -1;
         if (isIE) {
             const reIE = new RegExp('MSIE (\\d+\\.\\d+);');
             reIE.test(ua);
-            return parseFloat(RegExp['$1']);
-        } else {
-            return false;
+            return parseFloat(RegExp.$1);
         }
-    } else {
-        return ua.indexOf(browser) > -1;
+        return false;
     }
+    return ua.indexOf(browser) > -1;
 }
 
 const csv = {
-    _isIE11 () {
+    _isIE11() {
         let iev = 0;
         const ieold = (/MSIE (\d+\.\d+);/.test(navigator.userAgent));
         const trident = !!navigator.userAgent.match(/Trident\/7.0/);
@@ -34,22 +32,21 @@ const csv = {
         return iev === 11;
     },
 
-    _isEdge () {
+    _isEdge() {
         return /Edge/.test(navigator.userAgent);
     },
 
-    _getDownloadUrl (text) {
+    _getDownloadUrl(text) {
         const BOM = '\uFEFF';
         // Add BOM to text for open in excel correctly
         if (window.Blob && window.URL && window.URL.createObjectURL) {
             const csvData = new Blob([BOM + text], { type: 'text/csv' });
             return URL.createObjectURL(csvData);
-        } else {
-            return 'data:attachment/csv;charset=utf-8,' + BOM + encodeURIComponent(text);
         }
+        return `data:attachment/csv;charset=utf-8,${BOM}${encodeURIComponent(text)}`;
     },
 
-    download (filename, text) {
+    download(filename, text) {
         if (has('ie') && has('ie') < 10) {
             // has module unable identify ie11 and Edge
             const oWin = window.top.open('about:blank', '_blank');
@@ -70,7 +67,7 @@ const csv = {
             link.click();
             document.body.removeChild(link);
         }
-    }
+    },
 };
 
 export default csv;
