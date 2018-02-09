@@ -11,13 +11,19 @@
         "browser": true,
         "es6": true
     },
-    "extends": "eslint:recommended",
+    "extends": [
+        "eslint:recommended",
+        "plugin:import/errors",
+        "plugin:import/warnings",
+        "plugin:vue/base"
+    ],
     "plugins": ["vue"],
     "rules": {
         "indent": ["error", 4, { "SwitchCase": 1 }],
         "quotes": ["error", "single"],
         "semi": ["error", "always"],
         "vue/jsx-uses-vars": 2,
-        "no-console": ["error"]
+        "no-console": ["error"],
+        "vue/html-indent": ["error", 4]
     }
 }

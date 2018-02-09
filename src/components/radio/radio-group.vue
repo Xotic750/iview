@@ -1,90 +1,90 @@
 <template>
     <div :class="classes" :name="name">
-        <slot></slot>
+        <slot/>
     </div>
 </template>
 <script>
-    import { oneOf, findComponentsDownward } from '../../utils/assist';
-    import Emitter from '../../mixins/emitter';
+import { oneOf, findComponentsDownward } from '../../utils/assist';
+import Emitter from '../../mixins/emitter';
 
-    const prefixCls = 'ivu-radio-group';
+const prefixCls = 'ivu-radio-group';
 
-    let seed = 0;
-    const now = Date.now();
-    const getUuid = () => `ivuRadioGroup_${now}_${seed++}`;
+let seed = 0;
+const now = Date.now();
+const getUuid = () => `ivuRadioGroup_${now}_${seed++}`;
 
-    export default {
-        name: 'RadioGroup',
-        mixins: [ Emitter ],
-        props: {
-            value: {
-                type: [String, Number],
-                default: ''
-            },
-            size: {
-                validator (value) {
-                    return oneOf(value, ['small', 'large', 'default']);
-                }
-            },
-            type: {
-                validator (value) {
-                    return oneOf(value, ['button']);
-                }
-            },
-            vertical: {
-                type: Boolean,
-                default: false
-            },
-            name: {
-                type: String,
-                default: getUuid
+export default {
+    name: 'RadioGroup',
+    mixins: [ Emitter ],
+    props: {
+        value: {
+            type: [String, Number],
+            default: ''
+        },
+        size: {
+            validator (value) {
+                return oneOf(value, ['small', 'large', 'default']);
             }
         },
-        data () {
-            return {
-                currentValue: this.value,
-                childrens: []
-            };
-        },
-        computed: {
-            classes () {
-                return [
-                    `${prefixCls}`,
-                    {
-                        [`${prefixCls}-${this.size}`]: !!this.size,
-                        [`ivu-radio-${this.size}`]: !!this.size,
-                        [`${prefixCls}-${this.type}`]: !!this.type,
-                        [`${prefixCls}-vertical`]: this.vertical
-                    }
-                ];
+        type: {
+            validator (value) {
+                return oneOf(value, ['button']);
             }
         },
-        mounted () {
-            this.updateValue();
+        vertical: {
+            type: Boolean,
+            default: false
         },
-        methods: {
-            updateValue () {
-                this.childrens = findComponentsDownward(this, 'Radio');
-                if (this.childrens) {
-                    this.childrens.forEach(child => {
-                        child.currentValue = this.value === child.label;
-                        child.group = true;
-                    });
-                }
-            },
-            change (data) {
-                this.currentValue = data.value;
-                this.updateValue();
-                this.$emit('input', data.value);
-                this.$emit('on-change', data.value);
-                this.dispatch('FormItem', 'on-form-change', data.value);
-            }
-        },
-        watch: {
-            value () {
-                this.currentValue = this.value;
-                this.updateValue();
-            }
+        name: {
+            type: String,
+            default: getUuid
         }
-    };
+    },
+    data () {
+        return {
+            currentValue: this.value,
+            childrens: []
+        };
+    },
+    computed: {
+        classes () {
+            return [
+                `${prefixCls}`,
+                {
+                    [`${prefixCls}-${this.size}`]: !!this.size,
+                    [`ivu-radio-${this.size}`]: !!this.size,
+                    [`${prefixCls}-${this.type}`]: !!this.type,
+                    [`${prefixCls}-vertical`]: this.vertical
+                }
+            ];
+        }
+    },
+    mounted () {
+        this.updateValue();
+    },
+    methods: {
+        updateValue () {
+            this.childrens = findComponentsDownward(this, 'Radio');
+            if (this.childrens) {
+                this.childrens.forEach(child => {
+                    child.currentValue = this.value === child.label;
+                    child.group = true;
+                });
+            }
+        },
+        change (data) {
+            this.currentValue = data.value;
+            this.updateValue();
+            this.$emit('input', data.value);
+            this.$emit('on-change', data.value);
+            this.dispatch('FormItem', 'on-form-change', data.value);
+        }
+    },
+    watch: {
+        value () {
+            this.currentValue = this.value;
+            this.updateValue();
+        }
+    }
+};
 </script>

@@ -9,42 +9,42 @@
     </div>
 </template>
 <script>
-    import iButton from '../../button/button.vue';
-    import Locale from '../../../mixins/locale';
+import iButton from '../../button/button.vue';
+import Locale from '../../../mixins/locale';
 
-    const prefixCls = 'ivu-picker';
+const prefixCls = 'ivu-picker';
 
-    export default {
-        mixins: [ Locale ],
-        components: { iButton },
-        props: {
-            showTime: false,
-            isTime: false,
-            timeDisabled: false
-        },
-        data () {
+export default {
+    mixins: [ Locale ],
+    components: { iButton },
+    props: {
+        showTime: false,
+        isTime: false,
+        timeDisabled: false
+    },
+    data () {
+        return {
+            prefixCls: prefixCls
+        };
+    },
+    computed: {
+        timeClasses () {
             return {
-                prefixCls: prefixCls
+                [`${prefixCls}-confirm-time-disabled`]: this.timeDisabled
             };
-        },
-        computed: {
-            timeClasses () {
-                return {
-                    [`${prefixCls}-confirm-time-disabled`]: this.timeDisabled
-                };
-            }
-        },
-        methods: {
-            handleClear () {
-                this.$emit('on-pick-clear');
-            },
-            handleSuccess () {
-                this.$emit('on-pick-success');
-            },
-            handleToggleTime () {
-                if (this.timeDisabled) return;
-                this.$emit('on-pick-toggle-time');
-            }
         }
-    };
+    },
+    methods: {
+        handleClear () {
+            this.$emit('on-pick-clear');
+        },
+        handleSuccess () {
+            this.$emit('on-pick-success');
+        },
+        handleToggleTime () {
+            if (this.timeDisabled) return;
+            this.$emit('on-pick-toggle-time');
+        }
+    }
+};
 </script>
